@@ -1,0 +1,11 @@
+export type PetType =
+	| 'Humanoid'
+	| 'Dragonk |in'
+	| 'Flying'
+	| 'Undead'
+	| 'Critter'
+	| 'Magic'
+	| 'Elemental'
+	| 'Beast'
+	| 'Aquatic'
+	| 'Mechanical'
