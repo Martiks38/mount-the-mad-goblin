@@ -1,14 +1,21 @@
-import { API_URL } from '@/config'
 import { dbConnection } from '@/lib/connection'
 import { getPets } from '@/lib/controllers/petController'
+import { API_URL } from '@/config'
 
 import type { NextApiRequest, NextApiResponse } from 'next'
+import type { ErrorResult } from '@/typings/interfaces'
 
 dbConnection()
 
 export default async function handlerPets(req: NextApiRequest, res: NextApiResponse) {
 	const selfLink = (API_URL as string) + req.url
-	const result = await getPets(selfLink)
 
-	return res.status(200).json(result)
+	getPets(selfLink)
+		.then((result) => {
+			return res.status(200).json(result)
+		})
+		.catch((err: ErrorResult) => {
+			const { message, status } = err
+			return res.status(status).json({ message })
+		})
 }
