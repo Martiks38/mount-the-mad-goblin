@@ -6,7 +6,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 dbConnection()
 
-export default function handlerTypesPets(req: NextApiRequest, res: NextApiResponse) {
+export default function getPetTypesAPI(req: NextApiRequest, res: NextApiResponse) {
 	const selfLink = (API_URL as string) + req.url
 
 	getPetTypes(API_URL as string, selfLink)

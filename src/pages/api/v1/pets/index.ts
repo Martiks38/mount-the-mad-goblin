@@ -7,7 +7,7 @@ import type { ErrorResult } from '@/typings/interfaces'
 
 dbConnection()
 
-export default async function handlerPets(req: NextApiRequest, res: NextApiResponse) {
+export default async function getPetsAPI(req: NextApiRequest, res: NextApiResponse) {
 	const selfLink = (API_URL as string) + req.url
 
 	getPets(API_URL as string, selfLink)
