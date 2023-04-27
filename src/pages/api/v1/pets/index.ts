@@ -10,7 +10,7 @@ dbConnection()
 export default async function handlerPets(req: NextApiRequest, res: NextApiResponse) {
 	const selfLink = (API_URL as string) + req.url
 
-	getPets(selfLink)
+	getPets(API_URL as string, selfLink)
 		.then((result) => {
 			return res.status(200).json(result)
 		})
