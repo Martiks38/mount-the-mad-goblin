@@ -8,7 +8,7 @@ export default function getPetTypeAPI(req: NextApiRequest, res: NextApiResponse)
 	const petType = req.query.type as string
 	const resource = req.url as string
 
-	let isCorrectPetType = petType in PET_TYPES
+	let isCorrectPetType = PET_TYPES.some((type) => type === petType)
 
 	if (!isCorrectPetType) {
 		const formatter = new Intl.ListFormat('en', { style: 'long', type: 'conjunction' })
