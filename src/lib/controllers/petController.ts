@@ -59,7 +59,7 @@ export async function getPetTypes(resource: string): Promise<Result> {
  */
 export async function getPetType(resource: string, type: string): Promise<Result> {
 	try {
-		const results: Pet[] = await PetModel.find({ $type: type })
+		const results: Pet[] = await PetModel.find({ type }, { _id: false })
 		const total = results.length
 
 		return {
@@ -71,8 +71,6 @@ export async function getPetType(resource: string, type: string): Promise<Result
 			total
 		}
 	} catch (error: any) {
-		if (!error?.status) throw { status: 400, message: error?.message }
-
 		throw errorMessage(500)
 	}
 }
