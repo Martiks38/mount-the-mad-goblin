@@ -1,4 +1,3 @@
-import { PET_TYPES } from '@/consts'
 import type { PetTypes } from './types'
 
 export interface Pet {
@@ -10,7 +9,7 @@ export interface Pet {
 }
 
 export interface Result {
-	results?: Pet[] | typeof PET_TYPES /* Result of the request to the database */
+	results?: Pet[] | string[] /* Result of the request to the database */
 	page_number?: string /* Page number indicating the offset to display the request results */
 	total?: number /* Total possible elements for the request */
 	size?: number /* Total element of the response */
