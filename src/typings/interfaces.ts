@@ -22,5 +22,9 @@ export interface Result {
 		first?: string /* First page URL */
 		last?: string /* URL of the last page */
 	}
-	message?: string /*  */
+}
+
+export interface ErrorResult {
+	status: number /* HTTP Status Code */
+	message: string /* Error message */
 }
