@@ -17,10 +17,6 @@ export function dbConnection() {
 			const error = new Error('Error establishing connection to database')
 			error.name = 'DBConnectionError'
 
-			throw error
+			console.error(`[${err.name}]: ${err.message}`)
 		})
 }
-
-connection.on('error', (err) => {
-	console.error(`[${err.name}]: ${err.message}`)
-})
