@@ -3,13 +3,13 @@ import type { PetTypes } from './types'
 export interface Pet {
 	name: string
 	description: string
-	price: number
-	media: string
-	type: PetTypes
+	price: number /* Integer number of gold coins */
+	media: string /* Image of the pet */
+	type: PetTypes /* "Humanoid" | "Dragonkin" | "Flying" | "Undead" | "Critter" | "Magic" | "Elemental" | "Beast" | "Aquatic" | "Mechanical" */
 }
 
 export interface Result {
-	results?: Pet[] | string[] /* Result of the request to the database */
+	results?: Pet | Pet[] | string[] /* Result of the request to the database */
 	page_number?: string /* Page number indicating the offset to display the request results */
 	total?: number /* Total possible elements for the request */
 	size?: number /* Total element of the response */
