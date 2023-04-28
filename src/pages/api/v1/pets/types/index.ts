@@ -1,15 +1,15 @@
-import { API_URL } from '@/config'
 import { dbConnection } from '@/lib/connection'
 import { getPetTypes } from '@/lib/controllers/petController'
-import { ErrorResult } from '@/typings/interfaces'
-import { NextApiRequest, NextApiResponse } from 'next'
+
+import type { NextApiRequest, NextApiResponse } from 'next'
+import type { ErrorResult } from '@/typings/interfaces'
 
 dbConnection()
 
 export default function getPetTypesAPI(req: NextApiRequest, res: NextApiResponse) {
-	const selfLink = (API_URL as string) + req.url
+	const resource = req.url as string
 
-	getPetTypes(API_URL as string, selfLink)
+	getPetTypes(resource)
 		.then((result) => {
 			return res.status(200).json(result)
 		})
