@@ -1,6 +1,6 @@
 # Mounts - The Mad Goblin
 
-Tienda de monturas de [World of Warcraft](https://worldofwarcraft.blizzard.com/es-es/)
+Tienda de mascotas de [World of Warcraft](https://worldofwarcraft.blizzard.com/es-es/)
 
 > `En desarrollo`
 
