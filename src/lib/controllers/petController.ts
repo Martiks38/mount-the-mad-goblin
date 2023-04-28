@@ -149,3 +149,28 @@ export async function getPetByName(resource: string, namePet: string): Promise<R
 		throw errorMessage(500)
 	}
 }
+
+export async function getPetsByPrices(resource: string, min: number, max: number): Promise<Result> {
+	try {
+		let filter = {
+			price: {
+				$gte: min,
+				$lte: max
+			}
+		}
+
+		const results: Pet[] = await PetModel.find(filter, projection)
+		const total = results.length
+
+		return {
+			links: {
+				base,
+				self: base + resource
+			},
+			results,
+			total
+		}
+	} catch (error) {
+		throw errorMessage(500)
+	}
+}
