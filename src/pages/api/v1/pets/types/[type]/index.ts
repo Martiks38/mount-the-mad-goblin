@@ -1,20 +1,21 @@
 import { getPetType } from '@/lib/controllers/petController'
+import { dbConnection } from '@/lib/connection'
+import { checkType } from '@/utils/checkType'
 import { PET_TYPES } from '@/consts'
 
 import type { NextApiRequest, NextApiResponse } from 'next'
 import type { ErrorResult, Result } from '@/typings/interfaces'
 
+dbConnection()
+
 export default function getPetTypeAPI(req: NextApiRequest, res: NextApiResponse) {
 	const petType = req.query.type as string
 	const resource = req.url as string
 
-	let isCorrectPetType = PET_TYPES.some((type) => type === petType)
+	let isCorrectPetType = checkType(petType, PET_TYPES)
 
 	if (!isCorrectPetType) {
-		const formatter = new Intl.ListFormat('en', { style: 'long', type: 'conjunction' })
-		const validTypes = formatter.format(PET_TYPES)
-
-		const message = `The type of pet requested does not exist. Valid pet types are: ${validTypes}`
+		const message = 'The type of pet requested does not exist'
 
 		return res.status(400).json({ message })
 	}
