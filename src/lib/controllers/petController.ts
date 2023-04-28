@@ -2,6 +2,7 @@ import PetModel from '../models/petModel'
 
 import { errorMessage } from '@/utils/handlerError'
 import { API_URL } from '@/config'
+import { projection } from '@/consts'
 
 import type { Pet, Result } from '@/typings/interfaces'
 
@@ -15,7 +16,7 @@ const base = API_URL
  */
 export async function getPets(resource: string): Promise<Result> {
 	try {
-		const results: Pet[] = await PetModel.find({}, { _id: false })
+		const results: Pet[] = await PetModel.find({}, projection)
 		const total = results.length
 
 		return {
@@ -63,7 +64,7 @@ export async function getPetTypes(resource: string): Promise<Result> {
  */
 export async function getPetType(resource: string, type: string): Promise<Result> {
 	try {
-		const results: Pet[] = await PetModel.find({ type }, { _id: false })
+		const results: Pet[] = await PetModel.find({ type }, projection)
 		const total = results.length
 
 		return {
@@ -103,7 +104,7 @@ export async function getPetsByTypeAndPrice(
 			}
 		}
 
-		const results: Pet[] = await PetModel.find(filter, { _id: false })
+		const results: Pet[] = await PetModel.find(filter, projection)
 		const total = results.length
 
 		return {
@@ -115,6 +116,36 @@ export async function getPetsByTypeAndPrice(
 			total
 		}
 	} catch (error) {
+		throw errorMessage(500)
+	}
+}
+
+/**
+ * Search for the pet by name.
+ * @param { string } resource  API resource path.
+ * @param { string } namePet Pet's name.
+ * @returns { Promise<Result> } Returns a promise with the pet's data.
+ */
+export async function getPetByName(resource: string, namePet: string): Promise<Result> {
+	try {
+		const result: Pet | null = await PetModel.findOne({ name: namePet }, projection)
+
+		if (result === null) {
+			const message = `The mascot ${namePet} does not exist`
+			throw errorMessage(404, message)
+		}
+
+		return {
+			links: {
+				base,
+				self: base + resource
+			},
+			results: result,
+			total: 1
+		}
+	} catch (error: any) {
+		if (error?.status) throw error
+
 		throw errorMessage(500)
 	}
 }
