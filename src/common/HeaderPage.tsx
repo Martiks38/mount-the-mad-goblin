@@ -12,8 +12,8 @@ import { LoupeIcon } from '@/components/LoupeIcon'
 
 export function HeaderPage() {
 	const searchId = useId()
-	const widthImg = 36
-	const heightImg = 36
+	const widthImg = 42
+	const heightImg = 42
 
 	return (
 		<header className={headerPageStyles.header}>
@@ -44,18 +44,18 @@ export function HeaderPage() {
 
 				<div className={headerPageStyles.header__containerLinks}>
 					<ul className={headerPageStyles.header__menu}>
-						<li className="">
-							<Link href="#" className="">
+						<li>
+							<Link href="#" className={headerPageStyles.header__linkItem}>
 								Pets
 							</Link>
 						</li>
-						<li className="">
-							<Link href="#" className="">
+						<li>
+							<Link href="#" className={headerPageStyles.header__linkItem}>
 								Sign in
 							</Link>
 						</li>
-						<li className="">
-							<Link href="#" className="">
+						<li>
+							<Link href="#" className={headerPageStyles.header__linkItem}>
 								Log up
 							</Link>
 						</li>
@@ -65,7 +65,13 @@ export function HeaderPage() {
 						className={headerPageStyles.header__shoppingCart}
 						aria-label="See purchases"
 					>
-						<Image src={bag} alt="Shopping bag" width={widthImg} height={heightImg} />
+						<Image
+							src={bag}
+							alt="Shopping bag"
+							width={widthImg}
+							height={heightImg}
+							title="See purchases"
+						/>
 					</Link>
 				</div>
 			</nav>

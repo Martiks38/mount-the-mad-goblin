@@ -1,6 +1,6 @@
 :root {
 	--min-view: 20rem;
-	--max-view: 100rem;
+	--max-view: 120rem;
 	--vsm-breakpoint: 30rem;
 	--sm-breakpoint: 40rem;
 	--md-breakpoint: 48rem;
@@ -11,6 +11,8 @@
 	--border-6: 0.375rem;
 	--border-8: 0.5rem;
 	--border-10: 0.625rem;
+	--drop-shadow: #f8b700;
+	--body-background: #170e09;
 }
 
 /* navbar */
@@ -18,11 +20,16 @@
 	--navbar-background-no-blur: rgba(64, 47, 46, 0.95);
 	--navbar-background: rgba(60, 42, 41, 0.8);
 	--navbar-background-blur: 20px;
-	--navbar-background-menu: #2b1d1c;
 	--navbar-letter-color: #f8b700;
 	--input-search: rgb(195 192 192);
 	--input-search-focus: white;
 	--background-button-black: #1f1c1c;
+	--navbar-background-hover: #413639;
+}
+
+/* Footer */
+:root {
+	--navbar-footer-background: #211a14;
 }
 
 * {
@@ -43,7 +50,7 @@ body {
 }
 
 body {
-	background-color: var(--background-color-1);
+	background-color: var(--body-background);
 }
 
 a {
