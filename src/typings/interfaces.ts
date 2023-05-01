@@ -9,7 +9,7 @@ export interface Pet {
 }
 
 export interface Result {
-	results?: Pet | Pet[] | string[] /* Result of the request to the database */
+	results?: Pet | Pet[] | Pick<Pet, 'media' | 'type'>[] /* Result of the request to the database */
 	page_number?: string /* Page number indicating the offset to display the request results */
 	total?: number /* Total possible elements for the request */
 	size?: number /* Total element of the response */

@@ -25,6 +25,6 @@ Los endpoints disponibles son:
 - GET `/pets`: Devuelve todas las mascotas de Pets - The Crazy Goblin.
 - GET `/pets/prices`: Devuelve las mascotas de acuerdo al rango de precios de Pets - The Crazy Goblin.
 - GET `/pets/:name`: Devuelve una mascota de acuerdo al nombre de Pets - The Crazy Goblin.
-- GET `/pets/types`: Devuelve todos los tipos de mascotas de Pets - The Crazy Goblin.
+- GET `/pets/types`: Devuelve todos los tipos de mascotas con una imagen de Pets - The Crazy Goblin.
 - GET `/pets/types/:type`: Devuelve las mascotas de acuerdo al tipo de Pets - The Crazy Goblin.
 - GET `/pets/types/:type/prices`: Devuelve las mascotas de acuerdo al tipo y al rango de precios de Pets - The Crazy Goblin.
