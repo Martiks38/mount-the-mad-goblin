@@ -5,6 +5,9 @@ import { API_URL } from '@/config'
 import { projection } from '@/consts'
 
 import type { Pet, Result } from '@/typings/interfaces'
+import type { ContentAnswerPetTypes } from '@/typings/types'
+
+type AnswerPetTypesDB = ContentAnswerPetTypes & { _id: string }
 
 const base = API_URL
 
@@ -39,13 +42,16 @@ export async function getPets(resource: string): Promise<Result> {
  */
 export async function getPetTypes(resource: string): Promise<Result> {
 	try {
-		const results: Pick<Pet, 'media' | 'type'>[] = await PetModel.aggregate([
+		const results: AnswerPetTypesDB[] = await PetModel.aggregate([
 			{
 				$group: {
-					_id: '$_id',
+					_id: '$type',
 					type: { $first: '$type' },
 					media: { $first: '$media' }
 				}
+			},
+			{
+				$sort: { type: 1 }
 			}
 		])
 		const total = results.length
