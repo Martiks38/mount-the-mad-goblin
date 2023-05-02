@@ -1,4 +1,4 @@
-import type { PetTypes } from './types'
+import type { ContentAnswerPetTypes, PetTypes } from './types'
 
 export interface Pet {
 	name: string
@@ -9,7 +9,7 @@ export interface Pet {
 }
 
 export interface Result {
-	results?: Pet | Pet[] | string[] /* Result of the request to the database */
+	results?: Pet | Pet[] | ContentAnswerPetTypes[] /* Result of the request to the database */
 	page_number?: string /* Page number indicating the offset to display the request results */
 	total?: number /* Total possible elements for the request */
 	size?: number /* Total element of the response */

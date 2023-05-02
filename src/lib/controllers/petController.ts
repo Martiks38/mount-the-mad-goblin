@@ -5,6 +5,9 @@ import { API_URL } from '@/config'
 import { projection } from '@/consts'
 
 import type { Pet, Result } from '@/typings/interfaces'
+import type { ContentAnswerPetTypes } from '@/typings/types'
+
+type AnswerPetTypesDB = ContentAnswerPetTypes & { _id: string }
 
 const base = API_URL
 
@@ -33,13 +36,24 @@ export async function getPets(resource: string): Promise<Result> {
 }
 
 /**
- * Search the types of pets in the database.
+ * Search the types of pets and an image of these in the database.
  * @param resource -  API resource path.
- * @returns { Promise<Result> } Returns a promise that contains the pet types in the database.
+ * @returns { Promise<Result> } Returns a promise containing the pet types and an image of the pets in the database.
  */
 export async function getPetTypes(resource: string): Promise<Result> {
 	try {
-		const results: string[] = await PetModel.distinct('type')
+		const results: AnswerPetTypesDB[] = await PetModel.aggregate([
+			{
+				$group: {
+					_id: '$type',
+					type: { $first: '$type' },
+					media: { $first: '$media' }
+				}
+			},
+			{
+				$sort: { type: 1 }
+			}
+		])
 		const total = results.length
 
 		return {
@@ -47,7 +61,9 @@ export async function getPetTypes(resource: string): Promise<Result> {
 				base,
 				self: base + resource
 			},
-			results,
+			results: results.map(({ media, type }) => {
+				return { media, type }
+			}),
 			total
 		}
 	} catch (error) {
