@@ -7,6 +7,8 @@ Tienda de mascotas de [World of Warcraft](https://worldofwarcraft.blizzard.com/e
 ## TODO
 
 - [ ] Corregir nombre de las funciones de la API y de los controladores.
+- [ ] Arreglar la presentación del HeaderPage.
+- [ ] Hacer el modal correo del footer.
 
 ## Tecnologías usadas
 
