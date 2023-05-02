@@ -2,6 +2,7 @@
 	position: sticky;
 	top: 0;
 	background-color: var(--navbar-background-menu);
+	z-index: 1;
 
 	&__skip {
 		--position: 0.5em;

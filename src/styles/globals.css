@@ -12,6 +12,8 @@
 	--border-8: 0.5rem;
 	--border-10: 0.625rem;
 	--drop-shadow: #f8b700;
+	--drop-shadow-alpha-70: rgba(248, 183, 0, 0.7);
+	--drop-shadow-alpha-55: rgba(248, 183, 0, 0.55);
 	--body-background: #170e09;
 }
 

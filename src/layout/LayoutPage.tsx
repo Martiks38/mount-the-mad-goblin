@@ -23,7 +23,7 @@ export function LayoutPage({ children }: LayoutPageProps): JSX.Element {
 			</Head>
 			<div className={layoutStyles.wrapperPage}>
 				<HeaderPage />
-				<main className="">{children}</main>
+				<main className={layoutStyles.wrapperPage__main}>{children}</main>
 				<FooterPage />
 			</div>
 		</>
