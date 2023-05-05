@@ -26,23 +26,20 @@
 		font-size: clamp(3.2rem, 0.8857rem + 10.2857vw, 5rem);
 		line-height: 1;
 		color: white;
-		text-shadow: 0 0.0625em 0.125em rgb(0 0 0 / 0.8), -0.0625em 0.0625em 0.125em rgb(0 0 0 / 0.8);
+		text-shadow: 0 0.0625em 0.125em var(--text-shadow-black-alpha-80),
+			-0.0625em 0.0625em 0.125em var(--text-shadow-black-alpha-80);
 	}
 }
 
 .section {
-	padding: 3.5em 1.4em 10em;
 	font-size: 1.125rem;
-
-	@media (min-width: 40rem) {
-		padding: 10em 1.8em 15em;
-	}
+	padding-bottom: 10rem;
 
 	&__title {
 		margin-bottom: 1em;
 		color: white;
 		font-size: 4.5rem;
-		font-size: clamp(3rem, 1.0714rem + 8.5714vw, 4.5rem);
+		font-size: clamp(3rem, 2.0769rem + 4.1026vw, 7rem);
 		line-height: 1;
 		text-align: center;
 		text-transform: uppercase;
@@ -88,7 +85,8 @@
 	width: 100%;
 	height: 100%;
 	color: white;
-	text-shadow: 0 0.1em 0.125em rgb(0 0 0 / 0.8), -0.1em 0.1em 0.125em rgb(0 0 0 / 0.8);
+	text-shadow: 0 0.1em 0.125em var(--text-shadow-black-alpha-80),
+		-0.1em 0.1em 0.125em var(--text-shadow-black-alpha-80);
 }
 
 .img {

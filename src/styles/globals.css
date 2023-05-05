@@ -11,10 +11,21 @@
 	--border-6: 0.375rem;
 	--border-8: 0.5rem;
 	--border-10: 0.625rem;
-	--drop-shadow: #f8b700;
-	--drop-shadow-alpha-70: rgba(248, 183, 0, 0.7);
-	--drop-shadow-alpha-55: rgba(248, 183, 0, 0.55);
+	--color-primary: #f8b700;
+	--color-primary-alpha-70: rgba(248, 183, 0, 0.7);
+	--color-primary-alpha-55: rgba(248, 183, 0, 0.55);
+	--color-secondary: #f5deb3;
+	--color-tertiary: #edc454;
+	--drop-shadow: var(--color-primary);
+	--drop-shadow-alpha-70: var(--color-primary-alpha-70);
+	--drop-shadow-alpha-55: var(--color-primary-alpha-55);
 	--body-background: #170e09;
+	--btn-body-background: #2d2927;
+	--btn-body-background-alpha-55: rgba(45, 41, 39, 0.55);
+	--color-letter-1: var(--color-primary);
+	--color-letter-2: var(--color-secondary);
+	--color-letter-3: var(--color-tertiary);
+	--text-shadow-black-alpha-80: rgb(0 0 0 / 0.8);
 }
 
 /* navbar */
@@ -22,7 +33,7 @@
 	--navbar-background-no-blur: rgba(64, 47, 46, 0.95);
 	--navbar-background: rgba(60, 42, 41, 0.8);
 	--navbar-background-blur: 20px;
-	--navbar-letter-color: #f8b700;
+	--navbar-letter-color: var(--color-letter-1);
 	--input-search: rgb(195 192 192);
 	--input-search-focus: white;
 	--background-button-black: #1f1c1c;
@@ -32,6 +43,11 @@
 /* Footer */
 :root {
 	--navbar-footer-background: #211a14;
+}
+
+/* Category */
+:root {
+	--bg-category-alpha: rgb(0 0 0 / 0.65);
 }
 
 * {
@@ -67,4 +83,17 @@ img {
 ul {
 	list-style-type: none;
 	list-style-position: outside;
+}
+
+.content {
+	padding: 3.5em 1.4em 10em;
+	font-size: 1.125rem;
+
+	& > *:last-child {
+		padding-bottom: 0;
+	}
+
+	@media (min-width: 40rem) {
+		padding: 10em 1.8em 15em;
+	}
 }
