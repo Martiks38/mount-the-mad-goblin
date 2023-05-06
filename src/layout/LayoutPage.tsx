@@ -12,9 +12,9 @@ export function LayoutPage({ children }: LayoutPageProps): JSX.Element {
 	return (
 		<>
 			<Head>
-				<link rel="icon" href="./favicon-32x32.png" type="image/png" />
-				<link rel="icon" href="./favicon-180x180.png" type="image/png" />
-				<link rel="apple-touch-icon" href="./favicon-180x180.png" type="image/png" />
+				<link rel="icon" href="/favicon-32x32.png" type="image/png" />
+				<link rel="icon" href="/favicon-180x180.png" type="image/png" />
+				<link rel="apple-touch-icon" href="/favicon-180x180.png" type="image/png" />
 				<meta property="og:type" content="website" />
 				<meta property="og:image" content="./logo.png" />
 				<link rel="preconnect" href="http://localhost:3000/api/v1" />

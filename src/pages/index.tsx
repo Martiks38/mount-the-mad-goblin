@@ -27,28 +27,30 @@ export default function Home({ pets }: HomeProps) {
 				<h1 className={homeStyles.containerHeroImage__title}>Pets - The Crazy Goblin</h1>
 			</div>
 
-			<section className={homeStyles.section}>
-				<section>
-					<h2 className={homeStyles.section__title}>Pets</h2>
+			<article className="content">
+				<section className={homeStyles.section}>
 					{typeof pets === 'string' ? (
-						<p>jk</p>
+						<p className="error">{pets}</p>
 					) : (
-						<div className={homeStyles.section__gridCategory}>
-							{(pets.results as ContentAnswerPetTypes[]).map(({ media, type }) => {
-								return (
-									<ShowCategory
-										key={type}
-										alt={`${type} pet`}
-										href={type.toLowerCase()}
-										media={media}
-										title={`See ${type} pets`}
-									/>
-								)
-							})}
-						</div>
+						<>
+							<h2 className={homeStyles.section__title}>Pets</h2>
+							<div className={homeStyles.section__gridCategory}>
+								{(pets.results as ContentAnswerPetTypes[]).map(({ media, type }) => {
+									return (
+										<ShowCategory
+											key={type}
+											alt={`${type} pet`}
+											href={`/pets/categories/${type}`}
+											media={media}
+											title={`See ${type} pets`}
+										/>
+									)
+								})}
+							</div>
+						</>
 					)}
 				</section>
-			</section>
+			</article>
 		</>
 	)
 }

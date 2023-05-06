@@ -62,14 +62,17 @@
 			padding-right: 1.8em;
 		}
 
-		@media (min-width: 34rem) {
+		@media (min-width: 42.5rem) {
 			flex-direction: row;
 		}
 	}
 
 	&__form {
 		flex-grow: 1;
-		max-width: 28rem;
+
+		@media (min-width: 33.75rem) {
+			max-width: 18rem;
+		}
 	}
 
 	&__logo {
@@ -80,13 +83,14 @@
 		font-weight: 600;
 
 		& :is(span) {
-			@media (min-width: 34rem) {
+			@media (min-width: 42.5rem) {
 				display: none;
 			}
 		}
 
 		& :is(img) {
 			width: 2.625rem;
+			min-width: 2.625rem;
 			height: 2.625rem;
 			object-fit: cover;
 			object-position: center;
@@ -97,15 +101,23 @@
 		display: flex;
 		align-items: center;
 		justify-content: flex-end;
+		gap: 0.4em;
 		width: 100%;
-		gap: 1.2em;
 		font-weight: 500;
+
+		@media (min-width: 33.75rem) {
+			gap: 1.2em;
+		}
 	}
 
 	&__menu {
 		display: flex;
-		gap: 1.2em;
+		gap: 0.4em;
 		height: 100%;
+
+		@media (min-width: 33.75rem) {
+			gap: 1.2em;
+		}
 	}
 
 	&__linkItem {
@@ -114,6 +126,7 @@
 		padding: 0 1.125em;
 		height: 100%;
 		border-radius: var(--border-6);
+		text-align: center;
 
 		@media (hover: none) {
 			&:active {
@@ -129,9 +142,14 @@
 	}
 
 	&__shoppingCart {
-		display: block;
-		width: 2.25rem;
-		height: 2.25rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		& :is(img) {
+			min-width: 2.625rem;
+			height: 2.625rem;
+		}
 
 		@media (hover: none) {
 			&:active {
@@ -149,7 +167,6 @@
 
 .form {
 	width: 100%;
-	margin: 0 auto;
 
 	&__labelSearch {
 		display: flex;
@@ -188,7 +205,7 @@
 		width: 3rem;
 
 		& :is(svg) {
-			--size: 1.75rem;
+			--size: 1.45rem;
 
 			height: var(--size);
 			width: var(--size);
