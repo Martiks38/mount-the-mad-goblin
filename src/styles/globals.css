@@ -94,6 +94,14 @@ ul {
 	}
 
 	@media (min-width: 40rem) {
-		padding: 10em 1.8em 15em;
+		padding: 4em 1.8em 15em;
 	}
+}
+
+.error {
+	color: white;
+	font-weight: 600;
+	font-size: 3rem;
+	line-height: 1;
+	text-align: center;
 }
