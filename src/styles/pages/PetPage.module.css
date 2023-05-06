@@ -1,0 +1,53 @@
+.petData {
+	display: grid;
+	grid-template-areas:
+		'name'
+		'desc'
+		'img'
+		'btns';
+	grid-template-columns: 100%;
+	grid-template-rows: repeat(4, auto);
+	row-gap: 2em;
+	max-width: 67.5rem;
+	margin: 0 auto;
+	padding: 0 2rem;
+
+	&__name {
+		grid-area: name;
+		margin: 0;
+		color: var(--color-letter-1);
+		font-size: 4rem;
+		font-size: clamp(2.5rem, -2rem + 20vw, 4rem);
+		line-height: 115%;
+	}
+
+	&__img {
+		grid-area: img;
+		width: 100%;
+		max-width: 26.25rem;
+		margin: 0 auto;
+		height: auto;
+	}
+
+	&__description {
+		grid-area: desc;
+		margin-bottom: 1.4em;
+		font-size: 1.875rem;
+		line-height: 2.25rem;
+	}
+
+	&__btns {
+		grid-area: btns;
+	}
+
+	@media (min-width: 57.5rem) {
+		grid-template-areas:
+			'name name'
+			'img desc'
+			'img btns';
+		grid-template-columns: minmax(20rem, 26.25rem) minmax(23.75rem, 1fr);
+		grid-template-rows: auto min-content auto;
+		column-gap: 4em;
+		row-gap: 2.5em;
+	}
+}
