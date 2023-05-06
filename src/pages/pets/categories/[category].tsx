@@ -1,0 +1,79 @@
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import clsx from 'clsx'
+
+import { getCategoryPaths } from '@/utils/getCategoryPaths'
+import { searchInApi } from '@/utils/searchInApi'
+
+import categoryPageStyles from '@/styles/pages/CategoryPage.module.css'
+
+import type { GetStaticPaths, GetStaticProps } from 'next'
+import type { ParsedUrlQuery } from 'querystring'
+import type { Pet, Result } from '@/typings/interfaces'
+import type { PetTypes } from '@/typings/types'
+
+interface CategoryProps {
+	results: Result
+}
+
+interface CategoryParams extends ParsedUrlQuery {
+	category: PetTypes
+}
+
+export default function Category({ results }: CategoryProps) {
+	const router = useRouter()
+	const { category } = router.query
+
+	return (
+		<section className="content">
+			<h1 className={categoryPageStyles.title}>{`${category} pets`}</h1>
+			{typeof results === 'string' ? (
+				<p className="error">{results}</p>
+			) : (
+				<div className={categoryPageStyles.pets}>
+					{(results.results as Pet[]).map(({ name, media, price }) => {
+						return (
+							<Link
+								key={name}
+								href={`/pets/${name}`}
+								className={clsx([categoryPageStyles.pets__pet, categoryPageStyles.pet])}
+							>
+								<h2 className={categoryPageStyles.pet__name}>{name}</h2>
+								<img
+									src={media}
+									alt={name}
+									width="280"
+									height="220"
+									className={categoryPageStyles.pet__img}
+								/>
+								<p className={categoryPageStyles.pet__price}>{`${price} g`}</p>
+							</Link>
+						)
+					})}
+				</div>
+			)}
+		</section>
+	)
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+	const paths = await getCategoryPaths('/pets/types')
+
+	return {
+		paths,
+		fallback: false
+	}
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+	const { category } = params as CategoryParams
+	const resource = `/pets/types/${category}`
+
+	const results = await searchInApi(resource)
+
+	return {
+		props: {
+			results
+		}
+	}
+}
