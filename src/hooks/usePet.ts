@@ -11,13 +11,11 @@ export function usePet(url: string) {
 	const [data, setData] = useState<SearchStatus>({ data: null, error: false })
 
 	useEffect(() => {
-		const abortController = new AbortController()
-
 		const searchFetch = async () => {
 			setIsLoading(true)
 
 			try {
-				const response = await fetch(url, { signal: abortController.signal })
+				const response = await fetch(url)
 				const data: Result = await response.json()
 
 				if (!response.ok) throw data
@@ -33,10 +31,6 @@ export function usePet(url: string) {
 		if (url.includes('undefined')) return
 
 		searchFetch()
-
-		return () => {
-			abortController.abort()
-		}
 	}, [url])
 
 	return { data: data.data, error: data.error, isLoading }
