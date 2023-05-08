@@ -23,6 +23,7 @@
 
 	&__img {
 		grid-area: img;
+		background-color: #000;
 		width: 100%;
 		max-width: 26.25rem;
 		margin: 0 auto;
