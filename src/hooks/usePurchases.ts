@@ -1,50 +1,50 @@
 import { useState } from 'react'
 
 // Quantities allowed to buy
-const MIN_AMOUNT = 1
-const MAX_AMOUNT = 999
+const MIN_QUANTITY = 1
+const MAX_QUANTITY = 999
 
 export function usePurchases() {
-	const [amount, setAmount] = useState(MIN_AMOUNT)
+	const [quantity, setQuantity] = useState(MIN_QUANTITY)
 
 	// Decrease the amount of purchases through a button
-	const decreaseAmount = (ev: React.MouseEvent<HTMLButtonElement>) => {
+	const decreaseQuantity = (ev: React.MouseEvent<HTMLButtonElement>) => {
 		ev.preventDefault()
-		if (amount >= MIN_AMOUNT) setAmount(amount - 1)
+		if (quantity >= MIN_QUANTITY) setQuantity(quantity - 1)
 	}
 
 	// Increase the amount of purchases through a button
-	const increaseAmount = (ev: React.MouseEvent<HTMLButtonElement>) => {
+	const increaseQuantity = (ev: React.MouseEvent<HTMLButtonElement>) => {
 		ev.preventDefault()
-		if (amount <= MAX_AMOUNT) setAmount(amount + 1)
+		if (quantity <= MAX_QUANTITY) setQuantity(quantity + 1)
 	}
 
 	// Change the amount of purchases through an input
-	const changeAmount = (ev: React.ChangeEvent<HTMLInputElement>) => {
+	const changeQuantity = (ev: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = ev.currentTarget
 		const number = Number(value)
 
 		if (Number.isNaN(number)) return
 
 		if (value === '') {
-			setAmount(0)
+			setQuantity(0)
 			return
 		}
 
-		if (number > MAX_AMOUNT) {
-			setAmount(MAX_AMOUNT)
+		if (number > MAX_QUANTITY) {
+			setQuantity(MAX_QUANTITY)
 			return
 		}
 
-		setAmount(number)
+		setQuantity(number)
 	}
 
 	// If the value of the input is zero, when losing focus,
-	// it sets the amount of purchases to the minimum value.
+	// it sets the quantity of purchases to the minimum value.
 	const checkValue = (ev: React.FocusEvent<HTMLInputElement>) => {
 		const { value } = ev.currentTarget
-		if (Number(value) === 0) setAmount(MIN_AMOUNT)
+		if (Number(value) === 0) setQuantity(MIN_QUANTITY)
 	}
 
-	return { amount, changeAmount, checkValue, decreaseAmount, increaseAmount }
+	return { quantity, changeQuantity, checkValue, decreaseQuantity, increaseQuantity }
 }
