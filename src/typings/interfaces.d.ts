@@ -8,6 +8,12 @@ export interface Pet {
 	type: PetTypes /* "Humanoid" | "Dragonkin" | "Flying" | "Undead" | "Critter" | "Magic" | "Elemental" | "Beast" | "Aquatic" | "Mechanical" */
 }
 
+export interface PurchasedPet {
+	name: string
+	quantity: number
+	price: number
+}
+
 export interface Result {
 	results?: Pet | Pet[] | ContentAnswerPetTypes[] /* Result of the request to the database */
 	page_number?: string /* Page number indicating the offset to display the request results */
