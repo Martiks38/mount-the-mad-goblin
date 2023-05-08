@@ -9,9 +9,10 @@ export interface Pet {
 }
 
 export interface PurchasedPet {
+	img: string
 	name: string
-	quantity: number
 	price: number
+	quantity: number
 }
 
 export interface Result {

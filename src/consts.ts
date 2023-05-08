@@ -19,3 +19,5 @@ export const PRICE_RANGE = Object.freeze({
 export const projection = Object.freeze({
 	_id: false
 })
+
+export const KEY_SESSION_STORAGE = 'shopping-cart'
