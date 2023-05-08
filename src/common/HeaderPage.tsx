@@ -3,12 +3,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import clsx from 'clsx'
 
+import { LoupeIcon } from '@/components/LoupeIcon'
+import { ShoppingBag } from '@/components/ShoppingBag'
+
 import logo from '@/assets/imgs/logo.webp'
-import bag from '@/assets/imgs/bag.webp'
 
 import headerPageStyles from './HeaderPage.module.css'
 import loupeIconStyles from '@/styles/components/LoupeIcon.module.css'
-import { LoupeIcon } from '@/components/LoupeIcon'
 
 export function HeaderPage() {
 	const searchId = useId()
@@ -60,19 +61,7 @@ export function HeaderPage() {
 							</Link>
 						</li>
 					</ul>
-					<Link
-						href="#"
-						className={headerPageStyles.header__shoppingCart}
-						aria-label="See purchases"
-					>
-						<Image
-							src={bag}
-							alt="Shopping bag"
-							width={widthImg}
-							height={heightImg}
-							title="See purchases"
-						/>
-					</Link>
+					<ShoppingBag />
 				</div>
 			</nav>
 		</header>
