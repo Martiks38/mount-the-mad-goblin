@@ -11,11 +11,13 @@ export const PET_TYPES = [
 	'Mechanical'
 ] as const
 
-export const PRICE_RANGE = {
-	min: 0,
+export const PRICE_RANGE = Object.freeze({
+	min: 1,
 	max: 9999999 // Maximum allowed by the game.
-}
+})
 
-export const projection = {
+export const projection = Object.freeze({
 	_id: false
-}
+})
+
+export const KEY_SESSION_STORAGE = 'shopping-cart'

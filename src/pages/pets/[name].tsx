@@ -11,9 +11,7 @@ export default function MascotPage() {
 	const router = useRouter()
 	const petName: string = router.query.name as string
 
-	const { data, error, isLoading } = usePet(
-		`http://localhost:3000/api/v1/pets/${encodeURI(petName)}`
-	)
+	const { data, error, isLoading } = usePet(`http://localhost:3000/api/v1/pets/${petName}`)
 
 	return (
 		<article className="content">
@@ -21,14 +19,14 @@ export default function MascotPage() {
 				<div className={petPageStyles.loading}>
 					<Loader styles={petPageStyles.loading__loader} />
 					<p className={petPageStyles.loading__errorText}>
-						Our skillful explorer collecting the information.
+						Wait a minute, our &ldquo;skilled&rdquo; goblin workers are gathering the information.
 					</p>
 				</div>
 			)}
-			{!isLoading && error && <p style={{ color: 'white' }}>{'error'}</p>}
+			{!isLoading && error && <p className="error">{data as string}</p>}
 			{typeof data === 'object' && !isLoading && !error && (
 				<article style={{ color: 'white' }} className={petPageStyles.petData}>
-					<h1 className={petPageStyles.petData__name}>{petName}</h1>
+					<h1 className={petPageStyles.petData__name}>{decodeURI(petName)}</h1>
 					<img
 						src={data?.media}
 						alt={data?.name}
@@ -38,7 +36,12 @@ export default function MascotPage() {
 					/>
 					<p className={petPageStyles.petData__description}>{data?.description}</p>
 
-					<BuyUnits name={petName} styles={petPageStyles.petData__btns} />
+					<BuyUnits
+						img={data?.media as string}
+						name={petName}
+						price={data?.price as number}
+						styles={petPageStyles.petData__btns}
+					/>
 				</article>
 			)}
 		</article>

@@ -1,0 +1,32 @@
+.shoppingBag {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	&__quantity {
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		font-size: 0.875rem;
+		text-shadow: 0 0.0625em 0.125em var(--text-shadow-black-alpha-80),
+			-0.0625em 0.0625em 0.125em var(--text-shadow-black-alpha-80);
+	}
+
+	& :is(img) {
+		min-width: 2.625rem;
+		height: 2.625rem;
+	}
+
+	@media (hover: none) {
+		&:active {
+			filter: drop-shadow(0 0 3px var(--drop-shadow));
+		}
+	}
+
+	@media (hover: hover) {
+		&:hover {
+			filter: drop-shadow(0 0 3px var(--drop-shadow));
+		}
+	}
+}

@@ -1,30 +1,27 @@
 :root {
 	--min-view: 20rem;
 	--max-view: 120rem;
-	--vsm-breakpoint: 30rem;
-	--sm-breakpoint: 40rem;
-	--md-breakpoint: 48rem;
-	--lg-breakpoint: 64rem;
-	--xl-breakpoint: 80rem;
-	--2xl-breakpoint: 96rem;
 	--line-height-default: 1;
-	--border-6: 0.375rem;
-	--border-8: 0.5rem;
-	--border-10: 0.625rem;
 	--color-primary: #f8b700;
+	--color-primary-alpha-80: rgba(248, 183, 0, 0.8);
 	--color-primary-alpha-70: rgba(248, 183, 0, 0.7);
 	--color-primary-alpha-55: rgba(248, 183, 0, 0.55);
 	--color-secondary: #f5deb3;
 	--color-tertiary: #edc454;
+	--color-letter-1: var(--color-primary);
+	--color-letter-2: var(--color-secondary);
+	--color-letter-3: var(--color-tertiary);
 	--drop-shadow: var(--color-primary);
 	--drop-shadow-alpha-70: var(--color-primary-alpha-70);
 	--drop-shadow-alpha-55: var(--color-primary-alpha-55);
 	--body-background: #170e09;
 	--btn-body-background: #2d2927;
 	--btn-body-background-alpha-55: rgba(45, 41, 39, 0.55);
-	--color-letter-1: var(--color-primary);
-	--color-letter-2: var(--color-secondary);
-	--color-letter-3: var(--color-tertiary);
+	--btn-background-red-alpha-75: rgba(159, 22, 0, 0.75);
+	--btn-background-red-alpha-50: rgba(159, 22, 0, 0.5);
+	--border-6: 0.375rem;
+	--border-8: 0.5rem;
+	--border-10: 0.625rem;
 	--text-shadow-black-alpha-80: rgb(0 0 0 / 0.8);
 }
 
@@ -48,6 +45,12 @@
 /* Category */
 :root {
 	--bg-category-alpha: rgb(0 0 0 / 0.65);
+}
+
+/* Cart */
+:root {
+	--width-product-detail: 56.25rem;
+	--cart-section-gap: 1.4rem;
 }
 
 * {
@@ -91,6 +94,10 @@ ul {
 
 	& > *:last-child {
 		padding-bottom: 0;
+	}
+
+	&_letterWhite {
+		color: #fff;
 	}
 
 	@media (min-width: 40rem) {
