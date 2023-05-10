@@ -1,5 +1,6 @@
-import Link from 'next/link'
 import Image from 'next/image'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import { useCart } from '@/store/cart'
 
 import bag from '@/assets/imgs/bag.webp'
@@ -9,14 +10,18 @@ const LIMIT_NUMBER = 9999
 
 export function ShoppingBag() {
 	const purchasedPets = useCart((state) => state.purchasedPets)
+	const [quantity, setQuantity] = useState(0)
 
 	const sideImg = 42
-	const quantityPurchases = purchasedPets.reduce((cur, pet) => cur + pet.quantity, 0)
+
+	useEffect(() => {
+		setQuantity(purchasedPets.reduce((cur, pet) => cur + pet.quantity, 0))
+	}, [purchasedPets])
 
 	return (
 		<Link href="/cart" className={shoppingBagStyles.shoppingBag} aria-label="See purchases">
 			<span className={shoppingBagStyles.shoppingBag__quantity}>{`(${
-				quantityPurchases > LIMIT_NUMBER ? '...' : quantityPurchases
+				quantity > LIMIT_NUMBER ? '...' : quantity
 			})`}</span>
 			<Image src={bag} alt="Shopping bag" width={sideImg} height={sideImg} title="See purchases" />
 		</Link>
