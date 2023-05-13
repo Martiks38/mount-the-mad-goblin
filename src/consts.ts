@@ -21,3 +21,5 @@ export const projection = Object.freeze({
 })
 
 export const KEY_SESSION_STORAGE = 'shopping-cart'
+
+export const TOKEN_HEADER = 'x-access-token'
