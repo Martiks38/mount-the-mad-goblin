@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import clsx from 'clsx'
 
 import { getCategoryPaths } from '@/utils/getCategoryPaths'
 import { searchInApi } from '@/utils/searchInApi'
@@ -36,7 +35,7 @@ export default function Category({ results }: CategoryProps) {
 							<Link
 								key={name}
 								href={`/pets/${name}`}
-								className={clsx([categoryPageStyles.pets__pet, categoryPageStyles.pet])}
+								className={`${categoryPageStyles.pets__pet} ${categoryPageStyles.pet}`}
 							>
 								<h2 className={categoryPageStyles.pet__name}>{name}</h2>
 								<img
@@ -72,8 +71,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 	const results = await searchInApi(resource)
 
 	return {
-		props: {
-			results
-		}
+		props: { results }
 	}
 }

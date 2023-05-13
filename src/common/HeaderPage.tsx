@@ -1,7 +1,6 @@
 import { useId } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import clsx from 'clsx'
 
 import { LoupeIcon } from '@/components/LoupeIcon'
 import { ShoppingBag } from '@/components/ShoppingBag'
@@ -28,7 +27,10 @@ export function HeaderPage() {
 					<span>Pets - The Crazy Goblin</span>
 				</Link>
 
-				<form className={clsx([headerPageStyles.header__form, headerPageStyles.form])}>
+				<form
+					className={`${headerPageStyles.header__form} ${headerPageStyles.form}`}
+					onSubmit={() => {}}
+				>
 					<label className={headerPageStyles.form__labelSearch} htmlFor={searchId}>
 						<div className={headerPageStyles.form__searchLoupe}>
 							<LoupeIcon styles={loupeIconStyles.loupe} />

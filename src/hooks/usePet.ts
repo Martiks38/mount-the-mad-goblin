@@ -1,5 +1,6 @@
-import { Pet, Result } from '@/typings/interfaces'
 import { useEffect, useState } from 'react'
+
+import type { Pet, Result } from '@/typings/interfaces'
 
 interface SearchStatus {
 	data: null | Pet | string
