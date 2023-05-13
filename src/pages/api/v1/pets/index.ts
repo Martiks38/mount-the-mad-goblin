@@ -9,7 +9,7 @@ dbConnection()
 export default async function getPetsAPI(req: NextApiRequest, res: NextApiResponse) {
 	const resource = req.url as string
 
-	getPets(resource)
+	return getPets(resource)
 		.then((result) => {
 			return res.status(200).json(result)
 		})

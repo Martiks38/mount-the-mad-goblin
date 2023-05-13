@@ -11,7 +11,10 @@ const messages: Messages = {
 	500: 'Internal Server Error'
 }
 
-export function errorMessage(httpStatusCode: ErrorStatusCode, errorMessage?: string): ErrorResult {
+export function errorMessage(
+	httpStatusCode: ErrorStatusCode = 500,
+	errorMessage?: string
+): ErrorResult {
 	let badHTTPStatusCode = httpStatusCode < 400 || httpStatusCode > 599
 	let status = httpStatusCode
 	let message = ''
