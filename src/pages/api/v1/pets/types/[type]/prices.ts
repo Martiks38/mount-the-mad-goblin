@@ -31,7 +31,7 @@ export default function getPetByTypeAndPriceAPI(req: NextApiRequest, res: NextAp
 		return res.status(400).json({ message })
 	}
 
-	getPetsByTypeAndPrice(resource, petType, min, max)
+	return getPetsByTypeAndPrice(resource, petType, min, max)
 		.then((result: Result) => {
 			return res.status(200).json(result)
 		})
