@@ -10,7 +10,7 @@ export default function getPetByNameAPI(req: NextApiRequest, res: NextApiRespons
 	const resource = req.url as string
 	const namePet = decodeURI(req.query.name as string)
 
-	getPetByName(resource, namePet)
+	return getPetByName(resource, namePet)
 		.then((result: Result) => {
 			return res.status(200).json(result)
 		})

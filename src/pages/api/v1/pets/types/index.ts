@@ -9,7 +9,7 @@ dbConnection()
 export default function getPetTypesAPI(req: NextApiRequest, res: NextApiResponse) {
 	const resource = req.url as string
 
-	getPetTypes(resource)
+	return getPetTypes(resource)
 		.then((result) => {
 			return res.status(200).json(result)
 		})

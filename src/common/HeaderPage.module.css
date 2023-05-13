@@ -79,6 +79,7 @@
 		display: flex;
 		align-items: center;
 		gap: 0.6em;
+		width: fit-content;
 		font-size: 1.2rem;
 		font-weight: 600;
 
@@ -187,8 +188,9 @@
 		background-color: transparent;
 		border-width: 0;
 		border-left: solid 2px var(--input-search);
-		font-size: 1.125rem;
 		font-weight: 500;
+		font-size: 1.125rem;
+		line-height: 1.5rem;
 		color: var(--input-search);
 		appearance: none;
 		caret-color: var(--input-search);

@@ -24,9 +24,17 @@ Dirección: [http://localhost:3000/api/](http://localhost:3000/api/)
 
 Los endpoints disponibles son:
 
+### PETS
+
 - GET `/pets`: Devuelve todas las mascotas de Pets - The Crazy Goblin.
 - GET `/pets/prices`: Devuelve las mascotas de acuerdo al rango de precios de Pets - The Crazy Goblin.
 - GET `/pets/:name`: Devuelve una mascota de acuerdo al nombre de Pets - The Crazy Goblin.
 - GET `/pets/types`: Devuelve todos los tipos de mascotas con una imagen de Pets - The Crazy Goblin.
 - GET `/pets/types/:type`: Devuelve las mascotas de acuerdo al tipo de Pets - The Crazy Goblin.
 - GET `/pets/types/:type/prices`: Devuelve las mascotas de acuerdo al tipo y al rango de precios de Pets - The Crazy Goblin.
+
+### USERS
+
+- POST `/users`: Crea un nuevo usuario de Pets - The Crazy Goblin.
+- PUT `/users`: Modifica un campo del usario de Pets - The Crazy Goblin.
+- DELETE `/users/:username`: Borra el usuario de Pets - The Crazy Goblin.

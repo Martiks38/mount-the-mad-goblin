@@ -51,13 +51,13 @@ export function HeaderPage() {
 							</Link>
 						</li>
 						<li>
-							<Link href="#" className={headerPageStyles.header__linkItem}>
-								Sign in
+							<Link href="/user/login" className={headerPageStyles.header__linkItem}>
+								Log in
 							</Link>
 						</li>
 						<li>
-							<Link href="#" className={headerPageStyles.header__linkItem}>
-								Log up
+							<Link href="/user/signup" className={headerPageStyles.header__linkItem}>
+								Sign up
 							</Link>
 						</li>
 					</ul>

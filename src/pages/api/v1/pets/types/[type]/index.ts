@@ -20,7 +20,7 @@ export default function getPetTypeAPI(req: NextApiRequest, res: NextApiResponse)
 		return res.status(400).json({ message })
 	}
 
-	getPetType(resource, petType)
+	return getPetType(resource, petType)
 		.then((result: Result) => res.status(200).json(result))
 		.catch((err: ErrorResult) => {
 			const { message, status } = err
