@@ -34,3 +34,9 @@ export interface ErrorResult {
 	status: number /* HTTP Status Code */
 	message: string /* Error message */
 }
+
+export interface User {
+	email: string
+	password: string
+	username: string
+}
