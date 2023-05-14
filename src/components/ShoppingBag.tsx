@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useCart } from '@/store/cart'
 
 import bag from '@/assets/imgs/bag.webp'
+
 import shoppingBagStyles from '@/styles/components/ShoppingBag.module.css'
 
 const LIMIT_NUMBER = 9999

@@ -12,7 +12,7 @@ import type { Pet, Result } from '@/typings/interfaces'
 import type { PetTypes } from '@/typings/types'
 
 interface CategoryProps {
-	results: Result
+	results: string | Result
 }
 
 interface CategoryParams extends ParsedUrlQuery {

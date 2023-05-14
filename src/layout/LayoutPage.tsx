@@ -1,6 +1,8 @@
 import Head from 'next/head'
+
 import { FooterPage } from '@/common/FooterPage'
 import { HeaderPage } from '@/common/HeaderPage'
+
 import layoutStyles from './LayoutPage.module.css'
 
 interface LayoutPageProps {

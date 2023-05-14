@@ -1,5 +1,6 @@
 import { getPetsByPrices } from '@/lib/controllers/petController'
 import { outRange } from '@/utils/outRange'
+
 import { PRICE_RANGE } from '@/consts'
 
 import type { NextApiRequest, NextApiResponse } from 'next'

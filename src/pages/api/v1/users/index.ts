@@ -1,7 +1,9 @@
-import { TOKEN_HEADER } from '@/consts'
 import { dbConnection } from '@/lib/connection'
 import { createUser, updateUser } from '@/lib/controllers/userController'
-import { NextApiRequest, NextApiResponse } from 'next'
+
+import { TOKEN_HEADER } from '@/consts'
+
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 dbConnection()
 

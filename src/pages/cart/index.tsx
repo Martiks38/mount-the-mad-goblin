@@ -6,6 +6,7 @@ import { DetailCard } from '@/components/DetailCard'
 
 import clsx from 'clsx'
 import { formatPrice } from '@/utils/formatPrice'
+
 import cartPageStyles from '@/styles/pages/CartPage.module.css'
 
 import type { PurchasedPet } from '@/typings/interfaces'
@@ -29,8 +30,10 @@ export default function Cart() {
 			<h1 className={cartPageStyles.title}>Your shopping bag</h1>
 			<div className={cartPageStyles.products}>
 				{!isEmpty &&
-					purchasedPetsState.map(({ img, name, price, quantity }) => {
-						return <DetailCard key={name} img={img} name={name} price={price} quantity={quantity} />
+					purchasedPetsState.map(({ media, name, price, quantity }) => {
+						return (
+							<DetailCard key={name} media={media} name={name} price={price} quantity={quantity} />
+						)
 					})}
 			</div>
 			<section className={cartPageStyles.detailTotal}>

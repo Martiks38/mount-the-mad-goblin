@@ -1,22 +1,22 @@
-import type { ContentAnswerPetTypes, PetTypes } from './types'
+import type { Categories, PetTypes } from './types'
 
-export interface Pet {
-	name: string
-	description: string
-	price: number /* Integer number of gold coins */
+export interface PetBase {
 	media: string /* Image of the pet */
+	name: string
+	price: number /* Integer number of gold coins */
+}
+
+export interface Pet extends PetBase {
+	description: string
 	type: PetTypes /* "Humanoid" | "Dragonkin" | "Flying" | "Undead" | "Critter" | "Magic" | "Elemental" | "Beast" | "Aquatic" | "Mechanical" */
 }
 
-export interface PurchasedPet {
-	img: string
-	name: string
-	price: number
+export interface PurchasedPet extends PetBase {
 	quantity: number
 }
 
 export interface Result {
-	results?: Pet | Pet[] | ContentAnswerPetTypes[] /* Result of the request to the database */
+	results?: Pet | Pet[] | Categories[] /* Result of the request to the database */
 	page_number?: string /* Page number indicating the offset to display the request results */
 	total?: number /* Total possible elements for the request */
 	size?: number /* Total element of the response */
@@ -31,8 +31,8 @@ export interface Result {
 }
 
 export interface ErrorResult {
-	status: number /* HTTP Status Code */
 	message: string /* Error message */
+	status: number /* HTTP Status Code */
 }
 
 export interface User {

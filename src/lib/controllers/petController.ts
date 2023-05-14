@@ -1,13 +1,14 @@
 import PetModel from '../models/petModel'
 
 import { errorMessage } from '@/utils/handlerError'
+
 import { API_URL } from '@/config'
 import { projection } from '@/consts'
 
 import type { Pet, Result } from '@/typings/interfaces'
-import type { ContentAnswerPetTypes } from '@/typings/types'
+import type { Categories } from '@/typings/types'
 
-type AnswerPetTypesDB = ContentAnswerPetTypes & { _id: string }
+type AnswerPetTypesDB = Categories & { _id: string }
 
 const base = API_URL
 

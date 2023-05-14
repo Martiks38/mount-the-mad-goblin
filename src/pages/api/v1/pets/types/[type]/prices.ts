@@ -1,7 +1,9 @@
 import { dbConnection } from '@/lib/connection'
 import { getPetsByTypeAndPrice } from '@/lib/controllers/petController'
+
 import { checkType } from '@/utils/checkType'
 import { outRange } from '@/utils/outRange'
+
 import { PET_TYPES, PRICE_RANGE } from '@/consts'
 
 import type { NextApiRequest, NextApiResponse } from 'next'

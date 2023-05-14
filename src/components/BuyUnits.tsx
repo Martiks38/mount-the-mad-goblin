@@ -1,22 +1,22 @@
-import { usePurchases } from '@/hooks/usePurchases'
-import { useCart } from '@/store/cart'
-import buyUnitsStyles from '@/styles/components/BuyUnits.module.css'
 import { useRouter } from 'next/router'
-import { FormEvent, useId } from 'react'
+import { useId } from 'react'
+import { useCart } from '@/store/cart'
+import { usePurchases } from '@/hooks/usePurchases'
 
-interface BuyUnitsProps {
-	img: string
-	name: string
-	price: number
+import buyUnitsStyles from '@/styles/components/BuyUnits.module.css'
+
+import type { PetBase } from '@/typings/interfaces'
+
+interface BuyUnitsProps extends PetBase {
 	styles?: string
 }
 
-export function BuyUnits({ img, name, price, styles }: BuyUnitsProps) {
+export function BuyUnits({ media, name, price, styles }: BuyUnitsProps) {
+	const amountInputId = useId()
 	const router = useRouter()
 	const addToCart = useCart((state) => state.addToCart)
 	const { quantity, changeQuantity, checkValue, decreaseQuantity, increaseQuantity } =
 		usePurchases()
-	const amountInputId = useId()
 
 	const handlerBuy = (ev: React.FormEvent<HTMLFormElement>) => {
 		ev.preventDefault()
@@ -30,7 +30,7 @@ export function BuyUnits({ img, name, price, styles }: BuyUnitsProps) {
 		}
 
 		const pet = {
-			img,
+			media,
 			name,
 			price,
 			quantity

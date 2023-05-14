@@ -1,6 +1,7 @@
 import { getPetType } from '@/lib/controllers/petController'
 import { dbConnection } from '@/lib/connection'
 import { checkType } from '@/utils/checkType'
+
 import { PET_TYPES } from '@/consts'
 
 import type { NextApiRequest, NextApiResponse } from 'next'
