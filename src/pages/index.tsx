@@ -1,4 +1,5 @@
 import Image from 'next/image'
+
 import { ShowCategory } from '@/components/ShowCategory'
 
 import { searchInApi } from '@/utils/searchInApi'
@@ -8,7 +9,7 @@ import homeStyles from '@/styles/pages/home.module.css'
 
 import type { GetStaticProps } from 'next'
 import type { Result } from '@/typings/interfaces'
-import type { ContentAnswerPetTypes } from '@/typings/types'
+import type { Categories } from '@/typings/types'
 
 interface HomeProps {
 	pets: Result | string
@@ -35,7 +36,7 @@ export default function Home({ pets }: HomeProps) {
 						<>
 							<h2 className={homeStyles.section__title}>Pets</h2>
 							<div className={homeStyles.section__gridCategory}>
-								{(pets.results as ContentAnswerPetTypes[]).map(({ media, type }) => {
+								{(pets.results as Categories[]).map(({ media, type }) => {
 									return (
 										<ShowCategory
 											key={type}

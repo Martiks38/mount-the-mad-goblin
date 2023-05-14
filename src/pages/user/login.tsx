@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useId, useRef, useState } from 'react'
+import { useId, useState } from 'react'
+import { useInputfocus } from '@/hooks/useInputfocus'
 
 import img from '@/assets/imgs/heroImgHome.webp'
 import loginStyles from '@/styles/pages/LogIn_SignUp.module.css'
-import { useInputfocus } from '@/hooks/useInputfocus'
 
 export default function LogIn() {
 	const [isError, setIsError] = useState(false)

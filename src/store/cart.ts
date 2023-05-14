@@ -1,7 +1,9 @@
-import { KEY_SESSION_STORAGE } from '@/consts'
-import { PurchasedPet } from '@/typings/interfaces'
 import { create } from 'zustand'
 import { persist, devtools, createJSONStorage } from 'zustand/middleware'
+
+import { KEY_SESSION_STORAGE } from '@/consts'
+
+import type { PurchasedPet } from '@/typings/interfaces'
 
 interface ShoppingCartState {
 	loading: boolean

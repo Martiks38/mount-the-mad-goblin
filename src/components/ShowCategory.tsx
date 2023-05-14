@@ -17,7 +17,6 @@ export function ShowCategory({ alt, href, media, title }: CategoryInfo) {
 			className={showCategoryStyle.wrapperCategory}
 		>
 			<h3 className={showCategoryStyle.wrapperCategory__title}>{title}</h3>
-			{/* eslint-disable-next-line */}
 			<img
 				src={media}
 				alt={alt}

@@ -1,11 +1,14 @@
 import { useRouter } from 'next/router'
-
-import { Loader } from '@/common/Loader'
-import { BuyUnits } from '@/components/BuyUnits'
-
 import { usePet } from '@/hooks/usePet'
 
+import { BuyUnits } from '@/components/BuyUnits'
+import { Loader } from '@/common/Loader'
+
+import { instanceOf } from '@/utils/intanceOf'
+
 import petPageStyles from '@/styles/pages/PetPage.module.css'
+
+import type { Pet } from '@/typings/interfaces'
 
 export default function MascotPage() {
 	const router = useRouter()
@@ -23,23 +26,22 @@ export default function MascotPage() {
 					</p>
 				</div>
 			)}
-			{!isLoading && error && <p className="error">{data as string}</p>}
-			{typeof data === 'object' && !isLoading && !error && (
-				<article style={{ color: 'white' }} className={petPageStyles.petData}>
+			{!isLoading && error && typeof data === 'string' && <p className="error">{data}</p>}
+			{instanceOf<Pet>(data, 'name') && !isLoading && !error && (
+				<article className={petPageStyles.petData}>
 					<h1 className={petPageStyles.petData__name}>{decodeURI(petName)}</h1>
 					<img
-						src={data?.media}
-						alt={data?.name}
+						src={data.media}
+						alt={data.name}
 						width={200}
 						height={200}
 						className={petPageStyles.petData__img}
 					/>
 					<p className={petPageStyles.petData__description}>{data?.description}</p>
-
 					<BuyUnits
-						img={data?.media as string}
+						media={data.media}
 						name={petName}
-						price={data?.price as number}
+						price={data.price}
 						styles={petPageStyles.petData__btns}
 					/>
 				</article>

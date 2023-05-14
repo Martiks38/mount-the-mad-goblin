@@ -2,16 +2,14 @@ import Link from 'next/link'
 import { useCart } from '@/store/cart'
 
 import { formatPrice } from '@/utils/formatPrice'
+
 import detailCardStyles from '@/styles/components/DetailCard.module.css'
 
-interface DetailCardProps {
-	img: string
-	name: string
-	price: number
-	quantity: number
-}
+import type { PurchasedPet } from '@/typings/interfaces'
 
-export function DetailCard({ img, name, price, quantity }: DetailCardProps) {
+interface DetailCardProps extends PurchasedPet {}
+
+export function DetailCard({ media, name, price, quantity }: DetailCardProps) {
 	const { removeOneFromCart, removeAllOfPet } = useCart((state) => ({
 		removeAllOfPet: state.removeAllOfPet,
 		removeOneFromCart: state.removeOneFromCart
@@ -19,7 +17,7 @@ export function DetailCard({ img, name, price, quantity }: DetailCardProps) {
 
 	return (
 		<section className={detailCardStyles.product}>
-			<img src={img} alt={name} loading="lazy" className={detailCardStyles.product__img} />
+			<img src={media} alt={name} loading="lazy" className={detailCardStyles.product__img} />
 			<Link href={`/pets/${name}`} className={detailCardStyles.product__link}>
 				<h2 className={detailCardStyles.product__name}>{name}</h2>
 			</Link>
