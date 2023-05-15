@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { useId } from 'react'
-import { useCart } from '@/store/cart'
 import { usePurchases } from '@/hooks/usePurchases'
+import { useCart } from '@/hooks/useCart'
 
 import buyUnitsStyles from '@/styles/components/BuyUnits.module.css'
 
@@ -14,7 +14,7 @@ interface BuyUnitsProps extends PetBase {
 export function BuyUnits({ media, name, price, styles }: BuyUnitsProps) {
 	const amountInputId = useId()
 	const router = useRouter()
-	const addToCart = useCart((state) => state.addToCart)
+	const { addToCart } = useCart()
 	const { quantity, changeQuantity, checkValue, decreaseQuantity, increaseQuantity } =
 		usePurchases()
 

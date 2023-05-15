@@ -27,7 +27,7 @@ export default function MascotPage() {
 				</div>
 			)}
 			{!isLoading && error && typeof data === 'string' && <p className="error">{data}</p>}
-			{instanceOf<Pet>(data, 'name') && !isLoading && !error && (
+			{!isLoading && !error && data && instanceOf<Pet>(data, 'name') && (
 				<article className={petPageStyles.petData}>
 					<h1 className={petPageStyles.petData__name}>{decodeURI(petName)}</h1>
 					<img

@@ -6,7 +6,6 @@ import { KEY_SESSION_STORAGE } from '@/consts'
 import type { PurchasedPet } from '@/typings/interfaces'
 
 interface ShoppingCartState {
-	loading: boolean
 	purchasedPets: PurchasedPet[]
 	addToCart: (pet: PurchasedPet) => void
 	removeOneFromCart: (petName: string) => void
@@ -14,13 +13,12 @@ interface ShoppingCartState {
 	removeAllFromCart: () => void
 }
 
-export const useCart = create<ShoppingCartState>()(
+export const useShoppingCart = create<ShoppingCartState>()(
 	devtools(
 		persist(
 			(set, get) => {
 				return {
 					purchasedPets: [],
-					loading: true,
 					addToCart: (pet: PurchasedPet) => {
 						const { purchasedPets } = get()
 						let newPurchasedPets = structuredClone(purchasedPets)
@@ -57,7 +55,10 @@ export const useCart = create<ShoppingCartState>()(
 					}
 				}
 			},
-			{ name: KEY_SESSION_STORAGE, storage: createJSONStorage(() => sessionStorage) }
+			{
+				name: KEY_SESSION_STORAGE,
+				storage: createJSONStorage(() => sessionStorage)
+			}
 		)
 	)
 )

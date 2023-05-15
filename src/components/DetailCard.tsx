@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useCart } from '@/store/cart'
+import { useCart } from '@/hooks/useCart'
 
 import { formatPrice } from '@/utils/formatPrice'
 
@@ -10,10 +10,7 @@ import type { PurchasedPet } from '@/typings/interfaces'
 interface DetailCardProps extends PurchasedPet {}
 
 export function DetailCard({ media, name, price, quantity }: DetailCardProps) {
-	const { removeOneFromCart, removeAllOfPet } = useCart((state) => ({
-		removeAllOfPet: state.removeAllOfPet,
-		removeOneFromCart: state.removeOneFromCart
-	}))
+	const { removeAllOfPet, removeOneFromCart } = useCart()
 
 	return (
 		<section className={detailCardStyles.product}>

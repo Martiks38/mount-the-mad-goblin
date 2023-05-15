@@ -1,6 +1,5 @@
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import { useCart } from '@/store/cart'
+import { useCart } from '@/hooks/useCart'
 
 import { DetailCard } from '@/components/DetailCard'
 
@@ -9,28 +8,18 @@ import { formatPrice } from '@/utils/formatPrice'
 
 import cartPageStyles from '@/styles/pages/CartPage.module.css'
 
-import type { PurchasedPet } from '@/typings/interfaces'
-
 export default function Cart() {
-	const { purchasedPets, removeAllFromCart } = useCart((state) => ({
-		purchasedPets: state.purchasedPets,
-		removeAllFromCart: state.removeAllFromCart
-	}))
-	const [purchasedPetsState, setPurchasedPetsState] = useState<PurchasedPet[]>([])
-	const [total, setTotal] = useState(0)
-	const isEmpty = purchasedPetsState.length === 0
+	useCart
+	const { shopping, total, removeAllFromCart } = useCart()
 
-	useEffect(() => {
-		setPurchasedPetsState(purchasedPets)
-		setTotal(purchasedPets.reduce((cur, pet) => cur + pet.price, 0))
-	}, [purchasedPets])
+	const isEmpty = total === 0
 
 	return (
 		<article className="content content_letterWhite">
 			<h1 className={cartPageStyles.title}>Your shopping bag</h1>
 			<div className={cartPageStyles.products}>
 				{!isEmpty &&
-					purchasedPetsState.map(({ media, name, price, quantity }) => {
+					shopping.map(({ media, name, price, quantity }) => {
 						return (
 							<DetailCard key={name} media={media} name={name} price={price} quantity={quantity} />
 						)
