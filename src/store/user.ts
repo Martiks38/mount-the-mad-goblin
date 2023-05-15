@@ -1,6 +1,7 @@
-import { KEY_LOCAL_STORAGE } from '@/consts'
 import { create } from 'zustand'
 import { createJSONStorage, devtools, persist } from 'zustand/middleware'
+
+import { KEY_LOCAL_STORAGE } from '@/consts'
 
 interface UserConnectinState {
 	isConnected: boolean

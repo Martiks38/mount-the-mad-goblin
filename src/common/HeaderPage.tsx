@@ -1,6 +1,7 @@
-import { useId } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useId } from 'react'
+import { useUser } from '@/hooks/useUser'
 
 import { LoupeIcon } from '@/components/LoupeIcon'
 import { ShoppingBag } from '@/components/ShoppingBag'
@@ -9,11 +10,12 @@ import logo from '@/assets/imgs/logo.webp'
 
 import headerPageStyles from './HeaderPage.module.css'
 import loupeIconStyles from '@/styles/components/LoupeIcon.module.css'
+import { UserIcon } from '@/components/UserIcon'
 
 export function HeaderPage() {
+	const { connected } = useUser()
 	const searchId = useId()
-	const widthImg = 42
-	const heightImg = 42
+	const sideImg = 42
 
 	return (
 		<header className={headerPageStyles.header}>
@@ -23,7 +25,7 @@ export function HeaderPage() {
 				</a>
 
 				<Link href="/" className={headerPageStyles.header__logo} aria-label="Go to home">
-					<Image src={logo} alt="Pets - The Crazy Goblin" width={widthImg} height={heightImg} />
+					<Image src={logo} alt="Pets - The Crazy Goblin" width={sideImg} height={sideImg} />
 					<span>Pets - The Crazy Goblin</span>
 				</Link>
 
@@ -52,16 +54,26 @@ export function HeaderPage() {
 								Pets
 							</Link>
 						</li>
-						<li>
-							<Link href="/user/login" className={headerPageStyles.header__linkItem}>
-								Log in
-							</Link>
-						</li>
-						<li>
-							<Link href="/user/signup" className={headerPageStyles.header__linkItem}>
-								Sign up
-							</Link>
-						</li>
+						{connected ? (
+							<li>
+								<Link href="#" className={headerPageStyles.header__linkItem}>
+									<UserIcon size={sideImg - 8} />
+								</Link>
+							</li>
+						) : (
+							<>
+								<li>
+									<Link href="/user/login" className={headerPageStyles.header__linkItem}>
+										Log in
+									</Link>
+								</li>
+								<li>
+									<Link href="/user/signup" className={headerPageStyles.header__linkItem}>
+										Sign up
+									</Link>
+								</li>
+							</>
+						)}
 					</ul>
 					<ShoppingBag />
 				</div>
