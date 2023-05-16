@@ -4,8 +4,10 @@ import { createJSONStorage, devtools, persist } from 'zustand/middleware'
 import { KEY_LOCAL_STORAGE } from '@/consts'
 
 interface UserConnectinState {
-	isConnected: boolean
-	changeConnection: (state: boolean) => void
+	token: string
+	username: string
+	setToken: (token: string) => void
+	setUsername: (username: string) => void
 }
 
 export const useUserConnection = create<UserConnectinState>()(
@@ -13,13 +15,16 @@ export const useUserConnection = create<UserConnectinState>()(
 		persist(
 			(set, get) => {
 				return {
-					isConnected: false,
-					changeConnection: (state: boolean) => {
-						set({ isConnected: state })
-					}
+					token: '',
+					username: '',
+					setUsername: (username: string) => set({ username }),
+					setToken: (token: string) => set({ token })
 				}
 			},
-			{ name: KEY_LOCAL_STORAGE, storage: createJSONStorage(() => localStorage) }
+			{
+				name: KEY_LOCAL_STORAGE,
+				storage: createJSONStorage(() => localStorage)
+			}
 		)
 	)
 )

@@ -6,7 +6,9 @@ import { KEY_SESSION_STORAGE } from '@/consts'
 import type { PurchasedPet } from '@/typings/interfaces'
 
 interface ShoppingCartState {
+	isConnected: boolean
 	purchasedPets: PurchasedPet[]
+	setConnection: (isConnected: boolean) => void
 	addToCart: (pet: PurchasedPet) => void
 	removeOneFromCart: (petName: string) => void
 	removeAllOfPet: (petName: string) => void
@@ -18,6 +20,8 @@ export const useShoppingCart = create<ShoppingCartState>()(
 		persist(
 			(set, get) => {
 				return {
+					isConnected: false,
+					setConnection: (isConnected: boolean) => set({ isConnected }),
 					purchasedPets: [],
 					addToCart: (pet: PurchasedPet) => {
 						const { purchasedPets } = get()

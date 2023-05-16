@@ -4,17 +4,27 @@ import { useShoppingCart } from '@/store/cart'
 import type { PurchasedPet } from '@/typings/interfaces'
 
 export function useCart() {
-	const { addToCart, purchasedPets, removeAllFromCart, removeAllOfPet, removeOneFromCart } =
-		useShoppingCart((state) => ({
-			purchasedPets: state.purchasedPets,
-			addToCart: state.addToCart,
-			removeOneFromCart: state.removeOneFromCart,
-			removeAllOfPet: state.removeAllOfPet,
-			removeAllFromCart: state.removeAllFromCart
-		}))
+	const {
+		addToCart,
+		isConnected,
+		purchasedPets,
+		removeAllFromCart,
+		removeAllOfPet,
+		removeOneFromCart,
+		setConnection
+	} = useShoppingCart((state) => ({
+		isConnected: state.isConnected,
+		purchasedPets: state.purchasedPets,
+		setConnection: state.setConnection,
+		addToCart: state.addToCart,
+		removeOneFromCart: state.removeOneFromCart,
+		removeAllOfPet: state.removeAllOfPet,
+		removeAllFromCart: state.removeAllFromCart
+	}))
 
 	const [shopping, setShopping] = useState<PurchasedPet[]>([])
 	const [total, setTotal] = useState(0)
+	const [connected, setConnected] = useState(false)
 
 	useEffect(() => {
 		const total = purchasedPets.reduce((cur, item) => cur + item.quantity, 0)
@@ -23,11 +33,17 @@ export function useCart() {
 		setShopping(purchasedPets)
 	}, [purchasedPets])
 
+	useEffect(() => {
+		setConnected(isConnected)
+	}, [isConnected])
+
 	return {
 		addToCart,
+		connected,
 		removeAllFromCart,
 		removeAllOfPet,
 		removeOneFromCart,
+		setConnection,
 		shopping,
 		total
 	}
