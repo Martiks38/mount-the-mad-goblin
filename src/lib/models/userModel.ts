@@ -1,9 +1,23 @@
-import { Schema, model, models } from 'mongoose'
+import { Model, Schema, model, models } from 'mongoose'
 import { compare, genSalt, hash } from 'bcryptjs'
 
 const saltRounds = 10
 
-const UserSchema = new Schema(
+interface IUser {
+	email: string
+	password: string
+	username: string
+}
+
+interface IUserMethods {
+	encryptPassword(): Promise<void>
+	comparePassword(password: string): Promise<boolean>
+	compareUsername(username: string): boolean
+}
+
+type UserModel = Model<IUser, {}, IUserMethods>
+
+const UserSchema = new Schema<IUser, UserModel, IUserMethods>(
 	{
 		email: {
 			type: String,
@@ -23,26 +37,30 @@ const UserSchema = new Schema(
 		}
 	},
 	{
-		timestamps: true,
-		methods: {
-			async encryptPassword() {
-				const salt = await genSalt(saltRounds)
-
-				this.password = await hash(this.password, salt)
-			},
-			async compare(password: string) {
-				return await compare(password, this.password)
-			}
-		}
+		timestamps: true
 	}
 )
+
+UserSchema.methods.comparePassword = async function (password: string) {
+	return await compare(password, this.password)
+}
+
+UserSchema.methods.compareUsername = function (username: string) {
+	return username === this.username
+}
+
+UserSchema.methods.encryptPassword = async function () {
+	const self = this
+	const salt = await genSalt(saltRounds)
+
+	self.password = await hash(self.password, salt)
+}
 
 UserSchema.pre('save', async function (next) {
 	const user = this
 
 	if (!user.isModified('password')) return next()
 
-	/* @ts-expect-error */
 	await user.encryptPassword()
 
 	next()
@@ -55,4 +73,4 @@ UserSchema.pre('findOneAndUpdate', async function () {
 	this.setUpdate({ password: docToUpdate.password })
 })
 
-export default models?.User || model('User', UserSchema)
+export default models?.User || model<IUser, UserModel>('User', UserSchema)
