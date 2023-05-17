@@ -80,7 +80,7 @@ export default function LogIn() {
 	}
 
 	return (
-		<section className={`content ${loginStyles.centerContent}`}>
+		<section className="content content_center">
 			<SessionForm submit={handleLoginSubmit}>
 				<h1 className={loginStyles.title}>Log In</h1>
 				{isError && (

@@ -64,7 +64,7 @@ export default function SignUp() {
 	}
 
 	return (
-		<section className={`content ${loginStyles.centerContent}`}>
+		<section className="content content_center">
 			{isCreated ? (
 				<p className={loginStyles.successMessage}>Account created</p>
 			) : (
