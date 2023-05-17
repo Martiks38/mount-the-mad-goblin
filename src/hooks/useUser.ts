@@ -1,17 +1,21 @@
-import { useEffect, useState } from 'react'
 import { useUserConnection } from '@/store/user'
+import { useEffect, useState } from 'react'
 
 export function useUser() {
-	const { isConnected, changeConnection } = useUserConnection((state) => ({
-		isConnected: state.isConnected,
-		changeConnection: state.changeConnection
+	const { token, username, setToken, setUsername } = useUserConnection((state) => ({
+		token: state.token,
+		username: state.username,
+		setToken: state.setToken,
+		setUsername: state.setUsername
 	}))
 
-	const [connected, setConnected] = useState(false)
+	const [tokenUser, setTokenUser] = useState('')
+	const [name, setName] = useState('')
 
 	useEffect(() => {
-		setConnected(isConnected)
-	}, [isConnected])
+		setTokenUser(token)
+		setName(username)
+	}, [token, username])
 
-	return { connected, changeConnection }
+	return { token: tokenUser, username: name, setToken, setUsername }
 }

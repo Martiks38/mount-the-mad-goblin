@@ -3,12 +3,13 @@ import loaderStyles from './Loader.module.css'
 
 interface LoaderProps {
 	styles?: string
+	stylesCenterCircle?: string
 }
 
-export function Loader({ styles }: LoaderProps) {
+export function Loader({ styles, stylesCenterCircle }: LoaderProps) {
 	return (
 		<div className={clsx([loaderStyles.shadow, styles])}>
-			<div className={loaderStyles.loader}></div>
+			<div className={clsx([loaderStyles.loader, stylesCenterCircle])}></div>
 		</div>
 	)
 }
