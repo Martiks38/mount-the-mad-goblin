@@ -8,15 +8,18 @@ import { useUser } from '@/hooks/useUser'
 import { SessionForm } from '@/common/SessionForm'
 
 import loginStyles from '@/styles/pages/LogIn_SignUp.module.css'
+import { Loader } from '@/common/Loader'
 
 interface IResponse {
 	ok: boolean
-	token: string
+	message?: string
+	token?: string
 }
 
 export default function LogIn() {
 	const router = useRouter()
 	const [isError, setIsError] = useState(false)
+	const [isLoading, setIsLoading] = useState(false)
 	const userInputId = useId()
 	const passwordInputId = useId()
 	const keepLoggedInputId = useId()
@@ -30,6 +33,11 @@ export default function LogIn() {
 
 	const handleLoginSubmit = async (ev: React.FormEvent<HTMLFormElement>) => {
 		ev.preventDefault()
+
+		if (isLoading) return
+
+		setIsError(false)
+		setIsLoading(true)
 
 		const formData = new FormData(ev.currentTarget)
 
@@ -54,8 +62,9 @@ export default function LogIn() {
 
 			const data: IResponse = await response.json()
 
-			if (!data.ok) throw data
-			if (formData.get('keepLogged')) {
+			if (!data.ok) throw data?.message
+
+			if (formData.get('keepLogged') && data?.token) {
 				setUsername(formData.get('username') as string)
 				setToken(data.token)
 			}
@@ -64,7 +73,9 @@ export default function LogIn() {
 
 			router.push('/')
 		} catch (error) {
-			console.error(error)
+			setIsError(true)
+		} finally {
+			setIsLoading(false)
 		}
 	}
 
@@ -94,9 +105,16 @@ export default function LogIn() {
 					</label>
 					<Link href="#">Forgot username or password?</Link>
 				</div>
-				<button type="submit" className={loginStyles.containerForm__submit}>
-					Log in
-				</button>
+				{isLoading ? (
+					<Loader
+						styles={loginStyles.loader}
+						stylesCenterCircle={loginStyles.loader_centerCircle}
+					/>
+				) : (
+					<button type="submit" className={loginStyles.containerForm__submit}>
+						Log in
+					</button>
+				)}
 			</SessionForm>
 		</section>
 	)
