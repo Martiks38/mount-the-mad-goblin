@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useId } from 'react'
-import { useUser } from '@/hooks/useUser'
+import { useCart } from '@/hooks/useCart'
 
 import { LoupeIcon } from '@/components/LoupeIcon'
 import { ShoppingBag } from '@/components/ShoppingBag'
@@ -13,7 +13,7 @@ import loupeIconStyles from '@/styles/components/LoupeIcon.module.css'
 import { UserIcon } from '@/components/UserIcon'
 
 export function HeaderPage() {
-	const { connected } = useUser()
+	const { connected } = useCart()
 	const searchId = useId()
 	const sideImg = 42
 
