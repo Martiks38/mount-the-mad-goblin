@@ -38,3 +38,7 @@ Los endpoints disponibles son:
 - POST `/users`: Crea un nuevo usuario de Pets - The Crazy Goblin.
 - PUT `/users`: Modifica un campo del usario de Pets - The Crazy Goblin.
 - DELETE `/users/:username`: Borra el usuario de Pets - The Crazy Goblin.
+
+### AUTH
+
+- POST `/auth`: Devuelve si el token es válido y no ha expirado y renovar el token dos días antes de expirar.

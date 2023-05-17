@@ -4,20 +4,16 @@ import { createUser, loginUser, updateUser, validateToken } from '@/lib/controll
 import { TOKEN_HEADER } from '@/consts'
 
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { parseBodyRequest } from '@/utils/parseRequest'
 
 dbConnection()
 
 export default async function usersApi(req: NextApiRequest, res: NextApiResponse) {
 	const { body, method } = req
-	const data = new URLSearchParams(body)
-	const parseData = Array.from(data.entries()).reduce((cur: { [index: string]: string }, pair) => {
-		cur[pair[0]] = pair[1]
-		return cur
-	}, {})
+	const parseData = parseBodyRequest(body)
 
 	if (method === 'POST') {
-		const { email, password, username, token } = parseData
-
+		const { email, password, username } = parseData
 		const user = { email, password, username }
 
 		if (email) {
@@ -28,17 +24,6 @@ export default async function usersApi(req: NextApiRequest, res: NextApiResponse
 				.catch((err) => {
 					const { message, status } = err
 					return res.status(status).json({ message, token: null })
-				})
-		}
-
-		if (token) {
-			return validateToken(token, username)
-				.then((response) => {
-					return res.status(200).json(response)
-				})
-				.catch((err) => {
-					const { status, message } = err
-					return res.status(status).json({ message })
 				})
 		}
 
