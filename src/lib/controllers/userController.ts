@@ -37,8 +37,7 @@ export async function createUser(user: User) {
 
 		await verifyExistence({ username, email })
 
-		let newUser = new UserModel({ ...user })
-
+		let newUser = new UserModel(user)
 		let savedUser = await newUser.save()
 
 		const token = generateToken(savedUser._id)
@@ -111,7 +110,7 @@ export async function validateToken(token: string, username: string) {
 		const user = await UserModel.findById({ _id })
 		const isValid = user.compareUsername(username)
 
-		if (!isValid) throw { status: 400, message: 'The token is invalid.' }
+		if (!isValid) throw { status: 401, message: 'The token is invalid.' }
 
 		// If the token expiration time is less than two days.
 		//  So it generates a new token; otherwise, it's null.
@@ -124,8 +123,12 @@ export async function validateToken(token: string, username: string) {
 			throw { status: 401, message: 'The token expired.' }
 		}
 
-		return { ok: true, token: newToken }
-	} catch (error) {
-		throw { ...errorMessage(), ok: false }
+		return { ok: true, token: newToken, expire: false }
+	} catch (error: any) {
+		throw {
+			...errorMessage(error?.status, error?.message),
+			ok: false,
+			expire: true
+		}
 	}
 }

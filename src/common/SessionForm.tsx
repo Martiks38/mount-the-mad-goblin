@@ -5,7 +5,7 @@ import loginStyles from '@/styles/pages/LogIn_SignUp.module.css'
 
 interface SessionFormProps {
 	children: React.ReactNode
-	submit: (ev: React.FormEvent<HTMLFormElement>) => void
+	submit: (ev: React.FormEvent<HTMLFormElement>) => Promise<void>
 }
 
 export function SessionForm({ children, submit }: SessionFormProps) {
