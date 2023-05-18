@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useId, useState } from 'react'
 import { useCart } from '@/hooks/useCart'
 import { useUser } from '@/hooks/useUser'
-import { useInputfocus } from '@/hooks/useInputfocus'
+import { useFocus } from '@/hooks/useFocus'
 
 import { Loader } from '@/common/Loader'
 import { SessionForm } from '@/common/SessionForm'
@@ -18,7 +18,7 @@ export default function SignUp() {
 
 	const { connected, setConnection } = useCart()
 	const { setToken, setUsername } = useUser()
-	const focusInput = useInputfocus(null)
+	const focusInput = useFocus<HTMLInputElement>(null)
 
 	useEffect(() => {
 		if (connected) {

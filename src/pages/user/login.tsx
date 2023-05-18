@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useId, useState } from 'react'
 import { useCart } from '@/hooks/useCart'
-import { useInputfocus } from '@/hooks/useInputfocus'
+import { useFocus } from '@/hooks/useFocus'
 import { useUser } from '@/hooks/useUser'
 
 import { SessionForm } from '@/common/SessionForm'
@@ -21,8 +21,8 @@ export default function LogIn() {
 	const router = useRouter()
 	const [isError, setIsError] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
-	
-	const focusInput = useInputfocus(null)
+
+	const focusInput = useFocus<HTMLInputElement>(null)
 	const { setToken, setUsername } = useUser()
 	const { connected, setConnection } = useCart()
 
@@ -88,7 +88,7 @@ export default function LogIn() {
 					</p>
 				)}
 				<label htmlFor={`${formId}-userInput`}>Username *</label>
-				<input type="text" id={`${formId}-userInput`} name="username" required ref={focusInput} />
+				<input type="text" id={`${formId}-userInput`} name="username" ref={focusInput} required />
 				<label htmlFor={`${formId}-passwordInput`}>Password *</label>
 				<input type="password" id={`${formId}-passwordInput`} name="password" required />
 				<div className={loginStyles.containerForm__options}>
@@ -97,7 +97,12 @@ export default function LogIn() {
 						className={loginStyles.containerForm__options__wrapperCheckbox}
 					>
 						<div className={loginStyles.containerForm__options__wrapperCheckbox__input}>
-							<input type="checkbox" name="keepLogged" id={`${formId}-keepLoggedInput`} defaultChecked />
+							<input
+								type="checkbox"
+								name="keepLogged"
+								id={`${formId}-keepLoggedInput`}
+								defaultChecked
+							/>
 							<div></div>
 						</div>
 						<span>Keep me logged in</span>
