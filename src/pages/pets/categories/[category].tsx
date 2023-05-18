@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 
 import { getCategoryPaths } from '@/utils/getCategoryPaths'
 import { searchInApi } from '@/utils/searchInApi'
+import { formatPrice } from '@/utils/formatPrice'
 
 import categoryPageStyles from '@/styles/pages/CategoryPage.module.css'
 
@@ -45,7 +46,7 @@ export default function Category({ results }: CategoryProps) {
 									height="220"
 									className={categoryPageStyles.pet__img}
 								/>
-								<p className={categoryPageStyles.pet__price}>{`${price} g`}</p>
+								<p className={categoryPageStyles.pet__price}>{`${formatPrice(price)} g`}</p>
 							</Link>
 						)
 					})}
