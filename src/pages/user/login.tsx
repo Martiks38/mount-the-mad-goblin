@@ -17,12 +17,11 @@ interface IResponse {
 }
 
 export default function LogIn() {
+	const formId = useId()
 	const router = useRouter()
 	const [isError, setIsError] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
-	const userInputId = useId()
-	const passwordInputId = useId()
-	const keepLoggedInputId = useId()
+	
 	const focusInput = useInputfocus(null)
 	const { setToken, setUsername } = useUser()
 	const { connected, setConnection } = useCart()
@@ -88,17 +87,17 @@ export default function LogIn() {
 						The credentials you are using are not valid.
 					</p>
 				)}
-				<label htmlFor={userInputId}>Username *</label>
-				<input type="text" id={userInputId} name="username" required ref={focusInput} />
-				<label htmlFor={passwordInputId}>Password *</label>
-				<input type="password" id={passwordInputId} name="password" required />
+				<label htmlFor={`${formId}-userInput`}>Username *</label>
+				<input type="text" id={`${formId}-userInput`} name="username" required ref={focusInput} />
+				<label htmlFor={`${formId}-passwordInput`}>Password *</label>
+				<input type="password" id={`${formId}-passwordInput`} name="password" required />
 				<div className={loginStyles.containerForm__options}>
 					<label
-						htmlFor={keepLoggedInputId}
+						htmlFor={`${formId}-keepLoggedInput`}
 						className={loginStyles.containerForm__options__wrapperCheckbox}
 					>
 						<div className={loginStyles.containerForm__options__wrapperCheckbox__input}>
-							<input type="checkbox" name="keepLogged" id={keepLoggedInputId} defaultChecked />
+							<input type="checkbox" name="keepLogged" id={`${formId}-keepLoggedInput`} defaultChecked />
 							<div></div>
 						</div>
 						<span>Keep me logged in</span>
