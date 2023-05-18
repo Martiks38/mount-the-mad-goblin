@@ -1,12 +1,14 @@
 import { useRouter } from 'next/router'
 import { useEffect, useId, useState } from 'react'
 import { useCart } from '@/hooks/useCart'
+import { useUser } from '@/hooks/useUser'
+import { useInputfocus } from '@/hooks/useInputfocus'
 
+import { Loader } from '@/common/Loader'
 import { SessionForm } from '@/common/SessionForm'
 
 import loginStyles from '@/styles/pages/LogIn_SignUp.module.css'
-import { useUser } from '@/hooks/useUser'
-import { Loader } from '@/common/Loader'
+
 export default function SignUp() {
 	const formId = useId()
 	const router = useRouter()
@@ -16,6 +18,7 @@ export default function SignUp() {
 
 	const { connected, setConnection } = useCart()
 	const { setToken, setUsername } = useUser()
+	const focusInput = useInputfocus(null)
 
 	useEffect(() => {
 		if (connected) {
@@ -75,7 +78,13 @@ export default function SignUp() {
 						</p>
 					)}
 					<label htmlFor={`${formId}-usernameInput`}>Username *</label>
-					<input type="text" id={`${formId}-usernameInput`} name="username" autoFocus required />
+					<input
+						type="text"
+						id={`${formId}-usernameInput`}
+						name="username"
+						ref={focusInput}
+						required
+					/>
 					<label htmlFor={`${formId}-emailInput`}>Email *</label>
 					<input type="email" id={`${formId}-emailInput`} name="email" required />
 					<label htmlFor={`${formId}-passwordInput`}>Password *</label>
