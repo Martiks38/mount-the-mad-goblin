@@ -116,6 +116,11 @@
 		color: var(--color-letter-1);
 		font-weight: 600;
 
+		&:disabled {
+			opacity: 0.5;
+			pointer-events: none;
+		}
+
 		@media (hover: none) {
 			&:active {
 				background-color: var(--btn-background-red-alpha-75);
