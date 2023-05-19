@@ -25,7 +25,13 @@ export function HeaderPage() {
 				</a>
 
 				<Link href="/" className={headerPageStyles.header__logo} aria-label="Go to home">
-					<Image src={logo} alt="Pets - The Crazy Goblin" width={sideImg} height={sideImg} />
+					<Image
+						src={logo}
+						alt="Pets - The Crazy Goblin"
+						width={sideImg}
+						height={sideImg}
+						priority={true}
+					/>
 					<span>Pets - The Crazy Goblin</span>
 				</Link>
 
