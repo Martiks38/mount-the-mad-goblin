@@ -1,0 +1,166 @@
+.form {
+	padding: 1rem 1.5rem !important;
+	max-width: 50rem;
+	width: 100%;
+	background-color: var(--navbar-background);
+	font-size: 1.25rem;
+	font-size: clamp(1.25rem, 1.0833rem + 0.8333vw, 1.5rem);
+	line-height: 1.75rem;
+
+	@media (min-width: 48rem) {
+		padding: 1.5rem 1.75rem !important;
+		line-height: 2rem;
+	}
+
+	&__securityInput {
+		appearance: textfield;
+
+		&::-webkit-inner-spin-button,
+		&::-webkit-outer-spin-button {
+			margin: 0;
+			appearance: none;
+		}
+	}
+
+	&__expiration {
+		display: flex;
+		justify-content: flex-start;
+		gap: 2rem;
+		flex-wrap: wrap;
+
+		& > select {
+			flex-basis: 25%;
+			flex-grow: 1;
+		}
+
+		& > input {
+			flex-basis: 100%;
+		}
+
+		@media (min-width: 48rem) {
+			justify-content: space-between;
+			gap: 0;
+
+			& :is(input, select) {
+				flex-basis: content;
+				flex-grow: 0;
+			}
+		}
+
+		& input {
+			text-align: center;
+		}
+	}
+
+	&__payment,
+	&__information {
+		display: grid;
+		grid-template-columns: repeat(1, 1fr);
+		gap: 1rem;
+		font-size: 1.25rem;
+		line-height: 1.75rem;
+
+		@media (min-width: 48rem) {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 2em;
+		}
+	}
+
+	&__information {
+		margin-bottom: 2.75rem;
+	}
+
+	&__payment &__sectionContent:last-child {
+		justify-content: flex-end;
+	}
+
+	&__sectionContent {
+		display: flex;
+		flex-direction: column;
+		gap: 0.625rem;
+	}
+
+	&__title {
+		margin: 0;
+		font-size: 1.875rem;
+		font-size: clamp(1.875rem, 1.625rem + 1.25vw, 2.25rem);
+		line-height: 2.25rem;
+
+		@media (min-width: 48rem) {
+			line-height: 2.5rem;
+		}
+
+		&:first-child,
+		&:not(:first-child) {
+			margin-bottom: 1rem;
+		}
+
+		&:not(:first-child) {
+			margin-top: 2rem;
+		}
+	}
+
+	&__message {
+		margin: 1rem 0;
+		padding: 0.4em 0.8em;
+		background-color: rgb(0 0 0 / 0.3);
+	}
+
+	&__submit {
+		display: flex;
+		margin-left: auto;
+		padding: 0.3em 0.5em;
+		background-color: var(--btn-background-red-alpha-50);
+		border: solid 0.125rem var(--color-primary);
+		border-radius: var(--border-6);
+		color: var(--color-letter-1);
+		font-weight: 600;
+
+		@media (hover: none) {
+			&:active {
+				background-color: var(--btn-background-red-alpha-75);
+				color: var(--hover-color);
+			}
+		}
+
+		@media (hover: hover) {
+			&:hover {
+				background-color: var(--btn-background-red-alpha-75);
+				color: var(--hover-color);
+			}
+		}
+	}
+
+	&__input {
+		width: 100%;
+		height: 2.5rem;
+		padding: 0.3rem 0.5rem;
+		background-color: var(--color-secondary);
+		border: solid 0.25rem transparent;
+		outline-width: 0;
+		font-weight: 600;
+		font-size: 1rem;
+		transition-property: background;
+		transition-delay: 99999s;
+
+		&:-webkit-autofill,
+		&:autofill {
+			background-color: transparent;
+		}
+
+		&:focus {
+			border-color: black;
+		}
+
+		&::placeholder {
+			font-weight: 500;
+			color: #000;
+			opacity: 0.8;
+		}
+	}
+
+	&__error {
+		margin-bottom: 1rem;
+		padding: 0.6rem 0;
+	}
+}
