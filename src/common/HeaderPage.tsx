@@ -14,7 +14,7 @@ import { UserIcon } from '@/components/UserIcon'
 
 export function HeaderPage() {
 	const { connected } = useCart()
-	const searchId = useId()
+	const formId = useId()
 	const sideImg = 42
 
 	return (
@@ -25,7 +25,13 @@ export function HeaderPage() {
 				</a>
 
 				<Link href="/" className={headerPageStyles.header__logo} aria-label="Go to home">
-					<Image src={logo} alt="Pets - The Crazy Goblin" width={sideImg} height={sideImg} />
+					<Image
+						src={logo}
+						alt="Pets - The Crazy Goblin"
+						width={sideImg}
+						height={sideImg}
+						priority={true}
+					/>
 					<span>Pets - The Crazy Goblin</span>
 				</Link>
 
@@ -33,14 +39,14 @@ export function HeaderPage() {
 					className={`${headerPageStyles.header__form} ${headerPageStyles.form}`}
 					onSubmit={() => {}}
 				>
-					<label className={headerPageStyles.form__labelSearch} htmlFor={searchId}>
+					<label className={headerPageStyles.form__labelSearch} htmlFor={`${formId}-search`}>
 						<div className={headerPageStyles.form__searchLoupe}>
 							<LoupeIcon styles={loupeIconStyles.loupe} />
 						</div>
 						<input
 							type="search"
 							name=""
-							id={searchId}
+							id={`${formId}-search`}
 							className={headerPageStyles.form__search}
 							placeholder="Search..."
 						/>

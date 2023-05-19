@@ -17,6 +17,7 @@
 	--body-background: #170e09;
 	--btn-body-background: #2d2927;
 	--btn-body-background-alpha-55: rgba(45, 41, 39, 0.55);
+	--btn-background-red: rgb(159, 22, 0);
 	--btn-background-red-alpha-75: rgba(159, 22, 0, 0.75);
 	--btn-background-red-alpha-50: rgba(159, 22, 0, 0.5);
 	--border-6: 0.375rem;
@@ -100,6 +101,12 @@ ul {
 		color: #fff;
 	}
 
+	&_center {
+		display: grid;
+		place-content: center;
+		flex-grow: 1;
+	}
+
 	@media (min-width: 40rem) {
 		padding: 4em 1.8em 9em;
 	}
@@ -111,4 +118,16 @@ ul {
 	font-size: 3rem;
 	line-height: 1;
 	text-align: center;
+}
+
+.formError {
+	margin-bottom: 1rem;
+	padding: 0.6rem 0;
+	background-color: var(--btn-background-red-alpha-50);
+	color: white;
+	text-align: center;
+}
+
+.formElementError {
+	border-color: var(--btn-background-red) !important;
 }

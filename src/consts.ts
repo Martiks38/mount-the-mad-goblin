@@ -25,3 +25,5 @@ export const KEY_SESSION_STORAGE = 'shopping-cart'
 export const KEY_LOCAL_STORAGE = 'user-connection'
 
 export const TOKEN_HEADER = 'x-access-token'
+
+export const INVALID_BILLING_INFORMATION = 'billing-information'

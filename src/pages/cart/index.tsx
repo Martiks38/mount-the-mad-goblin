@@ -13,6 +13,10 @@ export default function Cart() {
 	const { shopping, total, removeAllFromCart } = useCart()
 
 	const isEmpty = total === 0
+	const estimatedPrice = shopping.reduce((cur, pet) => {
+		const { price, quantity } = pet
+		return cur + price * quantity
+	}, 0)
 
 	return (
 		<article className="content content_letterWhite">
@@ -28,7 +32,7 @@ export default function Cart() {
 			<section className={cartPageStyles.detailTotal}>
 				<h3 className={cartPageStyles.detailTotal__detail}>
 					<span>Estimated total</span>
-					<span>{formatPrice(total)}g</span>
+					<span>{formatPrice(estimatedPrice)}g</span>
 				</h3>
 				<Link
 					href="/cart/purchase"

@@ -5,23 +5,19 @@ import mail from '@/assets/imgs/mailLetter.png'
 
 import footerPageStyles from './FooterPage.module.css'
 
-/**
- * @todo Añadir modal sendMail al presionar el botón de correo
- */
 export function FooterPage() {
-	const widthImg = 54
-	const heightImg = 54
+	const sizeImg = 54
 
 	return (
 		<footer className={footerPageStyles.footer}>
 			<nav className={footerPageStyles.footer__nav}>
-				<Image src={logo} alt="Pets - The Crazy Goblin" width={widthImg} height={heightImg} />
+				<Image src={logo} alt="Pets - The Crazy Goblin" width={sizeImg} height={sizeImg} />
 				<button
 					aria-label="Send mail"
 					title="Send mail"
 					className={footerPageStyles.footer__toMail}
 				>
-					<Image src={mail} alt="Mail letter" width={widthImg} height={heightImg} />
+					<Image src={mail} alt="Mail letter" width={sizeImg} height={sizeImg} priority={true} />
 				</button>
 			</nav>
 		</footer>

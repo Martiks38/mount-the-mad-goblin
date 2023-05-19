@@ -1,22 +1,24 @@
 import { useRouter } from 'next/router'
 import { useEffect, useId, useState } from 'react'
 import { useCart } from '@/hooks/useCart'
+import { useUser } from '@/hooks/useUser'
+import { useFocus } from '@/hooks/useFocus'
 
+import { Loader } from '@/common/Loader'
 import { SessionForm } from '@/common/SessionForm'
 
 import loginStyles from '@/styles/pages/LogIn_SignUp.module.css'
-import { useUser } from '@/hooks/useUser'
-import { Loader } from '@/common/Loader'
+
 export default function SignUp() {
+	const formId = useId()
 	const router = useRouter()
 	const [isCreated, setIsCreated] = useState(false)
 	const [isError, setIsError] = useState(false)
-	const emailInputId = useId()
-	const passwordInputId = useId()
-	const usernameInputId = useId()
+	const [isLoading, setIsLoading] = useState(false)
+
 	const { connected, setConnection } = useCart()
 	const { setToken, setUsername } = useUser()
-	const [isLoading, setIsLoading] = useState(false)
+	const focusInput = useFocus<HTMLInputElement>(null)
 
 	useEffect(() => {
 		if (connected) {
@@ -64,7 +66,7 @@ export default function SignUp() {
 	}
 
 	return (
-		<section className={`content ${loginStyles.centerContent}`}>
+		<section className="content content_center">
 			{isCreated ? (
 				<p className={loginStyles.successMessage}>Account created</p>
 			) : (
@@ -75,12 +77,18 @@ export default function SignUp() {
 							The credentials you are using are not valid.
 						</p>
 					)}
-					<label htmlFor={usernameInputId}>Username *</label>
-					<input type="text" id={usernameInputId} name="username" autoFocus required />
-					<label htmlFor={emailInputId}>Email *</label>
-					<input type="email" id={emailInputId} name="email" required />
-					<label htmlFor={passwordInputId}>Password *</label>
-					<input type="password" id={passwordInputId} name="password" required />
+					<label htmlFor={`${formId}-usernameInput`}>Username *</label>
+					<input
+						type="text"
+						id={`${formId}-usernameInput`}
+						name="username"
+						ref={focusInput}
+						required
+					/>
+					<label htmlFor={`${formId}-emailInput`}>Email *</label>
+					<input type="email" id={`${formId}-emailInput`} name="email" required />
+					<label htmlFor={`${formId}-passwordInput`}>Password *</label>
+					<input type="password" id={`${formId}-passwordInput`} name="password" required />
 					{isLoading ? (
 						<Loader
 							styles={loginStyles.loader}
