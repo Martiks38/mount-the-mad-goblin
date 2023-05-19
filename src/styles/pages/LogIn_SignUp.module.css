@@ -14,10 +14,10 @@
 	}
 
 	&__error {
+		margin-bottom: -0.5rem;
 		background-color: var(--btn-background-red-alpha-50);
 		text-align: center;
 		color: white;
-		margin-bottom: -0.5rem;
 	}
 
 	&__img {
