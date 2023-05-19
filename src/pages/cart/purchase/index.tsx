@@ -4,6 +4,7 @@ import { useCart } from '@/hooks/useCart'
 import { useFocus } from '@/hooks/useFocus'
 
 import purchaseStyles from '@/styles/pages/PurchasePage.module.css'
+import { INVALID_BILLING_INFORMATION } from '@/consts'
 
 interface PaymentData {
 	billingAddress: string
@@ -33,8 +34,6 @@ export default function Purchase() {
 
 	const focusSelect = useFocus<HTMLSelectElement>(null)
 	const { total } = useCart()
-
-	if (total === 0) router.push('/')
 
 	const showError = useCallback((name: string) => {
 		const el = document.querySelector(`[name=${name}]`)
@@ -114,7 +113,10 @@ export default function Purchase() {
 				showError('postal')
 			}
 
-			if (!error.current) router.push('/cart/purchase/confirm')
+			if (error.current) return
+
+			window.sessionStorage.setItem(INVALID_BILLING_INFORMATION, JSON.stringify({ invalid: false }))
+			router.push('/cart/purchase/confirm')
 		},
 		[router, showError]
 	)
@@ -289,7 +291,7 @@ export default function Purchase() {
 						You will be able to review your order before it is processed.
 					</p>
 				</div>
-				<button type="submit" className={purchaseStyles.form__submit}>
+				<button type="submit" className={purchaseStyles.form__submit} disabled={total === 0}>
 					Continue
 				</button>
 			</form>
