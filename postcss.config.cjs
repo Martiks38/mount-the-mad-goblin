@@ -6,7 +6,9 @@ module.exports = {
 		'@fullhuman/postcss-purgecss': {
 			content: ['src/**/*.tsx'],
 			css: ['src/**/*.css'],
-			safelist: {}
+			safelist: {
+				standard: [/Error$/]
+			}
 		}
 	}
 }
