@@ -16,17 +16,27 @@ export interface PurchasedPet extends PetBase {
 }
 
 export interface Result {
-	results?: Pet | Pet[] | Categories[] /* Result of the request to the database */
-	page_number?: string /* Page number indicating the offset to display the request results */
-	total?: number /* Total possible elements for the request */
-	size?: number /* Total element of the response */
-	links?: {
-		base?: string /* Base url */
-		self?: string /* Request URL */
-		prev_page?: string /* URL of the previous page */
-		next_page?: string /* URL of the next page */
-		first?: string /* First page URL */
-		last?: string /* URL of the last page */
+	results: Pet | Categories[] /* Result of the request to the database */
+	total: number /* Total possible elements for the request */
+	size: number /* Total element of the response */
+	links: {
+		base: string
+		self: string
+	}
+}
+
+export interface ResultPagination {
+	results: Pet[]
+	total: number /* Total possible elements for the request */
+	size: number /* Total element of the response */
+	offset: number /* Page number indicating the offset to display the request results */
+	links: {
+		base: string
+		self: string
+		first_page: string
+		last_page: string
+		prev_page: string
+		next_page: string
 	}
 }
 
