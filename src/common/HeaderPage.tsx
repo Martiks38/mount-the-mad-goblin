@@ -56,7 +56,7 @@ export function HeaderPage() {
 				<div className={headerPageStyles.header__containerLinks}>
 					<ul className={headerPageStyles.header__menu}>
 						<li>
-							<Link href="#" className={headerPageStyles.header__linkItem}>
+							<Link href="/pets" className={headerPageStyles.header__linkItem}>
 								Pets
 							</Link>
 						</li>
