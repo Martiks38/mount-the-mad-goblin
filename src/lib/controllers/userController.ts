@@ -19,7 +19,7 @@ interface ContentJWT extends JWT {
 }
 
 function generateToken(_id: string) {
-	const expiresIn = 24 * 60 * 60 * 7
+	const expiresIn = 24 * 60 * 60 * 7 // One week
 
 	const token = jwt.sign({ _id }, SECRET_TOKEN as string, { expiresIn })
 
