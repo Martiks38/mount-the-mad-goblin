@@ -16,6 +16,7 @@ export default function getPetByTypeAndPriceAPI(req: NextApiRequest, res: NextAp
 	const petType = req.query.type as string
 	const min = Math.floor(Number(req.query?.min as string))
 	const max = Math.floor(Number(req.query?.max as string))
+	const offset = Number(req.query.offset) || 0
 
 	const invalidPrices = Number.isNaN(min) || Number.isNaN(max) || max < min
 	const isOutRange = outRange(PRICE_RANGE, min, max)
@@ -33,7 +34,7 @@ export default function getPetByTypeAndPriceAPI(req: NextApiRequest, res: NextAp
 		return res.status(400).json({ message })
 	}
 
-	return getPetsByTypeAndPrice(resource, petType, min, max)
+	return getPetsByTypeAndPrice({ resource, min, max, offset, type: petType })
 		.then((result: Result) => {
 			return res.status(200).json(result)
 		})
