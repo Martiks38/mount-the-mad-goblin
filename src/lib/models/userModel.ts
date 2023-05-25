@@ -3,10 +3,17 @@ import { compare, genSalt, hash } from 'bcryptjs'
 
 const saltRounds = 10
 
+interface IShoppingHistory {
+	name: string
+	price: number
+	quantity: number
+}
+
 interface IUser {
 	email: string
 	password: string
 	username: string
+	purchases: IShoppingHistory[]
 }
 
 interface IUserMethods {
@@ -16,6 +23,22 @@ interface IUserMethods {
 }
 
 type UserModel = Model<IUser, {}, IUserMethods>
+
+const ShoppingHistory = new Schema<IShoppingHistory>({
+	name: {
+		type: String,
+		required: [true, 'Product name is required'],
+		trim: true
+	},
+	price: {
+		type: Number,
+		required: [true, 'Price is required']
+	},
+	quantity: {
+		type: Number,
+		required: [true, 'Quantity is requied']
+	}
+})
 
 const UserSchema = new Schema<IUser, UserModel, IUserMethods>(
 	{
@@ -34,6 +57,9 @@ const UserSchema = new Schema<IUser, UserModel, IUserMethods>(
 			required: [true, 'Username is required'],
 			trim: true,
 			unique: true
+		},
+		purchases: {
+			type: [ShoppingHistory]
 		}
 	},
 	{
