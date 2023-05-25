@@ -131,3 +131,36 @@ ul {
 .formElementError {
 	border-color: var(--btn-background-red) !important;
 }
+
+.containerTabs {
+	display: flex;
+	gap: 0.4em;
+	width: fit-content;
+	margin: 3em auto 0;
+	font-size: 1.5rem;
+	line-height: 2.5rem;
+	font-weight: 500;
+
+	&_mt0 {
+		margin-top: 0;
+	}
+}
+
+.tab {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--color-tertiary);
+	min-width: 2em;
+	height: 2em;
+	border-radius: var(--border-6);
+
+	&.active {
+		background-color: var(--color-primary);
+		pointer-events: none;
+	}
+
+	&.disabled {
+		opacity: 0.6;
+	}
+}

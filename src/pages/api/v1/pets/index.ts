@@ -8,8 +8,11 @@ dbConnection()
 
 export default async function getPetsAPI(req: NextApiRequest, res: NextApiResponse) {
 	const resource = req.url as string
+	const { offset } = req.query
 
-	return getPets(resource)
+	let offsetPage = Number(offset) || 0
+
+	return getPets(resource, offsetPage)
 		.then((result) => {
 			return res.status(200).json(result)
 		})
