@@ -1,20 +1,9 @@
 import { Model, Schema, model, models } from 'mongoose'
 import { compare, genSalt, hash } from 'bcryptjs'
 
+import type { User } from '@/typings/interfaces'
+
 const saltRounds = 10
-
-interface IShoppingHistory {
-	name: string
-	price: number
-	quantity: number
-}
-
-interface IUser {
-	email: string
-	password: string
-	username: string
-	purchases: IShoppingHistory[]
-}
 
 interface IUserMethods {
 	encryptPassword(): Promise<void>
@@ -22,25 +11,9 @@ interface IUserMethods {
 	compareUsername(username: string): boolean
 }
 
-type UserModel = Model<IUser, {}, IUserMethods>
+type UserModel = Model<User, {}, IUserMethods>
 
-const ShoppingHistory = new Schema<IShoppingHistory>({
-	name: {
-		type: String,
-		required: [true, 'Product name is required'],
-		trim: true
-	},
-	price: {
-		type: Number,
-		required: [true, 'Price is required']
-	},
-	quantity: {
-		type: Number,
-		required: [true, 'Quantity is requied']
-	}
-})
-
-const UserSchema = new Schema<IUser, UserModel, IUserMethods>(
+const UserSchema = new Schema<User, UserModel, IUserMethods>(
 	{
 		email: {
 			type: String,
@@ -59,7 +32,13 @@ const UserSchema = new Schema<IUser, UserModel, IUserMethods>(
 			unique: true
 		},
 		purchases: {
-			type: [ShoppingHistory]
+			type: [
+				{
+					name: String,
+					price: Number,
+					quantity: Number
+				}
+			]
 		}
 	},
 	{
@@ -99,4 +78,4 @@ UserSchema.pre('findOneAndUpdate', async function () {
 	this.setUpdate({ password: docToUpdate.password })
 })
 
-export default models?.User || model<IUser, UserModel>('User', UserSchema)
+export default models?.User || model<User, UserModel>('User', UserSchema)
