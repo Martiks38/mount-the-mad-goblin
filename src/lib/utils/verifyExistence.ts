@@ -21,14 +21,6 @@ export async function verifyExistence(data: Partial<User>, _id?: string) {
 			const pairs = Object.entries(data)
 
 			for (const pair of pairs) {
-				const invalidEmail = !pair[1].match(
-					/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-				)
-
-				if (pair[0] === 'email' && invalidEmail) {
-					throw { status: 400, message: 'It is not a valid mail' }
-				}
-
 				if (pair[0] === 'name' && pair[1] === '') {
 					throw { status: 400, message: 'It is not a valid name' }
 				}
