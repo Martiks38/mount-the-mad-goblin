@@ -2,20 +2,27 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useMemo, useState } from 'react'
 import { useCart } from '@/hooks/useCart'
+import { useUser } from '@/hooks/useUser'
 
+import { Loader } from '@/common/Loader'
+
+import clsx from 'clsx'
 import { formatPrice } from '@/utils/formatPrice'
 
-import { INVALID_BILLING_INFORMATION } from '@/consts'
-
 import confirmPurchaseStyles from '@/styles/pages/ConfirmPurchase.module.css'
-import { Loader } from '@/common/Loader'
-import clsx from 'clsx'
+
+import { INVALID_BILLING_INFORMATION } from '@/consts'
+import { TOKEN_HEADER } from '@/consts'
 
 export default function ConfirmPurchase() {
 	const router = useRouter()
-	const [confirmedPurchase, setConfirmedPurchase] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
-
+	const [confirmedPurchase, setConfirmedPurchase] = useState(false)
+	const [error, setError] = useState<{ message: string; state: boolean }>({
+		message: '',
+		state: false
+	})
+	const { token } = useUser()
 	const { removeAllFromCart, shopping, total } = useCart()
 
 	useEffect(() => {
@@ -41,19 +48,53 @@ export default function ConfirmPurchase() {
 
 	const confirmPurchase = () => {
 		setIsLoading(true)
+		setError(() => ({ message: '', state: false }))
 
-		setTimeout(() => {
-			setIsLoading(false)
-			setConfirmedPurchase(true)
-			removeAllFromCart()
-			window.sessionStorage.setItem(INVALID_BILLING_INFORMATION, JSON.stringify({ valid: false }))
-		}, 2000)
+		const headers: { [index: string]: string } = {
+			'Content-Type': 'application/json;charset=utf-8'
+		}
+		headers[TOKEN_HEADER] = token
+
+		const purchases = shopping.map((purchase) => {
+			const { name, price, quantity } = purchase
+
+			return { name, price, quantity }
+		})
+
+		fetch('http://localhost:3000/api/v1/users', {
+			method: 'PUT',
+			headers,
+			body: JSON.stringify({ purchases })
+		})
+			.then((res) => {
+				const data = res.json()
+
+				if (!res.ok) throw data
+				return data
+			})
+			.then((data) => {
+				removeAllFromCart()
+				setConfirmedPurchase(true)
+				window.sessionStorage.setItem(INVALID_BILLING_INFORMATION, JSON.stringify({ valid: false }))
+			})
+			.catch((error: any) => {
+				error.then((e: any) => console.log(e))
+				setError(() => ({ message: error?.message, state: true }))
+			})
+			.finally(() => {
+				setIsLoading(false)
+			})
 	}
 
 	return (
 		<article
 			className={clsx(['content content_letterWhite', confirmedPurchase && 'content_center'])}
 		>
+			{error.state && (
+				<div className="error">
+					<p>{error.message}</p>
+				</div>
+			)}
 			{confirmedPurchase && (
 				<section className={confirmPurchaseStyles.detailTotal}>
 					<p className={confirmPurchaseStyles.detailTotal__gratitude}>
@@ -74,7 +115,8 @@ export default function ConfirmPurchase() {
 			)}
 			{!confirmedPurchase && !isLoading && (
 				<>
-					<h1>Your shopping</h1>
+					<h1 className="">Your shopping</h1>
+					<h2 className={confirmPurchaseStyles.subtitle}>Confirm purchase</h2>
 					<div>
 						{shopping.map((pet) => {
 							const { media, name, price, quantity } = pet
