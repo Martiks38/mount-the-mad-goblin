@@ -45,8 +45,15 @@ export interface ErrorResult {
 	status: number /* HTTP Status Code */
 }
 
+export interface ShoppingHistory {
+	name: string
+	price: number
+	quantity: number
+}
+
 export interface User {
 	email: string
 	password: string
 	username: string
+	purchases?: ShoppingHistory[]
 }
