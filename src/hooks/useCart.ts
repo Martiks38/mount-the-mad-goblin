@@ -11,15 +11,17 @@ export function useCart() {
 		removeAllFromCart,
 		removeAllOfPet,
 		removeOneFromCart,
-		setConnection
+		setConnection,
+		setPurchasedPets
 	} = useShoppingCart((state) => ({
 		isConnected: state.isConnected,
 		purchasedPets: state.purchasedPets,
-		setConnection: state.setConnection,
 		addToCart: state.addToCart,
 		removeOneFromCart: state.removeOneFromCart,
 		removeAllOfPet: state.removeAllOfPet,
-		removeAllFromCart: state.removeAllFromCart
+		removeAllFromCart: state.removeAllFromCart,
+		setConnection: state.setConnection,
+		setPurchasedPets: state.setPurchasedPets
 	}))
 
 	const [shopping, setShopping] = useState<PurchasedPet[]>([])
@@ -44,6 +46,7 @@ export function useCart() {
 		removeAllOfPet,
 		removeOneFromCart,
 		setConnection,
+		setPurchasedPets,
 		shopping,
 		total
 	}
