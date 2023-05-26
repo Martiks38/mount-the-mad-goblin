@@ -1,13 +1,9 @@
 import { Model, Schema, model, models } from 'mongoose'
 import { compare, genSalt, hash } from 'bcryptjs'
 
-const saltRounds = 10
+import type { User } from '@/typings/interfaces'
 
-interface IUser {
-	email: string
-	password: string
-	username: string
-}
+const saltRounds = 10
 
 interface IUserMethods {
 	encryptPassword(): Promise<void>
@@ -15,9 +11,9 @@ interface IUserMethods {
 	compareUsername(username: string): boolean
 }
 
-type UserModel = Model<IUser, {}, IUserMethods>
+type UserModel = Model<User, {}, IUserMethods>
 
-const UserSchema = new Schema<IUser, UserModel, IUserMethods>(
+const UserSchema = new Schema<User, UserModel, IUserMethods>(
 	{
 		email: {
 			type: String,
@@ -34,6 +30,15 @@ const UserSchema = new Schema<IUser, UserModel, IUserMethods>(
 			required: [true, 'Username is required'],
 			trim: true,
 			unique: true
+		},
+		purchases: {
+			type: [
+				{
+					name: String,
+					price: Number,
+					quantity: Number
+				}
+			]
 		}
 	},
 	{
@@ -73,4 +78,4 @@ UserSchema.pre('findOneAndUpdate', async function () {
 	this.setUpdate({ password: docToUpdate.password })
 })
 
-export default models?.User || model<IUser, UserModel>('User', UserSchema)
+export default models?.User || model<User, UserModel>('User', UserSchema)

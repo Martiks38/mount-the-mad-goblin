@@ -19,7 +19,7 @@ interface ContentJWT extends JWT {
 }
 
 function generateToken(_id: string) {
-	const expiresIn = 24 * 60 * 60 * 7
+	const expiresIn = 24 * 60 * 60 * 7 // One week
 
 	const token = jwt.sign({ _id }, SECRET_TOKEN as string, { expiresIn })
 
@@ -56,7 +56,16 @@ export async function updateUser(data: Partial<User>, token: string) {
 
 		await verifyExistence(data, _id)
 
-		await UserModel.findOneAndUpdate({ _id }, { $set: { ...data } })
+		const user = await UserModel.findById<User>({ _id })
+
+		if (user === null) throw { status: 400, message: "User don't exist." }
+
+		if (Object.hasOwn(data, 'purchases')) {
+			const purchases = { ...user.purchases, ...data.purchases }
+			await UserModel.findOneAndUpdate({ _id }, { $set: purchases })
+		} else {
+			await UserModel.findOneAndUpdate({ _id }, { $set: data })
+		}
 
 		return { message: 'The change was applied successfully.' }
 	} catch (error: any) {
