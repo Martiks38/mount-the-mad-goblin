@@ -29,3 +29,5 @@ export const TOKEN_HEADER = 'x-access-token'
 export const INVALID_BILLING_INFORMATION = 'billing-information'
 
 export const LIMIT = 10
+
+export const shoppingCartCookie = 'shopping-cart'
