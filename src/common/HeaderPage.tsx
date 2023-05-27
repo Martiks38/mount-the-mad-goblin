@@ -1,20 +1,19 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { useId } from 'react'
+
 import { useCart } from '@/hooks/useCart'
 
-import { LoupeIcon } from '@/components/LoupeIcon'
+import { Searcher } from '@/components/Searcher'
 import { ShoppingBag } from '@/components/ShoppingBag'
+import { UserIcon } from '@/components/UserIcon'
 
 import logo from '@/assets/imgs/logo.webp'
 
 import headerPageStyles from './HeaderPage.module.css'
-import loupeIconStyles from '@/styles/components/LoupeIcon.module.css'
-import { UserIcon } from '@/components/UserIcon'
 
 export function HeaderPage() {
 	const { connected } = useCart()
-	const formId = useId()
+
 	const sideImg = 42
 
 	return (
@@ -35,23 +34,7 @@ export function HeaderPage() {
 					<span>Pets - The Crazy Goblin</span>
 				</Link>
 
-				<form
-					className={`${headerPageStyles.header__form} ${headerPageStyles.form}`}
-					onSubmit={() => {}}
-				>
-					<label className={headerPageStyles.form__labelSearch} htmlFor={`${formId}-search`}>
-						<div className={headerPageStyles.form__searchLoupe}>
-							<LoupeIcon styles={loupeIconStyles.loupe} />
-						</div>
-						<input
-							type="search"
-							name=""
-							id={`${formId}-search`}
-							className={headerPageStyles.form__search}
-							placeholder="Search..."
-						/>
-					</label>
-				</form>
+				<Searcher path="/pets/search?word=" />
 
 				<div className={headerPageStyles.header__containerLinks}>
 					<ul className={headerPageStyles.header__menu}>
