@@ -283,10 +283,10 @@ export async function getSearchPet(
 
 	try {
 		const response: Pet[] | null | undefined = await PetModel.find({ name: regex }, projection)
-		const self = API_URL + resource
 
 		if (!response || response.length === 0) return { message: 'Without results. No pets found.' }
 
+		const self = API_URL + resource
 		const results = response.slice(offset, offset + LIMIT)
 		const size = results.length
 		const total = response.length
