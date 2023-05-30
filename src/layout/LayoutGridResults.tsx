@@ -43,6 +43,12 @@ export function LayoutGridResults({ errorSearch, url }: LayoutGridResultsProps) 
 				data.data &&
 				instanceOf<ResultPagination>(data.data, 'offset') && (
 					<>
+						<Pagination
+							links={data.data.links}
+							lastPageNumber={data.data.lastPageNumber}
+							offset={data.data.offset}
+							limit={LIMIT}
+						/>
 						<div className={categoryPageStyles.pets}>
 							{data.data.results.map(({ name, media, price }) => {
 								return (
@@ -64,12 +70,6 @@ export function LayoutGridResults({ errorSearch, url }: LayoutGridResultsProps) 
 								)
 							})}
 						</div>
-						<Pagination
-							links={data.data.links}
-							lastPageNumber={Math.ceil(data.data.total / data.data.size)}
-							offset={data.data.offset}
-							limit={LIMIT}
-						/>
 					</>
 				)}
 		</article>
