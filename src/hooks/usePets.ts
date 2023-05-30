@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import type { ResultPagination } from '@/typings/interfaces'
 import { LIMIT } from '@/consts'
+
+import type { ResultPagination } from '@/typings/interfaces'
 
 interface ResponseData {
 	data: null | ResultPagination | { message: string }
@@ -13,21 +14,38 @@ export function usePets(url: string) {
 	const router = useRouter()
 	const [data, setData] = useState<ResponseData>({ data: null, error: false })
 	const [isLoading, setIsLoading] = useState(false)
+	const [currentSearch, setCurrentSearch] = useState('')
+
+	useEffect(() => {
+		const checkSearch = () => {
+			const { search } = window.location
+
+			if (search !== currentSearch) setCurrentSearch(search)
+		}
+
+		router.events.on('routeChangeComplete', checkSearch)
+
+		return () => router.events.off('routeChangeComplete', checkSearch)
+	}, [currentSearch, router])
 
 	useEffect(() => {
 		const searchPets = async () => {
 			try {
+				const fetchURL = new URL(url)
 				const { searchParams } = new URL(window.location.href)
-				const offset = Number(searchParams.get('offset')) || 0
+				const offsetPage = searchParams.get('offset')
+
+				let offset = Number(searchParams.get('offset')) || 0
 
 				// Ensures that the offset is a multiple of the LIMIT constant. Ensuring correct pagination.
-				if (offset % LIMIT !== 0) {
-					const newOffset = Math.round(offset / LIMIT) * LIMIT
-
-					router.replace(`/pets?offset=${newOffset}`)
+				if (offsetPage !== null && offset % LIMIT !== 0) {
+					fetchURL.searchParams.set('offset', '0')
+				}
+				if (offsetPage !== null && offset % LIMIT === 0) {
+					fetchURL.searchParams.set('offset', offsetPage)
 				}
 
-				const response = await fetch(url + offset)
+				const response = await fetch(fetchURL.href)
 				const data = await response.json()
 
 				if (!response.ok) throw data
@@ -49,8 +67,10 @@ export function usePets(url: string) {
 			}
 		}
 
+		if (!url) return
+
 		searchPets()
-	}, [router, url])
+	}, [currentSearch, url])
 
 	return { data, isLoading }
 }

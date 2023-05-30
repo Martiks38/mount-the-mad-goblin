@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import { usePets } from '@/hooks/usePets'
 
 import { Loader } from '@/common/Loader'
@@ -14,27 +15,52 @@ import { LIMIT } from '@/consts'
 
 import type { ResultPagination } from '@/typings/interfaces'
 
-const requestURL = 'http://localhost:3000/api/v1/pets'
+const requestURL = 'http://localhost:3000/api/v1/pets/search'
 
-export default function PetsSection() {
-	const { data, isLoading } = usePets(requestURL)
+export default function SearchResultPage() {
+	const [url, setUrl] = useState('')
+	const [error, setError] = useState({
+		message: '',
+		state: false
+	})
+	const { data, isLoading } = usePets(url)
+
+	useEffect(() => {
+		const fetchURL = new URL(requestURL)
+		const { searchParams } = new URL(window.location.href)
+		const word = searchParams.get('word')
+		const offset = Number(searchParams.get('offset')) ? searchParams.get('offset') : '0'
+
+		if (word === null || offset === null) {
+			setError({ message: '', state: true })
+			return
+		}
+
+		fetchURL.searchParams.set('word', word)
+		fetchURL.searchParams.set('offset', offset)
+
+		setUrl(fetchURL.href)
+		setError({ message: '', state: false })
+	}, [])
 
 	return (
-		<article className="content content_whiteLetter">
+		<section className="content content_whiteLetter">
 			{isLoading && (
-				<div className={petPageStyles.loading}>
-					<Loader styles={petPageStyles.loading__loader} />
-					<p className={petPageStyles.loading__errorText}>
-						Wait a minute, our &ldquo;skilled&rdquo; goblin workers are gathering the information.
-					</p>
-				</div>
+				<>
+					<div className={petPageStyles.loading}>
+						<Loader styles={petPageStyles.loading__loader} />
+						<p className={petPageStyles.loading__errorText}>
+							Wait a minute, our &ldquo;skilled&rdquo; goblin workers are gathering the information.
+						</p>
+					</div>
+				</>
 			)}
-			{!isLoading &&
-				data.error &&
-				data.data &&
-				instanceOf<Record<'message', string>>(data.data, 'message') && (
-					<p className="error">{data.data.message}</p>
-				)}
+			{!isLoading && (data.error || error.state) && data.data && (
+				<p className="error">
+					{(instanceOf<Record<'message', string>>(data.data, 'message') && data.data.message) ||
+						error.message}
+				</p>
+			)}
 			{!isLoading &&
 				!data.error &&
 				data.data &&
@@ -69,6 +95,6 @@ export default function PetsSection() {
 						/>
 					</>
 				)}
-		</article>
+		</section>
 	)
 }

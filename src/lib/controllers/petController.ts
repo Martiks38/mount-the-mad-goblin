@@ -1,7 +1,7 @@
 import PetModel from '../models/petModel'
 
 import { errorMessage } from '@/utils/handlerError'
-import { generatePageURL } from '@/utils/generatePageURL'
+import { generateResourceURL } from '../utils/generateResourceURL'
 
 import { API_URL, API_URL_V1 } from '@/config'
 import { LIMIT, projection } from '@/consts'
@@ -26,7 +26,7 @@ export async function getPets(resource: string, offset: number): Promise<ResultP
 		const results = pets.slice(offset, offset + LIMIT)
 		const total = pets.length
 
-		const { first_page, last_page, next_page, prev_page } = generatePageURL({
+		const { first_page, last_page, next_page, prev_page } = generateResourceURL({
 			pathname: base + '/pets',
 			limit: LIMIT,
 			offset,
@@ -59,7 +59,7 @@ export async function getPets(resource: string, offset: number): Promise<ResultP
  */
 export async function getPetTypes(resource: string): Promise<Result> {
 	try {
-		const results: AnswerPetTypesDB[] = await PetModel.aggregate([
+		const response: AnswerPetTypesDB[] = await PetModel.aggregate([
 			{
 				$group: {
 					_id: '$type',
@@ -71,6 +71,8 @@ export async function getPetTypes(resource: string): Promise<Result> {
 				$sort: { type: 1 }
 			}
 		])
+		const results = response.map(({ media, type }) => ({ media, type }))
+
 		const self = API_URL + resource
 		const total = results.length
 
@@ -79,9 +81,7 @@ export async function getPetTypes(resource: string): Promise<Result> {
 				base,
 				self
 			},
-			results: results.map(({ media, type }) => {
-				return { media, type }
-			}),
+			results,
 			size: total,
 			total
 		}
@@ -155,7 +155,7 @@ export async function getPetsByTypeAndPrice({
 		const results = pets.slice(offset, offset + LIMIT)
 		const total = results.length
 
-		const { first_page, last_page, next_page, prev_page } = generatePageURL({
+		const { first_page, last_page, next_page, prev_page } = generateResourceURL({
 			pathname: base + `/pets/${type}/prices`,
 			limit: LIMIT,
 			offset,
@@ -239,7 +239,7 @@ export async function getPetsByPrices({
 		const total = pets.length
 		const results = pets.slice(offset, LIMIT)
 
-		const { first_page, last_page, next_page, prev_page } = generatePageURL({
+		const { first_page, last_page, next_page, prev_page } = generateResourceURL({
 			pathname: base + '',
 			offset,
 			total,
@@ -262,5 +262,47 @@ export async function getPetsByPrices({
 		}
 	} catch (error) {
 		throw errorMessage(500)
+	}
+}
+
+export async function getSearchPet(
+	resource: string,
+	word: string,
+	offset: number
+): Promise<ResultPagination | { message: string }> {
+	const regex = new RegExp(word, 'i')
+
+	try {
+		const response: Pet[] | null | undefined = await PetModel.find({ name: regex }, projection)
+
+		if (!response || response.length === 0) return { message: 'Without results. No pets found.' }
+
+		const self = API_URL + resource
+		const total = response.length
+
+		const { first_page, last_page, next_page, prev_page } = generateResourceURL({
+			pathname: base + '',
+			limit: LIMIT,
+			offset,
+			total,
+			word
+		})
+
+		return {
+			links: {
+				base,
+				self,
+				first_page,
+				last_page,
+				next_page,
+				prev_page
+			},
+			size: LIMIT,
+			offset,
+			results: response,
+			total
+		}
+	} catch (error: any) {
+		return errorMessage(500)
 	}
 }

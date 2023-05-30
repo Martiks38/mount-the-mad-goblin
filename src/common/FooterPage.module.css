@@ -17,22 +17,4 @@
 			padding-right: 1.8em;
 		}
 	}
-
-	&__toMail {
-		background-color: transparent;
-		border-radius: var(--border-6);
-		border-color: transparent;
-
-		@media (hover: hover) {
-			&:hover {
-				filter: drop-shadow(0 0 3px var(--drop-shadow));
-			}
-		}
-
-		@media (hover: none) {
-			&:active {
-				filter: drop-shadow(0 0 3px var(--drop-shadow));
-			}
-		}
-	}
 }
