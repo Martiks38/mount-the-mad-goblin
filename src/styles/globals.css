@@ -135,11 +135,19 @@ ul {
 .containerTabs {
 	display: flex;
 	gap: 0.4em;
+	height: fit-content;
 	width: fit-content;
-	margin: 3em auto 0;
 	font-size: 1.5rem;
 	line-height: 2.5rem;
 	font-weight: 500;
+
+	&_main {
+		margin: 0 auto 1.4em;
+
+		@media (min-width: 40rem) {
+			margin: 0 auto 3em;
+		}
+	}
 
 	&_mt0 {
 		margin-top: 0;
