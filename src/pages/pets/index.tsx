@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { usePets } from '@/hooks/usePets'
 
 import { Loader } from '@/common/Loader'
 import Pagination from '@/components/Pagination'
@@ -12,10 +13,11 @@ import categoryPageStyles from '@/styles/pages/CategoryPage.module.css'
 import { LIMIT } from '@/consts'
 
 import type { ResultPagination } from '@/typings/interfaces'
-import { usePets } from '@/hooks/usePets'
+
+const requestURL = 'http://localhost:3000/api/v1/pets'
 
 export default function PetsSection() {
-	const { data, isLoading } = usePets('http://localhost:3000/api/v1/pets?offset=')
+	const { data, isLoading } = usePets(requestURL)
 
 	return (
 		<article className="content content_whiteLetter">
