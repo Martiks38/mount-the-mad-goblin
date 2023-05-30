@@ -25,5 +25,5 @@ export function generateResourceURL({
 	const next_page =
 		lastOffset === 1 + offset / limit ? '' : pathname + `?${wordQuery}offset=${offset + limit}`
 
-	return { first_page, last_page, next_page, prev_page }
+	return { first_page, last_page, lastPageNumber: lastOffset, next_page, prev_page }
 }
