@@ -48,7 +48,8 @@ export function usePets(url: string) {
 				const response = await fetch(fetchURL.href)
 				const data = await response.json()
 
-				if (!response.ok) throw data
+				const hasMessage = Object.hasOwn(data, 'message')
+				if (!response.ok || hasMessage) throw hasMessage ? data.message : data
 
 				const links = Object.fromEntries(
 					Object.entries(data.links).map(([linkName, link]) => {
@@ -61,7 +62,11 @@ export function usePets(url: string) {
 
 				setData((prevData) => ({ ...prevData, data: { ...data, links } }))
 			} catch (error: any) {
-				setData(() => ({ data: error as ResultPagination, error: true }))
+				let message = ''
+				if (typeof error === 'string') message = error
+				if (typeof error === 'object') message = error.message
+
+				setData(() => ({ data: { message }, error: true }))
 			} finally {
 				setIsLoading(false)
 			}
