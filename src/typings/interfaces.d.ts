@@ -17,7 +17,7 @@ export interface PurchasedPet extends PetBase {
 
 export interface Result {
 	results: Pet | Categories[] /* Result of the request to the database */
-	total: number /* Total possible elements for the request */
+	limit: number /* Total possible elements for the request */
 	size: number /* Total element of the response */
 	links: {
 		base: string
@@ -26,10 +26,12 @@ export interface Result {
 }
 
 export interface ResultPagination {
-	results: Pet[]
+	results: Pet[] /* Result of the request to the database */
+	limit: number /* Maximum response size */
 	total: number /* Total possible elements for the request */
 	size: number /* Total element of the response */
 	offset: number /* Page number indicating the offset to display the request results */
+	lastPageNumber: number /* Last page number */
 	links: {
 		base: string
 		self: string
