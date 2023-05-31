@@ -48,11 +48,27 @@ export async function createUser(user: User) {
 	}
 }
 
+/* Get */
+export async function getUser(name: string, token: string) {
+	try {
+		const { _id } = decodeToken(token)
+
+		const user = await UserModel.findById<User>({ _id })
+
+		if (!user || user.username !== name) throw { status: 403, message: 'User does not exist.' }
+
+		const { email, purchases, username } = user
+
+		return { email, purchases, username }
+	} catch (error: any) {
+		throw errorMessage(error?.status, error?.message)
+	}
+}
+
 /* Update */
 export async function updateUser(data: Partial<User>, token: string) {
 	try {
-		const decodeToken = jwt.verify(token, SECRET_TOKEN as string) as { _id: string }
-		const _id = decodeToken._id
+		const { _id } = decodeToken(token)
 
 		await verifyExistence(data, _id)
 
@@ -76,8 +92,7 @@ export async function updateUser(data: Partial<User>, token: string) {
 /* Delete */
 export async function deleteUser(username: string, token: string) {
 	try {
-		const decodeToken = jwt.verify(token, SECRET_TOKEN as string) as { _id: string }
-		const _id = decodeToken._id
+		const { _id } = decodeToken(token)
 
 		const user = await UserModel.findById<User>({ _id })
 
