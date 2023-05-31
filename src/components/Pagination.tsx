@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { memo, useMemo, useRef } from 'react'
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { EllipsisIcon } from './EllipsisIcon'
 
@@ -28,13 +28,37 @@ function Pagination({
 	offset,
 	maximumElementsSimpleExtension = 10
 }: PaginationProps) {
+	const [isMovil, setIsMovil] = useState(false)
+	const firstCheckMovil = useRef(false)
+
+	const checkScreenDimensions = useCallback(() => {
+		const movilDimensions = window.innerWidth < 640
+
+		if (movilDimensions) {
+			setIsMovil(true)
+		} else if (isMovil) {
+			setIsMovil(false)
+		}
+	}, [isMovil])
+
+	if (!firstCheckMovil.current) {
+		checkScreenDimensions()
+		firstCheckMovil.current = true
+	}
+
+	useEffect(() => {
+		window.addEventListener('resize', checkScreenDimensions)
+
+		return () => window.removeEventListener('resize', checkScreenDimensions)
+	}, [checkScreenDimensions])
+
 	const { next_page, prev_page } = links
 	const pageNumber = useRef(offset / limit + 1)
 	const url = new URL(window.location.href)
 
 	let pathname = url.pathname
 	let word = url.searchParams.get('word')
-	let wordQuery = word ? word : ''
+	let wordQuery = word ? `word=${word}&` : ''
 
 	/**
 	 * If the limit of items returned by the API is 10.
@@ -50,10 +74,10 @@ function Pagination({
 
 	const enableLongPagination = lastPageNumber > maximumElementsSimpleExtension
 	const enableSideBrowsers = lastPageNumber > Math.round(maximumElementsSimpleExtension / 2)
-	console.log(links)
+
 	return (
 		<div className="containerTabs containerTabs_main">
-			{enableSideBrowsers && (
+			{(enableSideBrowsers || isMovil) && (
 				<Link
 					href={prev_page}
 					className={clsx({ tab: true, disabled: thereIsPrev })}
@@ -63,7 +87,8 @@ function Pagination({
 					&lt;
 				</Link>
 			)}
-			{enableLongPagination && (
+
+			{enableLongPagination && !isMovil && (
 				<LongPaginationBar
 					lastPageNumber={lastPageNumber}
 					currentPage={pageNumber.current}
@@ -74,7 +99,8 @@ function Pagination({
 					pathname={pathname}
 				/>
 			)}
-			{!enableLongPagination && lastPageNumber !== 1 && (
+
+			{!enableLongPagination && !isMovil && lastPageNumber !== 1 && (
 				<SimplePaginationBar
 					links={links}
 					lastPageNumber={lastPageNumber}
@@ -84,7 +110,11 @@ function Pagination({
 					currentPage={pageNumber.current}
 				/>
 			)}
-			{enableSideBrowsers && (
+
+			{/**@todo - Change to an input so that the user can change the page manually. */}
+			{isMovil && <div className="tab tab_movil">{pageNumber.current}</div>}
+
+			{(enableSideBrowsers || isMovil) && (
 				<Link
 					href={next_page}
 					className={clsx({ tab: true, disabled: thereIsNext })}

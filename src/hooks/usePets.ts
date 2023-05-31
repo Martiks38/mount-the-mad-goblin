@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useDetectSearchChanges } from './useDetectSearchChanges'
 
 import { LIMIT } from '@/consts'
 
@@ -12,6 +13,7 @@ interface ResponseData {
 export function usePets(url: string) {
 	const [data, setData] = useState<ResponseData>({ data: null, error: false })
 	const [isLoading, setIsLoading] = useState(false)
+	const { currentSearch } = useDetectSearchChanges()
 
 	useEffect(() => {
 		const searchPets = async () => {
@@ -59,7 +61,7 @@ export function usePets(url: string) {
 		if (!url) return
 
 		searchPets()
-	}, [url])
+	}, [currentSearch, url])
 
 	return { data, isLoading }
 }
