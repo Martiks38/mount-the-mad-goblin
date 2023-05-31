@@ -24,9 +24,10 @@ export async function getPets(resource: string, offset: number): Promise<ResultP
 		const self = API_URL + resource
 		const pets: Pet[] = await PetModel.find({}, projection)
 		const results = pets.slice(offset, offset + LIMIT)
+		const size = results.length
 		const total = pets.length
 
-		const { first_page, last_page, next_page, prev_page } = generateResourceURL({
+		const { first_page, last_page, lastPageNumber, next_page, prev_page } = generateResourceURL({
 			pathname: base + '/pets',
 			limit: LIMIT,
 			offset,
@@ -34,10 +35,6 @@ export async function getPets(resource: string, offset: number): Promise<ResultP
 		})
 
 		return {
-			results,
-			offset,
-			size: LIMIT,
-			total,
 			links: {
 				base,
 				self,
@@ -45,7 +42,13 @@ export async function getPets(resource: string, offset: number): Promise<ResultP
 				last_page,
 				next_page,
 				prev_page
-			}
+			},
+			lastPageNumber,
+			limit: LIMIT,
+			offset,
+			results,
+			size,
+			total
 		}
 	} catch (error) {
 		throw errorMessage(500)
@@ -74,7 +77,7 @@ export async function getPetTypes(resource: string): Promise<Result> {
 		const results = response.map(({ media, type }) => ({ media, type }))
 
 		const self = API_URL + resource
-		const total = results.length
+		const size = results.length
 
 		return {
 			links: {
@@ -82,8 +85,8 @@ export async function getPetTypes(resource: string): Promise<Result> {
 				self
 			},
 			results,
-			size: total,
-			total
+			size,
+			limit: size
 		}
 	} catch (error) {
 		throw errorMessage(500)
@@ -99,18 +102,18 @@ export async function getPetTypes(resource: string): Promise<Result> {
  */
 export async function getPetType(resource: string, type: string): Promise<Result> {
 	try {
-		const results: Pet[] = await PetModel.find({ type }, projection)
-		const total = results.length
 		const self = API_URL + resource
+		const results: Pet[] = await PetModel.find({ type }, projection)
+		const size = results.length
 
 		return {
 			links: {
 				base,
 				self
 			},
-			size: total,
+			size,
 			results,
-			total
+			limit: LIMIT
 		}
 	} catch (error: any) {
 		throw errorMessage(500)
@@ -153,9 +156,10 @@ export async function getPetsByTypeAndPrice({
 
 		const pets: Pet[] = await PetModel.find(filter, projection)
 		const results = pets.slice(offset, offset + LIMIT)
-		const total = results.length
+		const size = results.length
+		const total = pets.length
 
-		const { first_page, last_page, next_page, prev_page } = generateResourceURL({
+		const { first_page, last_page, lastPageNumber, next_page, prev_page } = generateResourceURL({
 			pathname: base + `/pets/${type}/prices`,
 			limit: LIMIT,
 			offset,
@@ -171,9 +175,11 @@ export async function getPetsByTypeAndPrice({
 				next_page,
 				prev_page
 			},
+			lastPageNumber,
+			limit: LIMIT,
 			offset,
-			size: total,
 			results,
+			size,
 			total
 		}
 	} catch (error) {
@@ -204,7 +210,7 @@ export async function getPetByName(resource: string, namePet: string): Promise<R
 			},
 			results: result,
 			size: 1,
-			total: 1
+			limit: 1
 		}
 	} catch (error: any) {
 		if (error?.status) throw error
@@ -237,9 +243,10 @@ export async function getPetsByPrices({
 		const self = API_URL + resource
 		const pets: Pet[] = await PetModel.find(filter, projection)
 		const total = pets.length
-		const results = pets.slice(offset, LIMIT)
+		const results = pets.slice(offset, offset + LIMIT)
+		const size = results.length
 
-		const { first_page, last_page, next_page, prev_page } = generateResourceURL({
+		const { first_page, last_page, lastPageNumber, next_page, prev_page } = generateResourceURL({
 			pathname: base + '',
 			offset,
 			total,
@@ -255,9 +262,11 @@ export async function getPetsByPrices({
 				next_page,
 				prev_page
 			},
+			lastPageNumber,
+			limit: LIMIT,
 			offset,
 			results,
-			size: LIMIT,
+			size,
 			total
 		}
 	} catch (error) {
@@ -278,10 +287,12 @@ export async function getSearchPet(
 		if (!response || response.length === 0) return { message: 'Without results. No pets found.' }
 
 		const self = API_URL + resource
+		const results = response.slice(offset, offset + LIMIT)
+		const size = results.length
 		const total = response.length
 
-		const { first_page, last_page, next_page, prev_page } = generateResourceURL({
-			pathname: base + '',
+		const { first_page, last_page, lastPageNumber, next_page, prev_page } = generateResourceURL({
+			pathname: base + '/pets/search',
 			limit: LIMIT,
 			offset,
 			total,
@@ -297,9 +308,11 @@ export async function getSearchPet(
 				next_page,
 				prev_page
 			},
-			size: LIMIT,
+			lastPageNumber,
+			limit: LIMIT,
 			offset,
-			results: response,
+			results,
+			size,
 			total
 		}
 	} catch (error: any) {

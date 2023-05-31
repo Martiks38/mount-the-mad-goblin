@@ -7,19 +7,26 @@ import clsx from 'clsx'
 
 import type { ResultPagination } from '@/typings/interfaces'
 
-type PaginationProps = Pick<ResultPagination, 'links'> & {
+interface Parameters {
 	lastPageNumber: number
 	limit: number
 	offset: number
 }
 
+interface PaginationProps extends Pick<ResultPagination, 'links'>, Parameters {}
+
 const activeEllipsis = 5 // Page x distance from the ends.
 const desactiveEllipsisRight = activeEllipsis - 1
 const sidePageNumber = activeEllipsis - 2 // Represents the number of pages between the endpoint and the page that triggers the ellipsis.
 
-function Pagination({ offset, lastPageNumber, links, limit }: PaginationProps) {
-	const { first_page, last_page, next_page, prev_page, self } = links
+function Pagination({ lastPageNumber, links, limit, offset }: PaginationProps) {
+	const { next_page, prev_page } = links
 	const pageNumber = useRef(offset / limit + 1)
+	const url = new URL(window.location.href)
+
+	let pathname = url.pathname
+	let word = url.searchParams.get('word')
+	let wordQuery = word ? word : ''
 
 	/**
 	 * If the limit of items returned by the API is 10.
@@ -30,15 +37,133 @@ function Pagination({ offset, lastPageNumber, links, limit }: PaginationProps) {
 	 */
 	pageNumber.current = offset / limit + 1
 
+	const thereIsPrev = prev_page === ''
+	const thereIsNext = next_page === ''
+
+	const lessThanPages = lastPageNumber > 5
+
+	return (
+		<div className="containerTabs containerTabs_main">
+			{lessThanPages && (
+				<Link
+					href={prev_page}
+					className={clsx({ tab: true, disabled: thereIsPrev })}
+					aria-disabled={thereIsPrev}
+					aria-label={thereIsPrev ? 'There is no previous page' : 'Go to the previous page'}
+				>
+					&lt;
+				</Link>
+			)}
+			{!lessThanPages && lastPageNumber !== 1 && (
+				<LongPaginationBar
+					lastPageNumber={lastPageNumber}
+					currentPage={pageNumber.current}
+					offset={offset}
+					links={links}
+					limit={limit}
+					wordQuery={wordQuery}
+					pathname={pathname}
+				/>
+			)}
+			{lessThanPages && (
+				<SimplePaginationBar
+					links={links}
+					lastPageNumber={lastPageNumber}
+					limit={limit}
+					pathname={pathname}
+					wordQuery={wordQuery}
+					currentPage={pageNumber.current}
+				/>
+			)}
+			{lessThanPages && (
+				<Link
+					href={next_page}
+					className={clsx({ tab: true, disabled: thereIsNext })}
+					aria-disabled={thereIsNext}
+					aria-label={thereIsNext ? 'There is no next page' : 'Go to the next page'}
+				>
+					&gt;
+				</Link>
+			)}
+		</div>
+	)
+}
+
+interface SimplePaginationBarProps extends Pick<ResultPagination, 'links'> {
+	lastPageNumber: number
+	limit: number
+	currentPage: number
+	pathname: string
+	wordQuery: string
+}
+
+function SimplePaginationBar({
+	links,
+	lastPageNumber,
+	limit,
+	currentPage,
+	pathname,
+	wordQuery
+}: SimplePaginationBarProps) {
+	const { first_page, last_page } = links
+
+	const pages = Array.from({ length: lastPageNumber }, (_, ind) => {
+		let pageNumber = ind + 1
+		let link = ''
+
+		if (pageNumber !== 1 && pageNumber !== lastPageNumber) {
+			let offset = (pageNumber - 1) * limit
+
+			link = `${pathname}?${wordQuery}offset=${offset}`
+		} else if (pageNumber === 1) {
+			link = first_page
+		} else {
+			link = last_page
+		}
+
+		return { link, pageNumber }
+	})
+
+	return (
+		<>
+			{pages.map(({ link, pageNumber }, ind) => (
+				<Link
+					key={link}
+					href={link}
+					className={clsx({ tab: true, active: currentPage === ind + 1 })}
+				>
+					{pageNumber}
+				</Link>
+			))}
+		</>
+	)
+}
+
+interface LongPaginationBarProps extends Pick<ResultPagination, 'links'>, Parameters {
+	currentPage: number
+	pathname: string
+	wordQuery: string
+}
+
+function LongPaginationBar({
+	lastPageNumber,
+	limit,
+	links,
+	currentPage,
+	pathname,
+	wordQuery
+}: LongPaginationBarProps) {
+	const { first_page, last_page, next_page, prev_page, self } = links
+
 	const LeftLinks = useMemo(
 		() =>
 			Array.from({ length: sidePageNumber }, (_, ind) => {
 				// Start on the second page
 				let pageNumber = ind + 2
 				let offset = (pageNumber - 1) * limit
-				return { link: `/pets?offset=${offset}`, pageNumber }
+				return { link: `${pathname}?${wordQuery}offset=${offset}`, pageNumber }
 			}),
-		[limit]
+		[limit, pathname, wordQuery]
 	)
 
 	const RightLinks = useMemo(
@@ -47,39 +172,28 @@ function Pagination({ offset, lastPageNumber, links, limit }: PaginationProps) {
 				// Starts at the page resulting from the subtraction between the last page minus sidePageNumber.
 				let pageNumber = ind + lastPageNumber - sidePageNumber
 				let offset = (pageNumber - 1) * limit
-				return { link: `/pets?offset=${offset}`, pageNumber }
+				return { link: `${pathname}?${wordQuery}offset=${offset}`, pageNumber }
 			}),
-		[lastPageNumber, limit]
+		[lastPageNumber, limit, pathname, wordQuery]
 	)
 
 	const CenterLink =
-		pageNumber.current < activeEllipsis
-			? `/pets?offset=${(activeEllipsis - 1) * limit}`
-			: `/pets?offset=${(lastPageNumber - activeEllipsis) * limit}`
-
-	const thereIsPrev = prev_page === ''
-	const thereIsNext = next_page === ''
+		currentPage < activeEllipsis
+			? `${pathname}?${wordQuery}offset=${(activeEllipsis - 1) * limit}`
+			: `${pathname}?${wordQuery}offset=${(lastPageNumber - activeEllipsis) * limit}`
 
 	return (
-		<div className="containerTabs">
-			<Link
-				href={prev_page}
-				className={clsx({ tab: true, disabled: thereIsPrev })}
-				aria-disabled={thereIsPrev}
-				aria-label={thereIsPrev ? 'There is no previous page' : 'Go to the previous page'}
-			>
-				&lt;
-			</Link>
-			<Link href={first_page} className={clsx(['tab', pageNumber.current === 1 && 'active'])}>
+		<>
+			<Link href={first_page} className={clsx(['tab', currentPage === 1 && 'active'])}>
 				1
 			</Link>
 			<div className="containerTabs containerTabs_mt0">
-				{pageNumber.current < activeEllipsis ? (
+				{currentPage < activeEllipsis ? (
 					LeftLinks.map((pageLink, ind) => (
 						<Link
 							key={pageLink.link}
 							href={pageLink.link}
-							className={clsx(['tab', pageNumber.current === ind + 2 && 'active'])}
+							className={clsx(['tab', currentPage === ind + 2 && 'active'])}
 						>
 							{pageLink.pageNumber}
 						</Link>
@@ -89,44 +203,41 @@ function Pagination({ offset, lastPageNumber, links, limit }: PaginationProps) {
 				)}
 			</div>
 
-			{pageNumber.current < activeEllipsis ||
-			pageNumber.current > lastPageNumber - desactiveEllipsisRight ? (
+			{currentPage < activeEllipsis || currentPage > lastPageNumber - desactiveEllipsisRight ? (
 				<Link
 					href={CenterLink}
 					className={clsx({
 						tab: true,
 						active:
-							pageNumber.current === activeEllipsis ||
-							pageNumber.current === lastPageNumber - desactiveEllipsisRight
+							currentPage === activeEllipsis ||
+							currentPage === lastPageNumber - desactiveEllipsisRight
 					})}
 				>
-					{pageNumber.current < activeEllipsis
-						? activeEllipsis
-						: lastPageNumber - desactiveEllipsisRight}
+					{currentPage < activeEllipsis ? activeEllipsis : lastPageNumber - desactiveEllipsisRight}
 				</Link>
 			) : (
 				<div className="containerTabs containerTabs_mt0">
 					<Link href={prev_page} className="tab">
-						{pageNumber.current - 1}
+						{currentPage - 1}
 					</Link>
 					<Link href={self} className="tab active">
-						{pageNumber.current}
+						{currentPage}
 					</Link>
 					<Link href={next_page} className="tab">
-						{pageNumber.current + 1}
+						{currentPage + 1}
 					</Link>
 				</div>
 			)}
 
-			{pageNumber.current > lastPageNumber - desactiveEllipsisRight ? (
-				<div className="containerTabs containerTabs_mt0">
+			{currentPage > lastPageNumber - desactiveEllipsisRight ? (
+				<div className="containerTabs container_main containerTabs_mt0">
 					{RightLinks.map((pageLink, ind) => (
 						<Link
 							key={pageLink.link}
 							href={pageLink.link}
 							className={clsx({
 								tab: true,
-								active: pageNumber.current === ind + lastPageNumber - sidePageNumber
+								active: currentPage === ind + lastPageNumber - sidePageNumber
 							})}
 						>
 							{pageLink.pageNumber}
@@ -139,19 +250,11 @@ function Pagination({ offset, lastPageNumber, links, limit }: PaginationProps) {
 
 			<Link
 				href={last_page}
-				className={clsx({ tab: true, active: pageNumber.current === lastPageNumber })}
+				className={clsx({ tab: true, active: currentPage === lastPageNumber })}
 			>
 				{lastPageNumber}
 			</Link>
-			<Link
-				href={next_page}
-				className={clsx({ tab: true, disabled: thereIsNext })}
-				aria-disabled={thereIsNext}
-				aria-label={thereIsNext ? 'There is no next page' : 'Go to the next page'}
-			>
-				&gt;
-			</Link>
-		</div>
+		</>
 	)
 }
 

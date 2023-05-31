@@ -11,7 +11,7 @@ export default async function searchAPI(req: NextApiRequest, res: NextApiRespons
 		const { word, offset } = req.query
 
 		if (typeof word !== 'string') {
-			throw { status: 400, message: `No pets found for ${word}` }
+			throw { status: 400, message: `No pets found.` }
 		}
 		const cond = decodeURI(word)
 
