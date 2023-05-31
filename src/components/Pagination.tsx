@@ -34,7 +34,7 @@ function Pagination({
 
 	let pathname = url.pathname
 	let word = url.searchParams.get('word')
-	let wordQuery = word ? word : ''
+	let wordQuery = word ? `word=${word}&` : ''
 
 	/**
 	 * If the limit of items returned by the API is 10.
@@ -50,7 +50,7 @@ function Pagination({
 
 	const enableLongPagination = lastPageNumber > maximumElementsSimpleExtension
 	const enableSideBrowsers = lastPageNumber > Math.round(maximumElementsSimpleExtension / 2)
-	console.log(links)
+
 	return (
 		<div className="containerTabs containerTabs_main">
 			{enableSideBrowsers && (
