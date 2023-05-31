@@ -34,6 +34,7 @@ const UserSchema = new Schema<User, UserModel, IUserMethods>(
 		purchases: {
 			type: [
 				{
+					date: Date,
 					name: String,
 					price: Number,
 					quantity: Number

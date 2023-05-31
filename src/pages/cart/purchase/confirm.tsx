@@ -57,8 +57,9 @@ export default function ConfirmPurchase() {
 
 		const purchases = shopping.map((purchase) => {
 			const { name, price, quantity } = purchase
+			const date = new Date()
 
-			return { name, price, quantity }
+			return { date, name, price, quantity }
 		})
 
 		fetch('http://localhost:3000/api/v1/users', {
