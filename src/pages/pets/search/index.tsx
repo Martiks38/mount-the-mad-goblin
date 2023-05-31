@@ -1,31 +1,19 @@
-import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { useDetectSearchChanges } from '@/hooks/useDetectSearchChanges'
 
 import { LayoutGridResults } from '@/layout/LayoutGridResults'
-import { useRouter } from 'next/router'
 
 const requestURL = 'http://localhost:3000/api/v1/pets/search'
 
 export default function SearchResultPage() {
 	const router = useRouter()
 	const [url, setUrl] = useState('')
-	const [currentSearch, setCurrentSearch] = useState('')
+	const { currentSearch } = useDetectSearchChanges()
 	const [errorSearch, setErrorSearch] = useState({
 		message: '',
 		state: false
 	})
-
-	useEffect(() => {
-		const checkSearch = () => {
-			const { search } = window.location
-
-			if (search !== currentSearch) setCurrentSearch(search)
-		}
-
-		router.events.on('routeChangeComplete', checkSearch)
-
-		return () => router.events.off('routeChangeComplete', checkSearch)
-	}, [currentSearch, router])
 
 	useEffect(() => {
 		const fetchURL = new URL(requestURL)
