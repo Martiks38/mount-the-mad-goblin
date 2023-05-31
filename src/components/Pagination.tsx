@@ -13,13 +13,21 @@ interface Parameters {
 	offset: number
 }
 
-interface PaginationProps extends Pick<ResultPagination, 'links'>, Parameters {}
+interface PaginationProps extends Pick<ResultPagination, 'links'>, Parameters {
+	maximumElementsSimpleExtension: number
+}
 
 const activeEllipsis = 5 // Page x distance from the ends.
 const desactiveEllipsisRight = activeEllipsis - 1
 const sidePageNumber = activeEllipsis - 2 // Represents the number of pages between the endpoint and the page that triggers the ellipsis.
 
-function Pagination({ lastPageNumber, links, limit, offset }: PaginationProps) {
+function Pagination({
+	lastPageNumber,
+	links,
+	limit,
+	offset,
+	maximumElementsSimpleExtension = 10
+}: PaginationProps) {
 	const { next_page, prev_page } = links
 	const pageNumber = useRef(offset / limit + 1)
 	const url = new URL(window.location.href)
@@ -40,11 +48,12 @@ function Pagination({ lastPageNumber, links, limit, offset }: PaginationProps) {
 	const thereIsPrev = prev_page === ''
 	const thereIsNext = next_page === ''
 
-	const lessThanPages = lastPageNumber > 5
-
+	const enableLongPagination = lastPageNumber > maximumElementsSimpleExtension
+	const enableSideBrowsers = lastPageNumber > Math.round(maximumElementsSimpleExtension / 2)
+	console.log(links)
 	return (
 		<div className="containerTabs containerTabs_main">
-			{lessThanPages && (
+			{enableSideBrowsers && (
 				<Link
 					href={prev_page}
 					className={clsx({ tab: true, disabled: thereIsPrev })}
@@ -54,7 +63,7 @@ function Pagination({ lastPageNumber, links, limit, offset }: PaginationProps) {
 					&lt;
 				</Link>
 			)}
-			{!lessThanPages && lastPageNumber !== 1 && (
+			{enableLongPagination && (
 				<LongPaginationBar
 					lastPageNumber={lastPageNumber}
 					currentPage={pageNumber.current}
@@ -65,7 +74,7 @@ function Pagination({ lastPageNumber, links, limit, offset }: PaginationProps) {
 					pathname={pathname}
 				/>
 			)}
-			{lessThanPages && (
+			{!enableLongPagination && lastPageNumber !== 1 && (
 				<SimplePaginationBar
 					links={links}
 					lastPageNumber={lastPageNumber}
@@ -75,7 +84,7 @@ function Pagination({ lastPageNumber, links, limit, offset }: PaginationProps) {
 					currentPage={pageNumber.current}
 				/>
 			)}
-			{lessThanPages && (
+			{enableSideBrowsers && (
 				<Link
 					href={next_page}
 					className={clsx({ tab: true, disabled: thereIsNext })}
