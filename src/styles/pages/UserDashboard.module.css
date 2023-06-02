@@ -1,0 +1,198 @@
+.dashboardNav {
+	grid-area: dashboardNav;
+	display: flex;
+	flex-direction: column;
+	gap: 0.6em;
+	padding: 1em;
+	border-bottom: solid 0.25rem var(--navbar-background-no-blur);
+	font-size: 1.125rem;
+	line-height: 1.75rem;
+
+	@media (min-width: 42.5rem) {
+		padding: 3em 2em;
+		border-bottom-width: 0;
+		border-right: solid 0.25rem var(--navbar-background-no-blur);
+	}
+
+	&__link {
+		display: block;
+		width: fit-content;
+		padding: 0.4em 0.8em;
+		border-radius: var(--border-8);
+
+		@media (min-width: 42.5rem) {
+			width: 100%;
+		}
+
+		@media (hover: none) {
+			&:active {
+				background-color: rgba(255, 255, 255, 0.1);
+			}
+		}
+
+		@media (hover: hover) {
+			&:hover {
+				background-color: rgba(255, 255, 255, 0.1);
+			}
+		}
+	}
+}
+
+.dashboardContent {
+	grid-area: dashboardMain;
+	padding: 1em 1.5em 2em !important;
+
+	@media (min-width: 42.5rem) {
+		padding: 3em 2em 3em 0 !important;
+	}
+
+	& :is(h2)::after {
+		content: '';
+		display: block;
+		width: 100%;
+		margin-top: 0.4em;
+		margin: 0.4em 0 1em;
+		border-bottom: solid 0.125rem rgba(255, 255, 255, 0.5);
+	}
+
+	&__btn {
+		display: block;
+		margin-top: 0.6em;
+		padding: 0.35em 0.6em;
+		width: fit-content;
+		background-color: var(--btn-background-red-alpha-50);
+		border: solid 0.125rem var(--color-primary);
+		border-radius: var(--border-8);
+		font-weight: 500;
+		color: var(--color-letter-1);
+
+		&_delete {
+			border-color: red;
+		}
+
+		@media (hover: none) {
+			&:active {
+				background-color: var(--btn-background-red-alpha-75);
+				color: var(--color-primary-hover);
+			}
+		}
+
+		@media (hover: hover) {
+			&:hover {
+				background-color: var(--btn-background-red-alpha-75);
+				color: var(--color-primary-hover);
+			}
+		}
+	}
+
+	&__deleteTitle {
+		color: var(--color-letter-delete);
+	}
+
+	&__form {
+		display: flex;
+		flex-direction: column;
+		gap: 0.8em;
+		max-width: 18.75rem;
+
+		&__label {
+			font-size: 1.25rem;
+			line-height: 1.75rem;
+		}
+
+		&__input {
+			padding: 0.5em 0.4em;
+			border-radius: var(--border-8);
+			font-size: 1.25rem;
+			background-color: transparent;
+			border: solid 0.125rem var(--input-search);
+			color: var(--input-search);
+			caret-color: var(--input-search);
+
+			&:focus {
+				outline: solid 0.25rem var(--color-primary);
+				outline-offset: -0.1875rem;
+			}
+		}
+	}
+
+	&__profile {
+		& :is(h2, h3, h4) {
+			margin-bottom: 0.6em;
+			font-size: 1.25rem;
+			line-height: 1.75rem;
+		}
+
+		& :is(p) {
+			margin-bottom: 1.4em;
+			font-size: 1rem;
+			line-height: 1.5rem;
+		}
+
+		& :is(p:last-of-type) {
+			margin-bottom: 2.25em;
+		}
+	}
+
+	&__section {
+		&:not(:last-child) {
+			margin-bottom: 2em;
+		}
+
+		&__title {
+			font-size: 1.5rem;
+			line-height: 1.75rem;
+		}
+	}
+
+	&__title {
+		margin-top: 0;
+		font-size: 2.25rem;
+		line-height: 2.5rem;
+	}
+
+	@media (min-width: 96rem) {
+		padding: 3em 4em 6em 0 !important;
+	}
+}
+
+.shoppingHistory {
+	width: 100%;
+	max-width: 50rem;
+	border: solid 0.125rem var(--color-primary-alpha-55);
+	border-collapse: collapse;
+
+	&__headRow {
+		border-bottom: solid 0.125rem var(--color-primary-alpha-55);
+
+		& th {
+			padding: 1rem 0;
+			font-size: 1.5rem;
+			font-size: clamp(0.875rem, 0.4919rem + 2.0161vw, 1.5rem);
+		}
+	}
+
+	&__bodyRow {
+		& :is(td) {
+			padding: 1rem 0.6rem;
+			font-size: 1rem;
+			font-size: clamp(0.75rem, 0.5968rem + 0.8065vw, 1rem);
+
+			&:first-child {
+				padding-left: 1rem;
+
+				@media (min-width: 40rem) {
+					padding-left: 2rem;
+				}
+			}
+
+			&:not(:first-child) {
+				text-align: center;
+			}
+		}
+
+		&:not(:last-child) {
+			border-bottom: solid 0.125rem var(--color-primary-alpha-55);
+		}
+	}
+}
