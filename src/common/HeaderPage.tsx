@@ -45,7 +45,7 @@ export function HeaderPage() {
 						</li>
 						{connected ? (
 							<li>
-								<Link href="#" className={headerPageStyles.header__linkItem}>
+								<Link href="/user/dashboard" className={headerPageStyles.header__linkItem}>
 									<UserIcon size={sideImg - 8} />
 								</Link>
 							</li>
