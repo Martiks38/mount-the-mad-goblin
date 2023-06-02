@@ -29,7 +29,7 @@ function Pagination({
 	maximumElementsSimpleExtension = 10
 }: PaginationProps) {
 	const [isMovil, setIsMovil] = useState(false)
-	const firstCheckMovil = useRef(false)
+	const firstCheckMovil = useRef(true)
 
 	const checkScreenDimensions = useCallback(() => {
 		const movilDimensions = window.innerWidth < 640
@@ -41,7 +41,7 @@ function Pagination({
 		}
 	}, [isMovil])
 
-	if (!firstCheckMovil.current) {
+	if (firstCheckMovil.current) {
 		checkScreenDimensions()
 		firstCheckMovil.current = true
 	}

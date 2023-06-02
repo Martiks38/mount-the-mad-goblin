@@ -48,6 +48,7 @@ export interface ErrorResult {
 }
 
 export interface ShoppingHistory {
+	date: Date
 	name: string
 	price: number
 	quantity: number

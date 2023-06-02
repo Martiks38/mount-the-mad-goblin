@@ -29,8 +29,6 @@
 	}
 
 	&__purchase {
-		--hover-color: #ffd04c;
-
 		display: block;
 		width: fit-content;
 		padding: 0.35em 0.6em;
@@ -49,14 +47,14 @@
 		@media (hover: none) {
 			&:active {
 				background-color: var(--btn-background-red-alpha-75);
-				color: var(--hover-color);
+				color: var(--color-primary-hover);
 			}
 		}
 
 		@media (hover: hover) {
 			&:hover {
 				background-color: var(--btn-background-red-alpha-75);
-				color: var(--hover-color);
+				color: var(--color-primary-hover);
 			}
 		}
 	}
