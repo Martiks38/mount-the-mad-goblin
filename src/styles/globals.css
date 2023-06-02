@@ -74,6 +74,7 @@ body {
 }
 
 body {
+	width: 100%;
 	background-color: var(--body-background);
 }
 
@@ -206,5 +207,40 @@ ul {
 
 	&.disabled {
 		opacity: 0.6;
+	}
+}
+
+.closeBtn {
+	--height-line: 0.25rem;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 20px;
+	width: 20px;
+	background-color: transparent;
+	border-width: 0;
+	border-radius: 4px;
+
+	&__line,
+	&__line::before {
+		display: block;
+		width: 1rem;
+		height: var(--height-line);
+		background-color: var(--color-primary);
+		border-radius: calc(var(--height-line) / 2);
+	}
+
+	&__line {
+		transform: rotate(45deg);
+	}
+
+	&__line::before {
+		content: '';
+		transform: rotate(90deg);
+	}
+
+	&:hover {
+		background-color: #2d2927;
 	}
 }
