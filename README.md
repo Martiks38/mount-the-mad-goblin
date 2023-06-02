@@ -32,11 +32,13 @@ Los endpoints disponibles son:
 - GET `/pets/types`: Devuelve todos los tipos de mascotas con una imagen de Pets - The Crazy Goblin.
 - GET `/pets/types/:type`: Devuelve las mascotas de acuerdo al tipo de Pets - The Crazy Goblin.
 - GET `/pets/types/:type/prices`: Devuelve las mascotas de acuerdo al tipo y al rango de precios de Pets - The Crazy Goblin.
+- GET `/pets/search`: Devuelve la/s mascotas que contengan en su nombre la palabra de la búsqueda de Pets - The Crazy Goblin.
 
 ### USERS
 
 - POST `/users`: Crea un nuevo usuario de Pets - The Crazy Goblin.
 - PUT `/users`: Modifica un campo del usario de Pets - The Crazy Goblin.
+- GET `/users/:username`: Devuelve el username, email y el historial de compras del usuario de Pets - The Crazy Goblin.
 - DELETE `/users/:username`: Borra el usuario de Pets - The Crazy Goblin.
 
 ### AUTH
