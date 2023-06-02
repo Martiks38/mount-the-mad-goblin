@@ -28,7 +28,7 @@
 		appearance: none;
 		caret-color: var(--input-search);
 		transition-property: background-color, color;
-		transition-delay: 30s;
+		transition-delay: 99999s;
 
 		&:-webkit-autofill,
 		&:autofill {
