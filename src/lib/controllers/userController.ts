@@ -6,7 +6,7 @@ import { errorMessage } from '@/utils/handlerError'
 
 import { SECRET_TOKEN } from '@/config'
 
-import type { User } from '@/typings/interfaces'
+import type { ShoppingHistory, User } from '@/typings/interfaces'
 
 /* Token */
 interface JWT {
@@ -69,6 +69,7 @@ export async function getUser(name: string, token: string) {
 export async function updateUser(data: Partial<User>, token: string) {
 	try {
 		const { _id } = decodeToken(token)
+		let update: Partial<User> | Record<'purchases', ShoppingHistory[] | undefined>
 
 		await verifyExistence(data, _id)
 
@@ -77,11 +78,12 @@ export async function updateUser(data: Partial<User>, token: string) {
 
 		if (Object.hasOwn(data, 'purchases') && data.purchases) {
 			const purchases = user.purchases?.concat(data.purchases)
-
-			await UserModel.findOneAndUpdate({ _id }, { $set: { purchases } })
+			update = { purchases }
 		} else {
-			await UserModel.findOneAndUpdate({ _id }, { $set: data })
+			update = data
 		}
+
+		await UserModel.findOneAndUpdate({ _id }, { $set: update })
 
 		return { message: 'The change was applied successfully.' }
 	} catch (error: any) {
