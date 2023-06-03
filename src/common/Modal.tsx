@@ -18,9 +18,15 @@ export function Modal({ children, className, closeModal }: ModalProps) {
 	}, [])
 
 	return createPortal(
-		<div ref={modalRef} onClick={closeModal} className={modalStyles.back} aria-live="polite">
+		<>
+			<div
+				ref={modalRef}
+				onClick={closeModal}
+				className={modalStyles.back}
+				aria-live="polite"
+			></div>
 			<div className={`${modalStyles.modal} ${className}`}>{children}</div>
-		</div>,
-		document.querySelector('body') as Element
+		</>,
+		document.body
 	)
 }
