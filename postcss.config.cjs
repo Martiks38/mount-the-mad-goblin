@@ -7,7 +7,7 @@ module.exports = {
 			content: ['src/**/*.tsx'],
 			css: ['src/**/*.css'],
 			safelist: {
-				standard: [/Error$/, /html$/],
+				standard: [/Error$/],
 				deep: [/containerTabs$/],
 				greedy: [/active$/]
 			}
