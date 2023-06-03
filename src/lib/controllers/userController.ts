@@ -73,12 +73,12 @@ export async function updateUser(data: Partial<User>, token: string) {
 		await verifyExistence(data, _id)
 
 		const user = await UserModel.findById<User>({ _id })
-
 		if (user === null) throw { status: 400, message: "User don't exist." }
 
-		if (Object.hasOwn(data, 'purchases')) {
-			const purchases = { ...user.purchases, ...data.purchases }
-			await UserModel.findOneAndUpdate({ _id }, { $set: purchases })
+		if (Object.hasOwn(data, 'purchases') && data.purchases) {
+			const purchases = user.purchases?.concat(data.purchases)
+
+			await UserModel.findOneAndUpdate({ _id }, { $set: { purchases } })
 		} else {
 			await UserModel.findOneAndUpdate({ _id }, { $set: data })
 		}
