@@ -81,3 +81,15 @@
 		}
 	}
 }
+
+.containerLoader {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	min-width: 15rem;
+	padding: 2rem;
+	background-color: var(--navbar-footer-background);
+	border: solid 0.25rem var(--color-primary-alpha-55);
+	border-radius: var(--border-8);
+	transform: translate(-50%, -50%);
+}

@@ -3,10 +3,12 @@ import { useId, useMemo, useState } from 'react'
 import { Modal } from '@/common/Modal'
 
 import deleteModal from '@/styles/components/DeleteUserModal.module.css'
+import { Loader } from '@/common/Loader'
 
 interface DeleteUserModalProps {
 	closeModal: () => void
 	deleteAccount: () => void
+	isLoading: boolean
 	startDeleteWith: string
 	username: string
 }
@@ -14,6 +16,7 @@ interface DeleteUserModalProps {
 export function DeleteUserModal({
 	closeModal,
 	deleteAccount,
+	isLoading,
 	startDeleteWith,
 	username
 }: DeleteUserModalProps) {
@@ -28,11 +31,15 @@ export function DeleteUserModal({
 		[phrase, startDeleteWith, username]
 	)
 
-	return (
+	return isLoading ? (
+		<div className={deleteModal.containerLoader}>
+			<Loader />
+		</div>
+	) : (
 		<Modal closeModal={closeModal} className={deleteModal.modal}>
 			<header className={deleteModal.modal__header}>
 				<p>Delete {username} account</p>
-				<button className="closeBtn" aria-label="Cancel account deletion">
+				<button onClick={closeModal} className="closeBtn" aria-label="Cancel account deletion">
 					<span className="closeBtn__line"></span>
 				</button>
 			</header>
@@ -46,6 +53,8 @@ export function DeleteUserModal({
 					name="delete"
 					id={`${modalId}-delete`}
 					autoComplete="off"
+					autoCorrect="off"
+					spellCheck={false}
 				/>
 
 				<button
