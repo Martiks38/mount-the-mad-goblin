@@ -32,6 +32,7 @@
 
 .shadow {
 	position: relative;
+	margin: 0 auto;
 	width: min-content;
 
 	&::after {
