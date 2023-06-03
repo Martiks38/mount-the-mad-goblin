@@ -68,7 +68,7 @@ export default function App({ Component, pageProps }: AppProps) {
 			const options = {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'x-www-form-urlencoded'
+					'Content-Type': 'application/json'
 				},
 				body
 			}
