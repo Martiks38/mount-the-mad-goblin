@@ -9,12 +9,12 @@ dbConnection()
 
 export default async function usersApi(req: NextApiRequest, res: NextApiResponse) {
 	const { body, method } = req
-	const { email, password, username } = JSON.parse(body)
 
 	if (method === 'POST') {
-		const user = { email, password, username }
+		const { email, password, username } = body
+
 		if (email) {
-			return createUser(user)
+			return createUser({ email, password, username })
 				.then((result) => {
 					return res.status(201).json(result)
 				})
@@ -41,7 +41,7 @@ export default async function usersApi(req: NextApiRequest, res: NextApiResponse
 
 		if (!token) return res.status(403).json({ message: 'No token provided' })
 
-		return updateUser(JSON.parse(body), token)
+		return updateUser(body, token)
 			.then((result) => {
 				return res.status(200).json(result)
 			})
