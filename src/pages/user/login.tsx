@@ -39,16 +39,9 @@ export default function LogIn() {
 		setIsLoading(true)
 
 		const formData = new FormData(ev.currentTarget)
+		const formDataObj = Object.fromEntries(formData.entries())
 
-		let urlSearchParams: Record<string, string> = {}
-
-		for (const pair of Array.from(formData.entries())) {
-			if (pair[0] === 'keepLogged') continue
-
-			urlSearchParams[pair[0]] = pair[1] as string
-		}
-
-		const body = new URLSearchParams(urlSearchParams).toString()
+		const body = JSON.stringify(formDataObj)
 
 		try {
 			const response = await fetch('http://localhost:3000/api/v1/users', {

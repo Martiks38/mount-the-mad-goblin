@@ -1,21 +1,18 @@
 import { dbConnection } from '@/lib/connection'
-import { createUser, loginUser, updateUser, validateToken } from '@/lib/controllers/userController'
+import { createUser, loginUser, updateUser } from '@/lib/controllers/userController'
 
 import { TOKEN_HEADER } from '@/consts'
 
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { parseBodyRequest } from '@/utils/parseRequest'
 
 dbConnection()
 
 export default async function usersApi(req: NextApiRequest, res: NextApiResponse) {
 	const { body, method } = req
-	const parseData = parseBodyRequest(body)
+	const { email, password, username } = JSON.parse(body)
 
 	if (method === 'POST') {
-		const { email, password, username } = parseData
 		const user = { email, password, username }
-
 		if (email) {
 			return createUser(user)
 				.then((result) => {
@@ -44,7 +41,7 @@ export default async function usersApi(req: NextApiRequest, res: NextApiResponse
 
 		if (!token) return res.status(403).json({ message: 'No token provided' })
 
-		return updateUser(body, token)
+		return updateUser(JSON.parse(body), token)
 			.then((result) => {
 				return res.status(200).json(result)
 			})

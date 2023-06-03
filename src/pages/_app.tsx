@@ -63,7 +63,8 @@ export default function App({ Component, pageProps }: AppProps) {
 	// Check if the user's session is kept open.
 	useEffect(() => {
 		const checkKeepSession = (token: string, username: string) => {
-			const body = new URLSearchParams({ token, username })
+			const body = JSON.stringify({ token, username })
+
 			const options = {
 				method: 'POST',
 				headers: {

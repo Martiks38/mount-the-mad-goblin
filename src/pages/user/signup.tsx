@@ -35,13 +35,9 @@ export default function SignUp() {
 		setIsError(false)
 
 		const formData = new FormData(ev.currentTarget)
-		let urlSearchParams: Record<string, string> = {}
+		const formDataObj = Object.fromEntries(formData.entries())
 
-		for (const pair of Array.from(formData.entries())) {
-			urlSearchParams[pair[0]] = pair[1] as string
-		}
-
-		const body = new URLSearchParams(urlSearchParams).toString()
+		const body = JSON.stringify(formDataObj)
 
 		try {
 			const response = await fetch('http://localhost:3000/api/v1/users', {

@@ -61,11 +61,12 @@ export default function ConfirmPurchase() {
 
 			return { date, name, price, quantity }
 		})
+		const body = JSON.stringify({ purchases })
 
 		fetch('http://localhost:3000/api/v1/users', {
 			method: 'PUT',
 			headers,
-			body: JSON.stringify({ purchases })
+			body
 		})
 			.then((res) => {
 				const data = res.json()
