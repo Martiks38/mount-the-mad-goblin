@@ -7,7 +7,7 @@ dbConnection()
 
 export default async function authApi(req: NextApiRequest, res: NextApiResponse) {
 	const { body, method } = req
-	const { token, username } = JSON.parse(body)
+	const { token, username } = body
 
 	if (method === 'POST') {
 		return validateToken(token, username)
