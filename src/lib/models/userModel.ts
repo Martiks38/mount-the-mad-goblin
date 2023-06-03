@@ -72,11 +72,18 @@ UserSchema.pre('save', async function (next) {
 	next()
 })
 
-UserSchema.pre('findOneAndUpdate', async function () {
-	const docToUpdate = await this.model.findOne(this.getQuery())
-	await docToUpdate.encryptPassword()
+UserSchema.pre('findOneAndUpdate', async function (next) {
+	const updateObj: any = this.getUpdate()
+	const password = updateObj.$set?.password
 
-	this.setUpdate({ password: docToUpdate.password })
+	if (password) {
+		const salt = await genSalt(saltRounds)
+		const encryptedPassword = await hash(password, salt)
+
+		this.setUpdate({ password: encryptedPassword })
+	}
+
+	next()
 })
 
 export default models?.User || model<User, UserModel>('User', UserSchema)
