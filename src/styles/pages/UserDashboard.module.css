@@ -46,6 +46,10 @@
 		padding: 3em 2em 3em 0 !important;
 	}
 
+	@media (min-width: 96rem) {
+		padding: 3em 4em 6em 0 !important;
+	}
+
 	& :is(h2)::after {
 		content: '';
 		display: block;
@@ -102,11 +106,12 @@
 
 		&__input {
 			padding: 0.5em 0.4em;
-			border-radius: var(--border-8);
-			font-size: 1.25rem;
 			background-color: transparent;
 			border: solid 0.125rem var(--input-search);
+			border-radius: var(--border-8);
 			color: var(--input-search);
+			font-size: 1.25rem;
+			line-height: 1.75rem;
 			caret-color: var(--input-search);
 
 			&:focus {
@@ -114,6 +119,21 @@
 				outline-offset: -0.1875rem;
 			}
 		}
+	}
+
+	&__message {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		padding: 1em 2em !important;
+		background-color: var(--navbar-background);
+		border: solid 2px var(--color-tertiary);
+		border-radius: var(--border-6);
+		color: var(--color-primary);
+		font-weight: 600;
+		font-size: 1.25rem;
+		line-height: 1.75rem;
+		transform: translate(-50%, -50%);
 	}
 
 	&__profile {
@@ -149,10 +169,6 @@
 		margin-top: 0;
 		font-size: 2.25rem;
 		line-height: 2.5rem;
-	}
-
-	@media (min-width: 96rem) {
-		padding: 3em 4em 6em 0 !important;
 	}
 }
 

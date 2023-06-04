@@ -1,23 +1,20 @@
 import { dbConnection } from '@/lib/connection'
-import { createUser, loginUser, updateUser, validateToken } from '@/lib/controllers/userController'
+import { createUser, loginUser, updateUser } from '@/lib/controllers/userController'
 
 import { TOKEN_HEADER } from '@/consts'
 
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { parseBodyRequest } from '@/utils/parseRequest'
 
 dbConnection()
 
 export default async function usersApi(req: NextApiRequest, res: NextApiResponse) {
 	const { body, method } = req
-	const parseData = parseBodyRequest(body)
 
 	if (method === 'POST') {
-		const { email, password, username } = parseData
-		const user = { email, password, username }
+		const { email, password, username } = body
 
 		if (email) {
-			return createUser(user)
+			return createUser({ email, password, username })
 				.then((result) => {
 					return res.status(201).json(result)
 				})

@@ -41,10 +41,11 @@ export async function verifyExistence(data: Partial<User>, _id?: string) {
 
 		if (Object.hasOwn(data, 'password')) {
 			const user = await UserModel.findById({ _id })
-
 			if (!user) throw { status: 401, message: 'Unauthorozed' }
 
-			if (data.password && (await user.compare(data.password)))
+			const isCurrentPassword = await user.comparePassword(data.password)
+
+			if (isCurrentPassword)
 				throw { status: 400, message: 'It cannot be the same as the old password' }
 		}
 	} catch (error: any) {
