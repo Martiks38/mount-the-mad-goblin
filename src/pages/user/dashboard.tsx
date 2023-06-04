@@ -3,7 +3,9 @@ import { useEffect, useId, useRef, useState } from 'react'
 import { useCart } from '@/hooks/useCart'
 import { useUser } from '@/hooks/useUser'
 
+import { createPortal } from 'react-dom'
 import { DeleteUserModal } from '@/components/DeleteUserModal'
+import { Loader } from '@/common/Loader'
 
 import { instanceOf } from '@/utils/intanceOf'
 import { formatPrice } from '@/utils/formatPrice'
@@ -13,7 +15,6 @@ import { TOKEN_HEADER } from '@/consts'
 import userDashboardStyles from '@/styles/pages/UserDashboard.module.css'
 
 import type { User } from '@/typings/interfaces'
-import { createPortal } from 'react-dom'
 
 type ResponseData = {
 	data: User | string | null
@@ -33,8 +34,12 @@ export default function UserDashboard() {
 		error: false
 	})
 
+	// It reflects the change of email since when updating this it is maintained until the user's data is brought back again.
+	const emailRef = useRef('')
+
 	const [viewDeleteModal, setViewDeleteModal] = useState(false)
 	const [deleteStatus, setDeleteStatus] = useState('')
+	const [updateStatus, setUpdateStatus] = useState('')
 
 	const deletePositionY = useRef(0)
 	const firstRender = useRef(true)
@@ -48,7 +53,7 @@ export default function UserDashboard() {
 		const getUser = async () => {
 			try {
 				setIsLoading(true)
-				const headers: { [index: string]: string } = {}
+				const headers: { [header: string]: string } = {}
 
 				headers[TOKEN_HEADER] = token
 
@@ -82,11 +87,11 @@ export default function UserDashboard() {
 	}, [connected, router, token, username])
 
 	const signOut = () => {
+		router.push('/')
+
 		setConnection(false)
 		setToken('')
 		setUsername('')
-
-		router.push('/')
 	}
 
 	/* Delete modal */
@@ -159,6 +164,55 @@ export default function UserDashboard() {
 		}
 	}
 
+	/* Update account */
+	const updateAccount = async (ev: React.FormEvent<HTMLFormElement>) => {
+		ev.preventDefault()
+
+		const formData = new FormData(ev.currentTarget)
+		const headers: { [header: string]: string } = {
+			'Content-Type': 'application/json'
+		}
+
+		headers[TOKEN_HEADER] = token
+
+		const fieldsToUpdate = Object.fromEntries(
+			Array.from(formData.entries()).filter((pair) => pair[1] !== '')
+		)
+
+		const body = JSON.stringify(fieldsToUpdate)
+
+		const options = {
+			method: 'PUT',
+			headers,
+			body
+		}
+
+		try {
+			setIsLoading(true)
+			const response = await fetch('http://localhost:3000/api/v1/users', options)
+			const data: { message: string } = await response.json()
+
+			if (!response.ok) throw data.message
+
+			if (fieldsToUpdate?.username) setUsername(fieldsToUpdate.username as string)
+			if (fieldsToUpdate?.email) emailRef.current = fieldsToUpdate.email as string
+
+			/* Reset form */
+			Array.from(formData.keys()).forEach((key) => {
+				const input = document.querySelector<HTMLInputElement>(`[name=${key}]`)
+
+				if (input) input.value = ''
+			})
+
+			setUpdateStatus(data.message)
+		} catch (error: any) {
+			setUpdateStatus(error)
+		} finally {
+			setIsLoading(false)
+			setTimeout(() => setUpdateStatus(''), 2500)
+		}
+	}
+
 	return (
 		<div className="content content_user content_letterWhite">
 			<nav className={userDashboardStyles.dashboardNav}>
@@ -171,10 +225,15 @@ export default function UserDashboard() {
 			</nav>
 			<article className={userDashboardStyles.dashboardContent}>
 				<h1 className={userDashboardStyles.dashboardContent__title}>Account</h1>
+				{isLoading && (
+					<div className="containerLoader">
+						<Loader />
+					</div>
+				)}
 				{data.data && typeof data.data === 'string' && data.error && (
 					<p className="error">{data.data}</p>
 				)}
-				{data.data && instanceOf<User>(data.data, 'email') && (
+				{data.data && typeof data.data === 'object' && instanceOf<User>(data.data, 'email') && (
 					<>
 						<section
 							className={`${userDashboardStyles.dashboardContent__section} ${userDashboardStyles.dashboardContent__profile}`}
@@ -183,7 +242,7 @@ export default function UserDashboard() {
 							<h4>Username</h4>
 							<p>{username}</p>
 							<h3>Email</h3>
-							<p>{data.data.email}</p>
+							<p>{emailRef.current || data.data.email}</p>
 							<button onClick={signOut} className={userDashboardStyles.dashboardContent__btn}>
 								Sign out
 							</button>
@@ -193,7 +252,14 @@ export default function UserDashboard() {
 							<h2 id="settings" className={userDashboardStyles.dashboardContent__section__title}>
 								Settings
 							</h2>
-							<form className={userDashboardStyles.dashboardContent__form}>
+							{updateStatus &&
+								createPortal(
+									<div className={userDashboardStyles.dashboardContent__message}>
+										{updateStatus}
+									</div>,
+									document.body
+								)}
+							<form onSubmit={updateAccount} className={userDashboardStyles.dashboardContent__form}>
 								<label
 									htmlFor={`${dashboardId}-username`}
 									className={userDashboardStyles.dashboardContent__form__label}
