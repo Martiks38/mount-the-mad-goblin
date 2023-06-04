@@ -32,7 +32,7 @@ export function DeleteUserModal({
 	)
 
 	return isLoading ? (
-		<div className={deleteModal.containerLoader}>
+		<div className="containerLoader">
 			<Loader />
 		</div>
 	) : (

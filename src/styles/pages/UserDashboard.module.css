@@ -106,11 +106,12 @@
 
 		&__input {
 			padding: 0.5em 0.4em;
-			border-radius: var(--border-8);
-			font-size: 1.25rem;
 			background-color: transparent;
 			border: solid 0.125rem var(--input-search);
+			border-radius: var(--border-8);
 			color: var(--input-search);
+			font-size: 1.25rem;
+			line-height: 1.75rem;
 			caret-color: var(--input-search);
 
 			&:focus {
