@@ -86,12 +86,28 @@ export default function SignUp() {
 							id={`${formId}-usernameInput`}
 							name="username"
 							ref={focusInput}
+							pattern="[a-zA-Z0-9]{4,20}"
+							title="The username can only be letters and number and a minimum of four and a maximum of twenty characters."
 							required
 						/>
 						<label htmlFor={`${formId}-emailInput`}>Email *</label>
-						<input type="email" id={`${formId}-emailInput`} name="email" required />
+						<input
+							type="email"
+							id={`${formId}-emailInput`}
+							name="email"
+							pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
+							title="Invalid email. Example: email@crazygoblin.com"
+							required
+						/>
 						<label htmlFor={`${formId}-passwordInput`}>Password *</label>
-						<input type="password" id={`${formId}-passwordInput`} name="password" required />
+						<input
+							type="password"
+							id={`${formId}-passwordInput`}
+							name="password"
+							pattern=".{8,16}"
+							title="The password must have a minimum of eight and a maximum sixteen characters."
+							required
+						/>
 						{isLoading ? (
 							<Loader
 								styles={loginStyles.loader}
