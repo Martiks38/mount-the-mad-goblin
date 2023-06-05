@@ -14,7 +14,7 @@ export default function SignUp() {
 	const formId = useId()
 	const router = useRouter()
 	const [isCreated, setIsCreated] = useState(false)
-	const [isError, setIsError] = useState(false)
+	const [error, setError] = useState({ message: '', has: false })
 	const [isLoading, setIsLoading] = useState(false)
 
 	const { connected, setConnection } = useCart()
@@ -33,7 +33,7 @@ export default function SignUp() {
 		if (isLoading) return
 
 		setIsLoading(true)
-		setIsError(false)
+		setError({ message: '', has: false })
 
 		const formData = new FormData(ev.currentTarget)
 		const formDataObj = Object.fromEntries(formData.entries())
@@ -51,12 +51,16 @@ export default function SignUp() {
 
 			const data = await response.json()
 
+			if (!response.ok) throw data.message
+
 			setUsername(formData.get('username') as string)
 			setToken(data.token)
 			setConnection(true)
 			setIsCreated(true)
-		} catch (error) {
-			setIsError(true)
+		} catch (error: any) {
+			const message = typeof error === 'string' ? error : error.message
+
+			setError({ message, has: true })
 		} finally {
 			setIsLoading(false)
 		}
@@ -75,11 +79,7 @@ export default function SignUp() {
 				) : (
 					<SessionForm submit={handleSignUpSubmit}>
 						<h1>Sign Up</h1>
-						{isError && (
-							<p className={loginStyles.containerForm__error}>
-								The credentials you are using are not valid.
-							</p>
-						)}
+						{error.has && <p className={loginStyles.containerForm__error}>{error.message}</p>}
 						<label htmlFor={`${formId}-usernameInput`}>Username *</label>
 						<input
 							type="text"
