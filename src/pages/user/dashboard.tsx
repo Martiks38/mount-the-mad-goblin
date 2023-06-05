@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useId, useRef, useState } from 'react'
 import { useCart } from '@/hooks/useCart'
@@ -214,160 +215,170 @@ export default function UserDashboard() {
 	}
 
 	return (
-		<div className="content content_user content_letterWhite">
-			<nav className={userDashboardStyles.dashboardNav}>
-				<a href="#settings" className={userDashboardStyles.dashboardNav__link}>
-					Settings
-				</a>
-				<a href="#purchases" className={userDashboardStyles.dashboardNav__link}>
-					Purchases
-				</a>
-			</nav>
-			<article className={userDashboardStyles.dashboardContent}>
-				<h1 className={userDashboardStyles.dashboardContent__title}>Account</h1>
-				{isLoading && (
-					<div className="containerLoader">
-						<Loader />
-					</div>
-				)}
-				{data.data && typeof data.data === 'string' && data.error && (
-					<p className="error">{data.data}</p>
-				)}
-				{data.data && typeof data.data === 'object' && instanceOf<User>(data.data, 'email') && (
-					<>
-						<section
-							className={`${userDashboardStyles.dashboardContent__section} ${userDashboardStyles.dashboardContent__profile}`}
-						>
-							<h2 className={userDashboardStyles.dashboardContent__section__title}>Profile</h2>
-							<h4>Username</h4>
-							<p>{username}</p>
-							<h3>Email</h3>
-							<p>{emailRef.current || data.data.email}</p>
-							<button onClick={signOut} className={userDashboardStyles.dashboardContent__btn}>
-								Sign out
-							</button>
-						</section>
-
-						<section className={userDashboardStyles.dashboardContent__section}>
-							<h2 id="settings" className={userDashboardStyles.dashboardContent__section__title}>
-								Settings
-							</h2>
-							{updateStatus &&
-								createPortal(
-									<div className={userDashboardStyles.dashboardContent__message}>
-										{updateStatus}
-									</div>,
-									document.body
-								)}
-							<form onSubmit={updateAccount} className={userDashboardStyles.dashboardContent__form}>
-								<label
-									htmlFor={`${dashboardId}-username`}
-									className={userDashboardStyles.dashboardContent__form__label}
-								>
-									Name
-								</label>
-								<input
-									type="text"
-									name="username"
-									id={`${dashboardId}-username`}
-									className={userDashboardStyles.dashboardContent__form__input}
-									autoComplete="off"
-								/>
-								<label
-									htmlFor={`${dashboardId}-email`}
-									className={userDashboardStyles.dashboardContent__form__label}
-								>
-									Email
-								</label>
-								<input
-									type="text"
-									name="email"
-									id={`${dashboardId}-email`}
-									className={userDashboardStyles.dashboardContent__form__input}
-									autoComplete="off"
-								/>
-								<label htmlFor={`${dashboardId}-pass`}>Password</label>
-								<input
-									type="password"
-									name="password"
-									id={`${dashboardId}-pass`}
-									className={userDashboardStyles.dashboardContent__form__input}
-								/>
-								<button type="submit" className={userDashboardStyles.dashboardContent__btn}>
-									Update profile
-								</button>
-							</form>
-						</section>
-
-						<section className={userDashboardStyles.dashboardContent__section}>
-							<h2 id="purchases" className={userDashboardStyles.dashboardContent__section__title}>
-								Purchases
-							</h2>
-							{data.data.purchases?.length === 0 ? (
-								<p>No purchases have been made</p>
-							) : (
-								<table className={userDashboardStyles.shoppingHistory}>
-									<thead>
-										<tr className={userDashboardStyles.shoppingHistory__headRow}>
-											<th>Name</th>
-											<th>Quantity</th>
-											<th>Price</th>
-											<th>Date</th>
-										</tr>
-									</thead>
-									<tbody>
-										{data.data.purchases?.map((purchase) => {
-											const { date, name, price, quantity } = purchase
-
-											const localeDate = new Date(date).toLocaleDateString('en-US')
-											const productPrice = formatPrice(price)
-
-											return (
-												<tr
-													key={name + date}
-													className={userDashboardStyles.shoppingHistory__bodyRow}
-												>
-													<td>{name}</td>
-													<td>{quantity}</td>
-													<td>{productPrice}&nbsp;g</td>
-													<td>{localeDate}</td>
-												</tr>
-											)
-										})}
-									</tbody>
-								</table>
-							)}
-						</section>
-
-						<section className={userDashboardStyles.dashboardContent__section}>
-							<h2 className={userDashboardStyles.dashboardContent__deleteTitle}>Delete account</h2>
-
-							{viewDeleteModal && (
-								<DeleteUserModal
-									closeModal={closeModal}
-									deleteAccount={deleteAccount}
-									isLoading={isLoading}
-									startDeleteWith={startDeleteWith}
-									username={username}
-								/>
-							)}
-							{deleteStatus &&
-								createPortal(
-									<div className={userDashboardStyles.dashboardContent__message}>
-										{deleteStatus}
-									</div>,
-									document.body
-								)}
-							<button
-								onClick={openModal}
-								className={`${userDashboardStyles.dashboardContent__btn} ${userDashboardStyles.dashboardContent__btn_delete}`}
+		<>
+			<Head>
+				<title>Dashboard | Pets - The Crazy Goblin</title>
+			</Head>
+			<div className="content content_user content_letterWhite">
+				<nav className={userDashboardStyles.dashboardNav}>
+					<a href="#settings" className={userDashboardStyles.dashboardNav__link}>
+						Settings
+					</a>
+					<a href="#purchases" className={userDashboardStyles.dashboardNav__link}>
+						Purchases
+					</a>
+				</nav>
+				<article className={userDashboardStyles.dashboardContent}>
+					<h1 className={userDashboardStyles.dashboardContent__title}>Account</h1>
+					{isLoading && (
+						<div className="containerLoader">
+							<Loader />
+						</div>
+					)}
+					{data.data && typeof data.data === 'string' && data.error && (
+						<p className="error">{data.data}</p>
+					)}
+					{data.data && typeof data.data === 'object' && instanceOf<User>(data.data, 'email') && (
+						<>
+							<section
+								className={`${userDashboardStyles.dashboardContent__section} ${userDashboardStyles.dashboardContent__profile}`}
 							>
-								Delete account
-							</button>
-						</section>
-					</>
-				)}
-			</article>
-		</div>
+								<h2 className={userDashboardStyles.dashboardContent__section__title}>Profile</h2>
+								<h4>Username</h4>
+								<p>{username}</p>
+								<h3>Email</h3>
+								<p>{emailRef.current || data.data.email}</p>
+								<button onClick={signOut} className={userDashboardStyles.dashboardContent__btn}>
+									Sign out
+								</button>
+							</section>
+
+							<section className={userDashboardStyles.dashboardContent__section}>
+								<h2 id="settings" className={userDashboardStyles.dashboardContent__section__title}>
+									Settings
+								</h2>
+								{updateStatus &&
+									createPortal(
+										<div className={userDashboardStyles.dashboardContent__message}>
+											{updateStatus}
+										</div>,
+										document.body
+									)}
+								<form
+									onSubmit={updateAccount}
+									className={userDashboardStyles.dashboardContent__form}
+								>
+									<label
+										htmlFor={`${dashboardId}-username`}
+										className={userDashboardStyles.dashboardContent__form__label}
+									>
+										Name
+									</label>
+									<input
+										type="text"
+										name="username"
+										id={`${dashboardId}-username`}
+										className={userDashboardStyles.dashboardContent__form__input}
+										autoComplete="off"
+									/>
+									<label
+										htmlFor={`${dashboardId}-email`}
+										className={userDashboardStyles.dashboardContent__form__label}
+									>
+										Email
+									</label>
+									<input
+										type="text"
+										name="email"
+										id={`${dashboardId}-email`}
+										className={userDashboardStyles.dashboardContent__form__input}
+										autoComplete="off"
+									/>
+									<label htmlFor={`${dashboardId}-pass`}>Password</label>
+									<input
+										type="password"
+										name="password"
+										id={`${dashboardId}-pass`}
+										className={userDashboardStyles.dashboardContent__form__input}
+									/>
+									<button type="submit" className={userDashboardStyles.dashboardContent__btn}>
+										Update profile
+									</button>
+								</form>
+							</section>
+
+							<section className={userDashboardStyles.dashboardContent__section}>
+								<h2 id="purchases" className={userDashboardStyles.dashboardContent__section__title}>
+									Purchases
+								</h2>
+								{data.data.purchases?.length === 0 ? (
+									<p>No purchases have been made</p>
+								) : (
+									<table className={userDashboardStyles.shoppingHistory}>
+										<thead>
+											<tr className={userDashboardStyles.shoppingHistory__headRow}>
+												<th>Name</th>
+												<th>Quantity</th>
+												<th>Price</th>
+												<th>Date</th>
+											</tr>
+										</thead>
+										<tbody>
+											{data.data.purchases?.map((purchase) => {
+												const { date, name, price, quantity } = purchase
+
+												const localeDate = new Date(date).toLocaleDateString('en-US')
+												const productPrice = formatPrice(price)
+
+												return (
+													<tr
+														key={name + date}
+														className={userDashboardStyles.shoppingHistory__bodyRow}
+													>
+														<td>{name}</td>
+														<td>{quantity}</td>
+														<td>{productPrice}&nbsp;g</td>
+														<td>{localeDate}</td>
+													</tr>
+												)
+											})}
+										</tbody>
+									</table>
+								)}
+							</section>
+
+							<section className={userDashboardStyles.dashboardContent__section}>
+								<h2 className={userDashboardStyles.dashboardContent__deleteTitle}>
+									Delete account
+								</h2>
+
+								{viewDeleteModal && (
+									<DeleteUserModal
+										closeModal={closeModal}
+										deleteAccount={deleteAccount}
+										isLoading={isLoading}
+										startDeleteWith={startDeleteWith}
+										username={username}
+									/>
+								)}
+								{deleteStatus &&
+									createPortal(
+										<div className={userDashboardStyles.dashboardContent__message}>
+											{deleteStatus}
+										</div>,
+										document.body
+									)}
+								<button
+									onClick={openModal}
+									className={`${userDashboardStyles.dashboardContent__btn} ${userDashboardStyles.dashboardContent__btn_delete}`}
+								>
+									Delete account
+								</button>
+							</section>
+						</>
+					)}
+				</article>
+			</div>
+		</>
 	)
 }
