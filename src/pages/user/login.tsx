@@ -88,9 +88,24 @@ export default function LogIn() {
 						</p>
 					)}
 					<label htmlFor={`${formId}-userInput`}>Username *</label>
-					<input type="text" id={`${formId}-userInput`} name="username" ref={focusInput} required />
+					<input
+						type="text"
+						id={`${formId}-userInput`}
+						name="username"
+						ref={focusInput}
+						pattern="[a-zA-Z0-9]{4,20}"
+						title="The username can only be letters and number and a minimum of four and a maximum of twenty characters."
+						required
+					/>
 					<label htmlFor={`${formId}-passwordInput`}>Password *</label>
-					<input type="password" id={`${formId}-passwordInput`} name="password" required />
+					<input
+						type="password"
+						id={`${formId}-passwordInput`}
+						pattern=".{8,16}"
+						title="The password must have a minimum of eight and a maximum sixteen characters."
+						name="password"
+						required
+					/>
 					<div className={loginStyles.containerForm__options}>
 						<label
 							htmlFor={`${formId}-keepLoggedInput`}
@@ -107,7 +122,6 @@ export default function LogIn() {
 							</div>
 							<span>Keep me logged in</span>
 						</label>
-						<Link href="#">Forgot username or password?</Link>
 					</div>
 					{isLoading ? (
 						<Loader

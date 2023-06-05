@@ -80,7 +80,6 @@ export default function ConfirmPurchase() {
 				window.sessionStorage.setItem(INVALID_BILLING_INFORMATION, JSON.stringify({ valid: false }))
 			})
 			.catch((error: any) => {
-				error.then((e: any) => console.log(e))
 				setError(() => ({ message: error?.message, state: true }))
 			})
 			.finally(() => {
