@@ -9,6 +9,11 @@ export default async function authApi(req: NextApiRequest, res: NextApiResponse)
 	const { body, method } = req
 	const { token, username } = body
 
+	if (typeof username !== 'string' || !username)
+		return res.status(400).json({ message: 'Username invalid' })
+
+	if (!token) return res.status(401).json({ message: 'No token provided' })
+
 	if (method === 'POST') {
 		return validateToken(token, username)
 			.then((response) => {
