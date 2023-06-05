@@ -16,9 +16,7 @@ export default function getPetTypeAPI(req: NextApiRequest, res: NextApiResponse)
 	let isCorrectPetType = checkType(petType, PET_TYPES)
 
 	if (!isCorrectPetType) {
-		const message = 'The type of pet requested does not exist'
-
-		return res.status(400).json({ message })
+		return res.status(400).json({ message: 'The type of pet requested does not exist' })
 	}
 
 	return getPetType(resource, petType)

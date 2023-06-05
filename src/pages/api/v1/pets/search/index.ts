@@ -10,18 +10,15 @@ export default async function searchAPI(req: NextApiRequest, res: NextApiRespons
 		const resource = req.url as string
 		const { word, offset } = req.query
 
-		if (typeof word !== 'string') {
-			throw { status: 400, message: `No pets found.` }
-		}
+		if (typeof word !== 'string') throw { status: 400, message: 'Invalid word' }
+
 		const cond = decodeURI(word)
 
-		// Searches for any character that is not a letter.
+		// Search for any character that is not a letter or number.
 		const invalidWord = cond.match(/[^0-9a-zñ\s\-']/i)
 		const offsetPage = Number(offset) || 0
 
-		if (invalidWord) {
-			throw { status: 400, message: `No pets found for ${cond}` }
-		}
+		if (invalidWord) throw { status: 400, message: 'Invalid word' }
 
 		const response = await getSearchPet(resource, cond, offsetPage)
 
