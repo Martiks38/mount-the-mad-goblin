@@ -6,10 +6,11 @@ import type { User } from '@/typings/interfaces'
 export async function verifyExistence(data: Partial<User>, _id?: string) {
 	try {
 		if (data?.username) {
-			if (data.username.match(/[^a-z0-9]{4,}/i))
+			if (data.username.match(/[^a-z0-9]{4,20}/i))
 				throw {
 					status: 400,
-					message: 'The username can only be letters and number and a minimum of 4 characters.'
+					message:
+						'The username can only be letters and number and a minimum of four and a maximum of twenty characters.'
 				}
 
 			const user = await UserModel.findOne({ username: data.username })
