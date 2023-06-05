@@ -116,13 +116,18 @@
 	&__linkItem {
 		display: flex;
 		align-items: center;
-		padding: 0 1.125em;
-		height: 100%;
+		padding: 0 0.875em;
+		height: 2.625rem;
 		border-radius: var(--border-6);
 		text-align: center;
+		width: fit-content;
+		white-space: nowrap;
+
+		@media (min-width: 23.75rem) {
+			padding: 0 1em;
+		}
 
 		&_button {
-			padding: 0 1rem;
 			background-color: transparent;
 			border-width: 0;
 			color: currentColor;
@@ -130,10 +135,6 @@
 			font-size: inherit;
 			line-height: inherit;
 			cursor: pointer;
-
-			@media (min-width: 23.75rem) {
-				padding: inherit;
-			}
 		}
 
 		@media (hover: none) {
