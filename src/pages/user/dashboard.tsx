@@ -87,14 +87,6 @@ export default function UserDashboard() {
 		return () => clearTimeout(redirectTimeoutID)
 	}, [connected, router, token, username])
 
-	const signOut = () => {
-		router.push('/')
-
-		setConnection(false)
-		setToken('')
-		setUsername('')
-	}
-
 	/* Delete modal */
 	const openModal = () => {
 		setViewDeleteModal(true)
@@ -248,9 +240,6 @@ export default function UserDashboard() {
 								<p>{username}</p>
 								<h3>Email</h3>
 								<p>{emailRef.current || data.data.email}</p>
-								<button onClick={signOut} className={userDashboardStyles.dashboardContent__btn}>
-									Sign out
-								</button>
 							</section>
 
 							<section className={userDashboardStyles.dashboardContent__section}>

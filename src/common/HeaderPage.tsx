@@ -1,7 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import { useCart } from '@/hooks/useCart'
+import { useUser } from '@/hooks/useUser'
 
 import { Searcher } from '@/components/Searcher'
 import { ShoppingBag } from '@/components/ShoppingBag'
@@ -12,9 +14,19 @@ import logo from '@/assets/imgs/logo.webp'
 import headerPageStyles from './HeaderPage.module.css'
 
 export function HeaderPage() {
-	const { connected } = useCart()
+	const router = useRouter()
+	const { setToken, setUsername } = useUser()
+	const { connected, setConnection } = useCart()
 
 	const sideImg = 42
+
+	const signOut = () => {
+		router.push('/')
+
+		setConnection(false)
+		setToken('')
+		setUsername('')
+	}
 
 	return (
 		<header className={headerPageStyles.header}>
@@ -44,11 +56,21 @@ export function HeaderPage() {
 							</Link>
 						</li>
 						{connected ? (
-							<li>
-								<Link href="/user/dashboard" className={headerPageStyles.header__linkItem}>
-									<UserIcon size={sideImg - 8} />
-								</Link>
-							</li>
+							<>
+								<li>
+									<button
+										onClick={signOut}
+										className={`${headerPageStyles.header__linkItem} ${headerPageStyles.header__linkItem_button}`}
+									>
+										Sign out
+									</button>
+								</li>
+								<li>
+									<Link href="/user/dashboard" className={headerPageStyles.header__linkItem}>
+										<UserIcon size={sideImg - 8} />
+									</Link>
+								</li>
+							</>
 						) : (
 							<>
 								<li>

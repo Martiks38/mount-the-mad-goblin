@@ -121,14 +121,31 @@
 		border-radius: var(--border-6);
 		text-align: center;
 
+		&_button {
+			padding: 0 1rem;
+			background-color: transparent;
+			border-width: 0;
+			color: currentColor;
+			font-weight: inherit;
+			font-size: inherit;
+			line-height: inherit;
+			cursor: pointer;
+
+			@media (min-width: 23.75rem) {
+				padding: inherit;
+			}
+		}
+
 		@media (hover: none) {
-			&:active {
+			&:active,
+			&_button:active {
 				filter: drop-shadow(0 0 3px var(--drop-shadow));
 			}
 		}
 
 		@media (hover: hover) {
-			&:hover {
+			&:hover,
+			&_button:hover {
 				background-color: var(--navbar-background-hover);
 			}
 		}
