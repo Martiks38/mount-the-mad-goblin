@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useId, useState } from 'react'
@@ -72,47 +73,54 @@ export default function LogIn() {
 	}
 
 	return (
-		<section className="content content_center">
-			<SessionForm submit={handleLoginSubmit}>
-				<h1 className={loginStyles.title}>Log In</h1>
-				{isError && (
-					<p className={loginStyles.containerForm__error} aria-live="polite">
-						The credentials you are using are not valid.
-					</p>
-				)}
-				<label htmlFor={`${formId}-userInput`}>Username *</label>
-				<input type="text" id={`${formId}-userInput`} name="username" ref={focusInput} required />
-				<label htmlFor={`${formId}-passwordInput`}>Password *</label>
-				<input type="password" id={`${formId}-passwordInput`} name="password" required />
-				<div className={loginStyles.containerForm__options}>
-					<label
-						htmlFor={`${formId}-keepLoggedInput`}
-						className={loginStyles.containerForm__options__wrapperCheckbox}
-					>
-						<div className={loginStyles.containerForm__options__wrapperCheckbox__input}>
-							<input
-								type="checkbox"
-								name="keepLogged"
-								id={`${formId}-keepLoggedInput`}
-								defaultChecked
-							/>
-							<div></div>
-						</div>
-						<span>Keep me logged in</span>
-					</label>
-					<Link href="#">Forgot username or password?</Link>
-				</div>
-				{isLoading ? (
-					<Loader
-						styles={loginStyles.loader}
-						stylesCenterCircle={loginStyles.loader_centerCircle}
-					/>
-				) : (
-					<button type="submit" className={loginStyles.containerForm__submit}>
-						Log in
-					</button>
-				)}
-			</SessionForm>
-		</section>
+		<>
+			<Head>
+				<meta name="description" content="Log in to Pets - The Crazy Goblin" />
+				<meta property="og:description" content="Log in to Pets - The Crazy Goblin" />
+				<title>Log in | Pets - The Crazy Goblin</title>
+			</Head>
+			<section className="content content_center">
+				<SessionForm submit={handleLoginSubmit}>
+					<h1 className={loginStyles.title}>Log In</h1>
+					{isError && (
+						<p className={loginStyles.containerForm__error} aria-live="polite">
+							The credentials you are using are not valid.
+						</p>
+					)}
+					<label htmlFor={`${formId}-userInput`}>Username *</label>
+					<input type="text" id={`${formId}-userInput`} name="username" ref={focusInput} required />
+					<label htmlFor={`${formId}-passwordInput`}>Password *</label>
+					<input type="password" id={`${formId}-passwordInput`} name="password" required />
+					<div className={loginStyles.containerForm__options}>
+						<label
+							htmlFor={`${formId}-keepLoggedInput`}
+							className={loginStyles.containerForm__options__wrapperCheckbox}
+						>
+							<div className={loginStyles.containerForm__options__wrapperCheckbox__input}>
+								<input
+									type="checkbox"
+									name="keepLogged"
+									id={`${formId}-keepLoggedInput`}
+									defaultChecked
+								/>
+								<div></div>
+							</div>
+							<span>Keep me logged in</span>
+						</label>
+						<Link href="#">Forgot username or password?</Link>
+					</div>
+					{isLoading ? (
+						<Loader
+							styles={loginStyles.loader}
+							stylesCenterCircle={loginStyles.loader_centerCircle}
+						/>
+					) : (
+						<button type="submit" className={loginStyles.containerForm__submit}>
+							Log in
+						</button>
+					)}
+				</SessionForm>
+			</section>
+		</>
 	)
 }
