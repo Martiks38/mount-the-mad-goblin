@@ -49,8 +49,11 @@ export async function verifyExistence(data: Partial<User>, _id?: string) {
 		}
 
 		if (data?.password) {
-			if (data.password.length < 8)
-				throw { status: 400, message: 'The password must have a minimum of eight characters.' }
+			if (data.password.length < 8 || data.password.length > 16)
+				throw {
+					status: 400,
+					message: 'The password must have a minimum of eight and a maximum sixteen characters.'
+				}
 
 			const user = await UserModel.findById({ _id })
 			if (!user) throw { status: 401, message: 'Unauthorozed' }
