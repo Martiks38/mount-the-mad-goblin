@@ -14,7 +14,7 @@ interface Parameters {
 }
 
 interface PaginationProps extends Pick<ResultPagination, 'links'>, Parameters {
-	maximumElementsSimpleExtension: number
+	maximumElementsSimpleExtension?: number
 }
 
 const activeEllipsis = 5 // Page x distance from the ends.
