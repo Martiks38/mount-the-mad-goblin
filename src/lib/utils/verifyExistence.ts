@@ -19,8 +19,11 @@ export async function verifyExistence(data: Partial<User>, _id?: string) {
 		}
 
 		if (data?.email) {
-			if (data.email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/))
-				throw { status: 400, message: 'Email invalid' }
+			const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+
+			const correctFormatEmail = data.email.match(emailRegex)
+
+			if (!correctFormatEmail) throw { status: 400, message: 'Email invalid' }
 
 			const user = await UserModel.findOne({ email: data.email })
 
