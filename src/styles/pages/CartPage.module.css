@@ -1,0 +1,102 @@
+.title {
+	margin-top: 0;
+	margin-bottom: 1.8em;
+	font-size: 4rem;
+	font-size: clamp(3rem, 0rem + 13.3333vw, 4rem);
+	text-align: left;
+	color: var(--color-letter-1);
+}
+
+.products {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cart-section-gap);
+}
+
+.detailTotal {
+	max-width: var(--width-product-detail);
+	margin: var(--cart-section-gap) 0;
+	padding: 1.8rem 1.2rem;
+	background-color: var(--navbar-footer-background);
+
+	&__detail {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 1.125em;
+		font-weight: 400;
+		font-size: 1.125rem;
+		line-height: 1.75rem;
+	}
+
+	&__purchase {
+		display: block;
+		width: fit-content;
+		padding: 0.35em 0.6em;
+		margin-left: auto;
+		background-color: var(--btn-background-red-alpha-50);
+		border: solid 0.125rem var(--color-primary);
+		border-radius: var(--border-8);
+		font-weight: 500;
+		color: var(--color-letter-1);
+
+		&_disabled {
+			opacity: 0.5;
+			pointer-events: none;
+		}
+
+		@media (hover: none) {
+			&:active {
+				background-color: var(--btn-background-red-alpha-75);
+				color: var(--color-primary-hover);
+			}
+		}
+
+		@media (hover: hover) {
+			&:hover {
+				background-color: var(--btn-background-red-alpha-75);
+				color: var(--color-primary-hover);
+			}
+		}
+	}
+}
+
+.shoppingContainer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	max-width: var(--width-product-detail);
+	padding: 0.6rem 1.2rem;
+
+	&__continueShopping {
+		padding: 0.5em 1em;
+		background-color: var(--color-primary-alpha-80);
+		border-radius: var(--border-6);
+		border: solid 0.125rem var(--color-primary);
+		color: #000;
+		font-weight: 700;
+
+		@media (hover: none) {
+			&:active {
+				background-color: var(--color-primary);
+			}
+		}
+
+		@media (hover: hover) {
+			&:hover {
+				background-color: var(--color-primary);
+			}
+		}
+	}
+
+	&__removeAll {
+		background-color: transparent;
+		border-width: 0;
+		color: #fff;
+		text-decoration: underline;
+		opacity: 0.7;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+}
