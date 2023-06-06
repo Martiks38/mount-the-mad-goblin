@@ -3,7 +3,7 @@ import PetModel from '../models/petModel'
 import { errorMessage } from '@/utils/handlerError'
 import { generateResourceURL } from '../utils/generateResourceURL'
 
-import { API_URL, API_URL_V1 } from '@/config'
+import { API_URL_DEV, API_URL_V1_DEV, API_URL_PROD, API_URL_V1_PROD } from '@/config'
 import { LIMIT, projection } from '@/consts'
 
 import type { Pet, Result, ResultPagination } from '@/typings/interfaces'
@@ -11,7 +11,8 @@ import type { Categories } from '@/typings/types'
 
 type AnswerPetTypesDB = Categories & { _id: string }
 
-const base = API_URL_V1 as string
+const base = (process.env.NODE_ENV === 'production' ? API_URL_PROD : API_URL_DEV) as string
+const baseV1 = (process.env.NODE_ENV === 'production' ? API_URL_V1_PROD : API_URL_V1_DEV) as string
 
 /**
  * Search all pets in the database.
@@ -21,14 +22,14 @@ const base = API_URL_V1 as string
  */
 export async function getPets(resource: string, offset: number): Promise<ResultPagination> {
 	try {
-		const self = API_URL + resource
+		const self = base + resource
 		const pets: Pet[] = await PetModel.find({}, projection)
 		const results = pets.slice(offset, offset + LIMIT)
 		const size = results.length
 		const total = pets.length
 
 		const { first_page, last_page, lastPageNumber, next_page, prev_page } = generateResourceURL({
-			pathname: base + '/pets',
+			pathname: baseV1 + '/pets',
 			limit: LIMIT,
 			offset,
 			total
@@ -36,7 +37,7 @@ export async function getPets(resource: string, offset: number): Promise<ResultP
 
 		return {
 			links: {
-				base,
+				base: baseV1,
 				self,
 				first_page,
 				last_page,
@@ -76,7 +77,7 @@ export async function getPetTypes(resource: string): Promise<Result> {
 		])
 		const results = response.map(({ media, type }) => ({ media, type }))
 
-		const self = API_URL + resource
+		const self = base + resource
 		const size = results.length
 
 		return {
@@ -102,7 +103,7 @@ export async function getPetTypes(resource: string): Promise<Result> {
  */
 export async function getPetType(resource: string, type: string): Promise<Result> {
 	try {
-		const self = API_URL + resource
+		const self = base + resource
 		const results: Pet[] = await PetModel.find({ type }, projection)
 		const size = results.length
 
@@ -145,7 +146,7 @@ export async function getPetsByTypeAndPrice({
 	type
 }: GetPetsByTypeAndPriceProps): Promise<ResultPagination> {
 	try {
-		const self = API_URL + resource
+		const self = base + resource
 		let filter = {
 			type,
 			price: {
@@ -196,7 +197,7 @@ export async function getPetsByTypeAndPrice({
 export async function getPetByName(resource: string, namePet: string): Promise<Result> {
 	try {
 		const result: Pet | null = await PetModel.findOne({ name: namePet }, projection)
-		const self = API_URL + resource
+		const self = base + resource
 
 		if (result === null) {
 			const message = `The mascot ${namePet} does not exist`
@@ -240,7 +241,7 @@ export async function getPetsByPrices({
 			}
 		}
 
-		const self = API_URL + resource
+		const self = base + resource
 		const pets: Pet[] = await PetModel.find(filter, projection)
 		const total = pets.length
 		const results = pets.slice(offset, offset + LIMIT)
@@ -286,7 +287,7 @@ export async function getSearchPet(
 
 		if (!response || response.length === 0) return { message: 'Without results. No pets found.' }
 
-		const self = API_URL + resource
+		const self = base + resource
 		const results = response.slice(offset, offset + LIMIT)
 		const size = results.length
 		const total = response.length
