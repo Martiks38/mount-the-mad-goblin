@@ -59,6 +59,10 @@ export default function Purchase() {
 			/* void field */
 			const voidField = Object.values(data).some((field) => field === '')
 
+			/* reset form state */
+			const fields = ev.currentTarget.querySelectorAll('[name]')
+			fields.forEach((field) => field.classList.remove('formElementError'))
+
 			if (voidField) {
 				Object.entries(data).forEach((pair) => {
 					if (pair[1] === '') showError(pair[0])
@@ -79,7 +83,10 @@ export default function Purchase() {
 
 			/* Month */
 			const month = Number(data.month)
-			const monthError = month < 1 || month > 12
+			const currentMonth = new Date().getMonth() + 1
+			const verifyMonthExpiration =
+				month < currentMonth && Number(data.year) === new Date().getFullYear()
+			const monthError = month < 1 || month > 12 || verifyMonthExpiration
 
 			if (monthError) {
 				showError('month')
@@ -187,11 +194,9 @@ export default function Purchase() {
 									))}
 								</select>
 								<input
-									type="number"
+									type="text"
 									name="securityCode"
 									id={`${formId}-securityCode`}
-									min={0}
-									max={999}
 									placeholder="999"
 									pattern="^\d{3}$"
 									title="Must have three digits"
