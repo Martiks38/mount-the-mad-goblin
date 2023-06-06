@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import Image from 'next/image'
 
 import { ShowCategory } from '@/components/ShowCategory'
@@ -18,6 +19,16 @@ interface HomeProps {
 export default function Home({ pets }: HomeProps) {
 	return (
 		<>
+			<Head>
+				<meta
+					name="description"
+					content="Come to The Crazy Goblin. Here you can find the pet of your dreams. From flying pets or dragons to mechanical or magical pets. The Crazy Goblin your pet store."
+				/>
+				<meta
+					property="og:description"
+					content="Come to The Crazy Goblin. Here you can find the pet of your dreams. From flying pets or dragons to mechanical or magical pets. The Crazy Goblin your pet store."
+				/>
+			</Head>
 			<div className={homeStyles.containerHeroImage}>
 				<Image
 					src={heroImage}

@@ -20,7 +20,6 @@ export function errorMessage(
 	let message = ''
 
 	if (badHTTPStatusCode) {
-		console.error('The entered status code is invalid')
 		status = 500
 	}
 
