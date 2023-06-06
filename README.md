@@ -1,14 +1,6 @@
-# Mounts - The Mad Goblin
+# Pets - The Mad Goblin
 
 Tienda de mascotas de [World of Warcraft](https://worldofwarcraft.blizzard.com/es-es/)
-
-> `En desarrollo`
-
-## TODO
-
-- [ ] Corregir nombre de las funciones de la API y de los controladores.
-- [ ] Arreglar la presentación del HeaderPage.
-- [ ] Hacer el modal correo del footer.
 
 ## Tecnologías usadas
 
