@@ -3,7 +3,7 @@ import { useDetectSearchChanges } from '@/hooks/useDetectSearchChanges'
 
 import { LayoutGridResults } from '@/layout/LayoutGridResults'
 
-const requestURL = 'http://localhost:3000/api/v1/pets/search'
+import { apiURLs } from '@/consts'
 
 export default function SearchResultPage() {
 	const [url, setUrl] = useState('')
@@ -14,7 +14,7 @@ export default function SearchResultPage() {
 	})
 
 	useEffect(() => {
-		const fetchURL = new URL(requestURL)
+		const fetchURL = new URL(apiURLs.pets.search)
 		const { searchParams } = new URL(window.location.href)
 		const word = searchParams.get('word')
 		const offset = Number(searchParams.get('offset')) ? searchParams.get('offset') : '0'

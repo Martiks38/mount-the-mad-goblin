@@ -7,6 +7,7 @@ import { Loader } from '@/common/Loader'
 
 import { instanceOf } from '@/utils/intanceOf'
 
+import { apiURLs } from '@/consts'
 import petPageStyles from '@/styles/pages/PetPage.module.css'
 
 import type { Pet } from '@/typings/interfaces'
@@ -15,7 +16,7 @@ export default function MascotPage() {
 	const router = useRouter()
 	const petName: string = router.query.name as string
 
-	const { data, error, isLoading } = usePet(`http://localhost:3000/api/v1/pets/${petName}`)
+	const { data, error, isLoading } = usePet(`${apiURLs.pets.base}/${petName}`)
 
 	return (
 		<>

@@ -17,6 +17,18 @@ export function Modal({ children, className, closeModal }: ModalProps) {
 		if (modalEl) modalEl.focus()
 	}, [])
 
+	useEffect(() => {
+		const closeModalEscapeKey = (ev: KeyboardEvent) => {
+			const key = ev.key
+
+			if (key === 'Escape') closeModal()
+		}
+
+		window.addEventListener('keydown', closeModalEscapeKey)
+
+		return () => window.removeEventListener('keydown', closeModalEscapeKey)
+	}, [closeModal])
+
 	return createPortal(
 		<>
 			<div

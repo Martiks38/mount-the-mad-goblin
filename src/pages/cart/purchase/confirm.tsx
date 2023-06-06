@@ -11,8 +11,7 @@ import { formatPrice } from '@/utils/formatPrice'
 
 import confirmPurchaseStyles from '@/styles/pages/ConfirmPurchase.module.css'
 
-import { INVALID_BILLING_INFORMATION } from '@/consts'
-import { TOKEN_HEADER } from '@/consts'
+import { INVALID_BILLING_INFORMATION, TOKEN_HEADER, apiURLs } from '@/consts'
 
 export default function ConfirmPurchase() {
 	const router = useRouter()
@@ -63,7 +62,7 @@ export default function ConfirmPurchase() {
 		})
 		const body = JSON.stringify({ purchases })
 
-		fetch('http://localhost:3000/api/v1/users', {
+		fetch(apiURLs.users, {
 			method: 'PUT',
 			headers,
 			body

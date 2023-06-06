@@ -11,7 +11,7 @@ import { Loader } from '@/common/Loader'
 import { instanceOf } from '@/utils/intanceOf'
 import { formatPrice } from '@/utils/formatPrice'
 
-import { TOKEN_HEADER } from '@/consts'
+import { TOKEN_HEADER, apiURLs } from '@/consts'
 
 import userDashboardStyles from '@/styles/pages/UserDashboard.module.css'
 
@@ -22,7 +22,6 @@ type ResponseData = {
 	error: boolean
 }
 
-const urlApi = 'http://localhost:3000/api/v1/users'
 const startDeleteWith = 'delete/'
 
 export default function UserDashboard() {
@@ -60,9 +59,7 @@ export default function UserDashboard() {
 
 				const options = { method: 'GET', headers }
 
-				const url = urlApi.concat('/', username)
-
-				const response = await fetch(url, options)
+				const response = await fetch(`${apiURLs.users}/${username}`, options)
 				const data = await response.json()
 
 				if (!response.ok) throw data.message
@@ -135,7 +132,7 @@ export default function UserDashboard() {
 
 			const options = { method: 'DELETE', headers }
 
-			const response = await fetch(`http://localhost:3000/api/v1/users/${username}`, options)
+			const response = await fetch(`${apiURLs.users}/${username}`, options)
 			const data: { message: string } = await response.json()
 
 			if (!response.ok) throw data
@@ -182,7 +179,7 @@ export default function UserDashboard() {
 
 		try {
 			setIsLoading(true)
-			const response = await fetch('http://localhost:3000/api/v1/users', options)
+			const response = await fetch(apiURLs.users, options)
 			const data: { message: string } = await response.json()
 
 			if (!response.ok) throw data.message

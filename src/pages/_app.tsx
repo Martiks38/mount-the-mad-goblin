@@ -5,7 +5,7 @@ import { useUser } from '@/hooks/useUser'
 
 import { LayoutPage } from '@/layout/LayoutPage'
 
-import { shoppingCartCookie } from '@/consts'
+import { apiURLs, shoppingCartCookie } from '@/consts'
 
 import '@/styles/globals.css'
 import '@/styles/reset.css'
@@ -73,7 +73,7 @@ export default function App({ Component, pageProps }: AppProps) {
 				body
 			}
 
-			fetch('http://localhost:3000/api/v1/auth', options)
+			fetch(apiURLs.auth, options)
 				.then((response) => response.json())
 				.then((data: Response) => {
 					if (data?.token) setToken(data.token)
