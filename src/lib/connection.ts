@@ -1,8 +1,10 @@
 import { ConnectionStates, connect, connection } from 'mongoose'
-import { DB_URL } from '@/config'
+import { DB_DEV, DB_PROD } from '@/config'
 
 export function dbConnection() {
 	if (connection.readyState === ConnectionStates.connected) return
+
+	const DB_URL = process.env.NODE_ENV === 'production' ? DB_PROD : DB_DEV
 
 	if (!DB_URL) {
 		const error = new Error("Database URL can't be undefined")

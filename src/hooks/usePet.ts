@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { instanceOf } from '@/utils/intanceOf'
 
 import type { Pet, Result } from '@/typings/interfaces'
 
@@ -7,10 +8,7 @@ interface SearchStatus {
 	error: boolean
 }
 
-type ResponseApi = {
-	message?: string
-	results?: Result
-}
+type ResponseApi = { message: string } | Result
 
 export function usePet(url: string) {
 	const [isLoading, setIsLoading] = useState(false)
@@ -24,9 +22,19 @@ export function usePet(url: string) {
 				const response = await fetch(url)
 				const data: ResponseApi = await response.json()
 
-				if (!response.ok) throw data?.message
+				if (!response.ok && instanceOf<{ message: string }>(data, 'message')) throw data.message
 
-				setData((prevState) => ({ ...prevState, data: data?.results as Pet }))
+				if (instanceOf<Result>(data, 'results') && data.results === undefined) {
+					const error = new Error('Pet without information')
+					error.name = 'SearchPetError'
+
+					throw error
+				}
+				console.log(instanceOf<Result>(data, 'results') && data.results)
+				setData((prevState) => ({
+					...prevState,
+					data: (data as Result).results as Pet
+				}))
 			} catch (error: any) {
 				if (error instanceof Error) {
 					setData(() => ({ data: error.message, error: true }))
