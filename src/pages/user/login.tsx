@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useId, useState } from 'react'
 import { useCart } from '@/hooks/useCart'
@@ -7,9 +6,10 @@ import { useFocus } from '@/hooks/useFocus'
 import { useUser } from '@/hooks/useUser'
 
 import { SessionForm } from '@/common/SessionForm'
-
-import loginStyles from '@/styles/pages/LogIn_SignUp.module.css'
 import { Loader } from '@/common/Loader'
+
+import { apiURLs } from '@/consts'
+import loginStyles from '@/styles/pages/LogIn_SignUp.module.css'
 
 interface IResponse {
 	ok: boolean
@@ -45,7 +45,7 @@ export default function LogIn() {
 		const body = JSON.stringify(formDataObj)
 
 		try {
-			const response = await fetch('http://localhost:3000/api/v1/users', {
+			const response = await fetch(apiURLs.users, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'

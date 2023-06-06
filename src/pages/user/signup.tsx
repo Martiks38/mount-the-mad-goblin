@@ -8,6 +8,7 @@ import { useFocus } from '@/hooks/useFocus'
 import { Loader } from '@/common/Loader'
 import { SessionForm } from '@/common/SessionForm'
 
+import { apiURLs } from '@/consts'
 import loginStyles from '@/styles/pages/LogIn_SignUp.module.css'
 
 export default function SignUp() {
@@ -41,7 +42,7 @@ export default function SignUp() {
 		const body = JSON.stringify(formDataObj)
 
 		try {
-			const response = await fetch('http://localhost:3000/api/v1/users', {
+			const response = await fetch(apiURLs.users, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'

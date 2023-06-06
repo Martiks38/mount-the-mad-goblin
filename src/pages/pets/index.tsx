@@ -1,6 +1,7 @@
 import { LayoutGridResults } from '@/layout/LayoutGridResults'
+import { apiURLs } from '@/consts'
 
-const requestURL = 'http://localhost:3000/api/v1/pets'
+const requestURL = apiURLs.pets.base
 
 export default function PetsSection() {
 	return <LayoutGridResults url={requestURL} />
