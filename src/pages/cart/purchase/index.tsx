@@ -40,9 +40,6 @@ export default function Purchase() {
 		el?.classList.add('formElementError')
 
 		setIsError(true)
-		setTimeout(() => {
-			setIsError(false)
-		}, 1500)
 
 		error.current = true
 	}, [])
