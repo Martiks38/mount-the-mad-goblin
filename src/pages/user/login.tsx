@@ -104,6 +104,7 @@ export default function LogIn() {
 						pattern=".{8,16}"
 						title="The password must have a minimum of eight and a maximum sixteen characters."
 						name="password"
+						autoComplete="current-password"
 						required
 					/>
 					<div className={loginStyles.containerForm__options}>

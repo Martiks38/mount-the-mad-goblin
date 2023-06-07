@@ -286,6 +286,7 @@ export default function UserDashboard() {
 										name="password"
 										id={`${dashboardId}-pass`}
 										className={userDashboardStyles.dashboardContent__form__input}
+										autoComplete="off"
 									/>
 									<button type="submit" className={userDashboardStyles.dashboardContent__btn}>
 										Update profile
