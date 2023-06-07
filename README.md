@@ -6,13 +6,11 @@ Tienda de mascotas de [World of Warcraft](https://worldofwarcraft.blizzard.com/e
 
 La página web está desarrollada con el framework [Next.js](https://nextjs.org) y utilizó CSS para estilizar con el post-procesador [PostCSS](https://postcss.org).
 
-Para probar y validar el funcionamiento de la aplicación, utilizó la librería [Vitest](https://vitest.dev).
-
 La base de datos está hecha en [MongoDB](https://www.mongodb.com).
 
 ## API
 
-Dirección: [/api/v1](/api/v1)
+Dirección: [https://pets-the-crazy-goblin.vercel.app/api/v1]([/api/v1](https://pets-the-crazy-goblin.vercel.app/api/v1))
 
 Los endpoints disponibles son:
 
