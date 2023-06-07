@@ -30,7 +30,7 @@ export default function MascotPage() {
 					content={data && typeof data === 'object' && data.description ? data.description : ''}
 				/>
 
-				<title>{petName} | Pets - The Crazy Goblin</title>
+				<title>{`${petName} | Pets - The Crazy Goblin`}</title>
 			</Head>
 			<article className="content">
 				{isLoading && (
