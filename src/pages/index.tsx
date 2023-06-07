@@ -11,6 +11,7 @@ import homeStyles from '@/styles/pages/home.module.css'
 import type { GetStaticProps } from 'next'
 import type { Result } from '@/typings/interfaces'
 import type { Categories } from '@/typings/types'
+import { apiURLs } from '@/consts'
 
 interface HomeProps {
 	pets: Result | string
@@ -68,7 +69,7 @@ export default function Home({ pets }: HomeProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-	const response = await searchInApi('/pets/types')
+	const response = await searchInApi(apiURLs.pets.types)
 
 	return {
 		props: { pets: response }
