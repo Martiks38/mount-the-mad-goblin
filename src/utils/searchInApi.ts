@@ -5,7 +5,8 @@ import type { Result } from '@/typings/interfaces'
 export async function searchInApi(resource: string): Promise<Result | string> {
 	const base = (process.env.NODE_ENV === 'production' ? API_URL_V1_PROD : API_URL_V1_DEV) as string
 
-	const url = base + resource
+	// const url = base + resource
+	const url = 'https://pets-the-crazy-goblin.vercel.app/api/v1' + resource
 
 	try {
 		const response = await fetch(url)

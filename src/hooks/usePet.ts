@@ -21,7 +21,7 @@ export function usePet(url: string) {
 			try {
 				const response = await fetch(url)
 				const data: ResponseApi = await response.json()
-				console.log({ data, response })
+
 				if (!response.ok && instanceOf<{ message: string }>(data, 'message')) throw data.message
 
 				if (instanceOf<Result>(data, 'results') && data.results === undefined) {
