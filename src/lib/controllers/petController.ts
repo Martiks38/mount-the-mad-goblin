@@ -3,7 +3,7 @@ import PetModel from '../models/petModel'
 import { errorMessage } from '@/utils/handlerError'
 import { generateResourceURL } from '../utils/generateResourceURL'
 
-import { API_URL_DEV, API_URL_V1_DEV, API_URL_PROD, API_URL_V1_PROD } from '@/config'
+import { API_URL_DEV, API_URL_V1_DEV, API_URL_V1_PROD } from '@/config'
 import { LIMIT, projection } from '@/consts'
 
 import type { Pet, Result, ResultPagination } from '@/typings/interfaces'
@@ -11,7 +11,7 @@ import type { Categories } from '@/typings/types'
 
 type AnswerPetTypesDB = Categories & { _id: string }
 
-const base = (process.env.NODE_ENV === 'production' ? API_URL_PROD : API_URL_DEV) as string
+const base = (process.env.NODE_ENV === 'production' ? '' : API_URL_DEV) as string
 const baseV1 = (process.env.NODE_ENV === 'production' ? API_URL_V1_PROD : API_URL_V1_DEV) as string
 
 /**

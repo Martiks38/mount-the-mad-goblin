@@ -33,14 +33,14 @@ export const LIMIT = 10
 export const shoppingCartCookie = 'shopping-cart'
 
 const API_RESOURCES_PROD = {
-	auth: 'https://pets-the-crazy-goblin.vercel.app/api/v1/auth',
+	auth: '/api/v1/auth',
 	pets: {
-		search: 'https://pets-the-crazy-goblin.vercel.app/api/v1/pets/search',
-		types: 'https://pets-the-crazy-goblin.vercel.app/api/v1/pets/types',
-		prices: 'https://pets-the-crazy-goblin.vercel.app/api/v1/pets/prices',
-		base: 'https://pets-the-crazy-goblin.vercel.app/api/v1/pets'
+		search: '/api/v1/pets/search',
+		types: '/api/v1/pets/types',
+		prices: '/api/v1/pets/prices',
+		base: '/api/v1/pets'
 	},
-	users: 'https://pets-the-crazy-goblin.vercel.app/api/v1/users'
+	users: '/api/v1/users'
 }
 
 const API_RESOURCES_DEV = {
