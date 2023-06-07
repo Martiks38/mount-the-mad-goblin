@@ -30,7 +30,7 @@ export function usePet(url: string) {
 
 					throw error
 				}
-				console.log(instanceOf<Result>(data, 'results') && data.results)
+
 				setData((prevState) => ({
 					...prevState,
 					data: (data as Result).results as Pet
