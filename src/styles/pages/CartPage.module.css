@@ -69,11 +69,16 @@
 
 	&__continueShopping {
 		padding: 0.5em 1em;
+		width: min-content;
 		background-color: var(--color-primary-alpha-80);
 		border-radius: var(--border-6);
 		border: solid 0.125rem var(--color-primary);
 		color: #000;
 		font-weight: 700;
+
+		@media (min-width: 30rem) {
+			width: auto;
+		}
 
 		@media (hover: none) {
 			&:active {
