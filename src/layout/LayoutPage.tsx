@@ -10,10 +10,7 @@ interface LayoutPageProps {
 	haveHeroImage?: string
 }
 
-const apiURL =
-	process.env.NODE_ENV === 'development'
-		? 'http://localhost:3000/api/v1'
-		: 'https://pets-the-crazy-goblin.vercel.app/api/v1'
+const apiURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000/api/v1' : '/api/v1'
 
 export function LayoutPage({ children }: LayoutPageProps): JSX.Element {
 	return (

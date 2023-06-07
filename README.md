@@ -12,7 +12,7 @@ La base de datos está hecha en [MongoDB](https://www.mongodb.com).
 
 ## API
 
-Dirección: [https://pets-the-crazy-goblin.vercel.app/api/v1](https://pets-the-crazy-goblin.vercel.app/api/v1)
+Dirección: [/api/v1](/api/v1)
 
 Los endpoints disponibles son:
 
