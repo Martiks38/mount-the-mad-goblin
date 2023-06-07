@@ -96,7 +96,7 @@ export default function SignUp() {
 							type="email"
 							id={`${formId}-emailInput`}
 							name="email"
-							pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
+							pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*"
 							title="Invalid email. Example: email@crazygoblin.com"
 							required
 						/>
@@ -107,6 +107,7 @@ export default function SignUp() {
 							name="password"
 							pattern=".{8,16}"
 							title="The password must have a minimum of eight and a maximum sixteen characters."
+							autoComplete="new-password"
 							required
 						/>
 						{isLoading ? (
