@@ -10,9 +10,9 @@ export default function Error404() {
 	return (
 		<>
 			<Head>
-				<title>Error 404 | Pets - The Crazy Goblin</title>
 				<meta name="description" content="Page not found." />
 				<meta property="og:description" content="Page not found" />
+				<title>Error 404 | Pets - The Crazy Goblin</title>
 			</Head>
 			<section className="content content_letterWhite">
 				<div className={errorPageStyles.containerMessage}>

@@ -36,6 +36,7 @@ export default function Category({ results }: CategoryProps) {
 					property="og:description"
 					content="Types of pets in Pets - The Crazy Goblin. Humanoid, draconic, flying, undead, critter, magical, elemental, beast, aquatic, and mechanical pets."
 				/>
+				<title>{`${category} pets | Pets - The Crazy Goblin`}</title>
 			</Head>
 			<section className="content">
 				<h1 className={categoryPageStyles.title}>{`${category} pets`}</h1>
