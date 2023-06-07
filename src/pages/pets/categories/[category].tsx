@@ -6,6 +6,7 @@ import { getCategoryPaths } from '@/utils/getCategoryPaths'
 import { searchInApi } from '@/utils/searchInApi'
 import { formatPrice } from '@/utils/formatPrice'
 
+import { apiURLs } from '@/consts'
 import categoryPageStyles from '@/styles/pages/CategoryPage.module.css'
 
 import type { GetStaticPaths, GetStaticProps } from 'next'
@@ -81,7 +82,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
 	const { category } = params as CategoryParams
-	const resource = `/pets/types/${category}`
+	const resource = `${apiURLs.pets.types}/${category}`
 
 	const results = await searchInApi(resource)
 
