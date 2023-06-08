@@ -72,7 +72,7 @@ export default function Category({ results }: CategoryProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	const paths = await getCategoryPaths('/pets/types')
+	const paths = await getCategoryPaths(apiURLs.pets.types)
 
 	return {
 		paths,
